@@ -1,0 +1,30 @@
+<!-- base.html -->
+<!DOCTYPE html>
+{% load static %}
+
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Draudiklis.lt{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+</head>
+<body>
+    <div id="top-shelf">
+        <p>Draudiklis.lt | Kliento paskyra | 00000</p>
+    </div>
+    <div id="content">
+        <ul>
+            <li><a href="#">Skaičiuoti kainą</a></li>
+            <li><a href="#">Draudimo produktai</a></li>
+            <li><a href="#">Dažniausiai užduodami klausimai</a></li>
+            <li><a href="#">Kontaktai</a></li>
+            <li><a href="#">Apie mus</a></li>
+            <li><a href="#">Kliento paskyra</a></li>
+        </ul>
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+</html>
