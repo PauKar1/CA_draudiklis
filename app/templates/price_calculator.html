@@ -25,8 +25,7 @@
     {% if total_price %}
     <div id="calculation-result">
         <h2>Preliminari kaina: {{ total_price }} EUR</h2>
-        <button onclick="window.location.reload()">Pirkti</button>
-        <button onclick="window.location.reload()">Išvalyti duomenis</button>
+        <a href="{% url 'registruoti_sutarti' %}" class="btn btn-primary">Registruoti sutartį</a>
     </div>
     {% endif %}
 {% endblock %}

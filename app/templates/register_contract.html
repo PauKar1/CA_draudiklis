@@ -1,0 +1,30 @@
+<!-- templates/register_contract.html -->
+{% extends 'base.html' %}
+
+{% block title %}Registruoti sutartį - Draudiklis.lt{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>Registruoti sutartį</h1>
+    <form method="post">
+        {% csrf_token %}
+        <div class="card mb-3">
+            <div class="card-header">
+                <h2>Kliento informacija</h2>
+            </div>
+            <div class="card-body">
+                {{ klientai_form.as_p }}
+            </div>
+        </div>
+        <div class="card mb-3">
+            <div class="card-header">
+                <h2>Poliso informacija</h2>
+            </div>
+            <div class="card-body">
+                {{ polisai_form.as_p }}
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Registruoti</button>
+    </form>
+</div>
+{% endblock %}

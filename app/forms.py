@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django import forms
-from .models import Profile, Polisai
+from .models import Profile, Polisai, Klientai
 
 class CustomLoginForm(forms.Form):
     username = forms.CharField(
@@ -46,3 +46,12 @@ class PolisaiForm(forms.ModelForm):
         if paslaugos:
             cleaned_data['apsauga'] = paslaugos.aprasymas
         return cleaned_data
+
+############## REGISTRUOJAM
+
+class KlientaiForm(forms.ModelForm):
+    class Meta:
+        model = Klientai
+        fields = '__all__'
+
+

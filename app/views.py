@@ -19,6 +19,13 @@ def home(request):
     return render(request, 'home.html')
 
 
+################ PRICE CALC
+def get_all_countries():
+    all_countries = []
+    for risk_level_countries in COUNTRY_RISK_LEVELS.values():
+        all_countries.extend(risk_level_countries)
+    return all_countries
+
 def price_calculator(request):
     return render(request, 'price_calculator.html')
 
@@ -94,11 +101,6 @@ def calculate_total_price(base_price_per_day, trip_duration, country_surcharge, 
     total_price = base_price * travel_mode_multiplier + country_surcharge
     return total_price
 
-def get_all_countries():
-    all_countries = []
-    for risk_level_countries in COUNTRY_RISK_LEVELS.values():
-        all_countries.extend(risk_level_countries)
-    return all_countries
 
 
 
@@ -106,6 +108,9 @@ def get_all_countries():
 
 
 ############### REGISTRATION
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from .forms import CustomLoginForm
 
 def kliento_paskyra(request):
     if request.method == 'POST':
@@ -145,14 +150,6 @@ def logout_view(request):
     logout(request)
     messages.info(request, "Jūs sėkmingai atsijungėte.")
     return redirect('home')
-
-
-from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
-from .forms import CustomLoginForm
-
-
 
 def kliento_paskyra(request):
     if request.method == 'POST':
@@ -194,3 +191,30 @@ def profile_view(request):
     else:
         form = ProfileUpdateForm(instance=profile)
     return render(request, 'profile.html', {'form': form, 'profile': profile})
+
+
+
+####################### REGISTER CONTRACT
+from .forms import KlientaiForm, PolisaiForm
+
+@login_required
+def registruoti_sutarti(request):
+
+    if request.method == 'POST':
+        klientai_form = KlientaiForm(request.POST)
+        polisai_form = PolisaiForm(request.POST)
+        if klientai_form.is_valid() and polisai_form.is_valid():
+            klientas = klientai_form.save()
+            polisas = polisai_form.save(commit=False)
+            polisas.klientai = klientas
+            polisas.save()
+            messages.success(request, "Sutartis sėkmingai užregistruota!")
+            return redirect('success_url')  # Replace with your success URL
+    else:
+        klientai_form = KlientaiForm()
+        polisai_form = PolisaiForm()
+
+    return render(request, 'register_contract.html', {
+        'klientai_form': klientai_form,
+        'polisai_form': polisai_form,
+    })
