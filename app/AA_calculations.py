@@ -1,17 +1,18 @@
 COUNTRY_RISK_LEVELS = {
     'high': [
-        'Afghanistan', 'Iraq', 'Syria', 'Yemen', 'Somalia',
-        'Libya', 'South Sudan', 'Mali', 'Central African Republic'
+        'Afganistanas', 'Irakas', 'Sirija', 'Jemenas', 'Somalis',
+        'Libija', 'Pietų Sudanas', 'Malis', 'Centrinės Afrikos Respublika'
     ],
     'medium': [
-        'Brazil', 'India', 'Philippines', 'Egypt', 'Colombia',
-        'Pakistan', 'Turkey', 'Thailand', 'Mexico', 'Ukraine'
+        'Brazilija', 'Indija', 'Filipinai', 'Egiptas', 'Kolumbija',
+        'Pakistanas', 'Turkija', 'Tailandas', 'Meksika', 'Ukraina'
     ],
     'low': [
-        'Canada', 'Australia', 'Germany', 'Japan', 'United Kingdom',
-        'France', 'Italy', 'Spain', 'Netherlands', 'Sweden'
+        'Kanada', 'Australija', 'Vokietija', 'Japonija', 'Jungtinė Karalystė',
+        'Prancūzija', 'Italija', 'Ispanija', 'Nyderlandai', 'Švedija'
     ],
 }
+
 
 # Country surcharges (example countries)
 

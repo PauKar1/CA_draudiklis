@@ -1,43 +1,12 @@
 <!DOCTYPE html>
 {% load static %}
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Draudiklis.lt{% endblock %}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
-    <style>
-        .submenu {
-            display: none;
-            list-style: none;
-            padding-left: 20px;
-        }
-
-        .expandable:hover .submenu {
-            display: block;
-        }
-
-        .selection-icon {
-            width: 20px;
-            height: 20px;
-        }
-
-        .selections {
-            list-style: none;
-            padding: 0;
-        }
-
-        .selections li {
-            margin: 5px 0;
-        }
-
-        .submenu-item {
-            font-style: italic;
-            color: darkblue;
-            font-size: 0.9em;
-        }
-    </style>
 </head>
 <body>
     <div id="top-shelf">
@@ -55,14 +24,7 @@
             <ul class="selections">
                 <li class="expandable">
                     <img src="{% static 'icons/calculator.png' %}" class="selection-icon" alt="Calculator Icon">
-                    <a href="#">Skaičiuoti kainą</a>
-                    <ul class="submenu">
-                        <li class="submenu-item">
-                            <img src="{% static 'icons/calculator.png' %}" class="selection-icon" alt="Calculator Icon">
-                            <a href="#" onclick="loadContent('price-calculator')">Kelionių draudimas</a>
-                        </li>
-                        <!-- Add more submenu items here if needed -->
-                    </ul>
+                    <a href="{% url 'price_calculator' %}">Skaičiuoti kainą</a>
                 </li>
                 <li>
                     <img src="{% static 'icons/products.png' %}" class="selection-icon" alt="Products Icon">
@@ -82,7 +44,7 @@
                 </li>
                 <li>
                     <img src="{% static 'icons/account.png' %}" class="selection-icon" alt="Account Icon">
-                    <a href="{% url 'profilis' %}">Kliento paskyra</a>
+                    <a href="{% url 'profile' %}">Kliento paskyra</a>
                 </li>
             </ul>
         </div>
@@ -91,98 +53,5 @@
             {% endblock %}
         </div>
     </div>
-    <script>
-        function getCSRFToken() {
-            let csrfToken = null;
-            const cookies = document.cookie.split(';');
-            for (let i = 0; i < cookies.length; i++) {
-                const cookie = cookies[i].trim();
-                if (cookie.startsWith('csrftoken=')) {
-                    csrfToken = cookie.substring('csrftoken='.length, cookie.length);
-                    break;
-                }
-            }
-            return csrfToken;
-        }
-
-        function loadContent(contentId) {
-            const centerSection = document.querySelector('.center-section');
-            if (contentId === 'price-calculator') {
-                centerSection.innerHTML = `
-                    <h2>Kelionių draudimas</h2>
-                    <h3>Skaičiuoti kainą</h3>
-                    <form id="price-calculation-form">
-                        <input type="hidden" name="csrfmiddlewaretoken" value="${getCSRFToken()}">
-                        <label for="country">Įveskite šalies pavadinimą:</label>
-                        <input type="text" id="country" name="country" required><br><br>
-
-                        <label for="travel-mode">Keliavimo būdas:</label>
-                        <select id="travel-mode" name="travel-mode">
-                            <option value="plane">Lėktuvas</option>
-                            <option value="car">Automobilis</option>
-                            <option value="motorcycle">Motociklas</option>
-                            <option value="ship">Laivas</option>
-                            <option value="bike">Dviratis</option>
-                            <option value="foot">Pėsčiomis</option>
-                        </select><br><br>
-
-                        <label for="trip-duration">Kelionės dienų skaičius:</label>
-                        <input type="number" id="trip-duration" name="trip-duration" required min="1"><br><br>
-
-                        <button type="button" onclick="calculatePrice()">Skaičiuoti</button>
-                    </form>
-                    <div id="calculation-result"></div>
-                `;
-            }
-        }
-
-        function calculatePrice() {
-            const country = document.getElementById('country').value;
-            const travelMode = document.getElementById('travel-mode').value;
-            const tripDuration = document.getElementById('trip-duration').value;
-
-            fetch('/calculate_price/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': getCSRFToken()
-                },
-                body: JSON.stringify({
-                    country: country,
-                    travel_mode: travelMode,
-                    trip_duration: tripDuration
-                })
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                const resultDiv = document.getElementById('calculation-result');
-                resultDiv.innerHTML = `
-                    <h2>Preliminari kaina: ${data.total_price} EUR</h2>
-                    <button onclick="purchaseInsurance()">Pirkti</button>
-                    <button onclick="clearData()">Išvalyti duomenis</button>
-                `;
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-        }
-
-        function purchaseInsurance() {
-            alert('Insurance purchased!');
-            // Additional functionality for purchasing insurance can be added here
-        }
-
-        function clearData() {
-            document.getElementById('country').value = '';
-            document.getElementById('travel-mode').value = 'plane';
-            document.getElementById('trip-duration').value = '';
-            document.getElementById('calculation-result').innerHTML = '';
-        }
-    </script>
 </body>
 </html>

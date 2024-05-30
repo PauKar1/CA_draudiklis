@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Skaičiuoti Kainą</h1>
+    <form method="post" action="{% url 'calculate_price' %}">
+        {% csrf_token %}
+        <label for="country">Įveskite šalies pavadinimą:</label>
+        <input type="text" id="country" name="country" required><br><br>
+
+        <label for="travel-mode">Keliavimo būdas:</label>
+        <select id="travel-mode" name="travel_mode">
+            <option value="plane">Lėktuvas</option>
+            <option value="car">Automobilis</option>
+            <option value="motorcycle">Motociklas</option>
+            <option value="ship">Laivas</option>
+            <option value="bike">Dviratis</option>
+            <option value="foot">Pėsčiomis</option>
+        </select><br><br>
+
+        <label for="trip-duration">Keliausite dienų skaičius:</label>
+        <input type="number" id="trip-duration" name="trip_duration" required min="1"><br><br>
+
+        <button type="submit">Skaičiuoti</button>
+    </form>
+    {% if total_price %}
+    <div id="calculation-result">
+        <h2>Preliminari kaina: {{ total_price }} EUR</h2>
+        <button onclick="window.location.reload()">Pirkti</button>
+        <button onclick="window.location.reload()">Išvalyti duomenis</button>
+    </div>
+    {% endif %}
+{% endblock %}

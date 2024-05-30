@@ -18,55 +18,50 @@ def susi(request):
 def home(request):
     return render(request, 'home.html')
 
+
 def price_calculator(request):
     return render(request, 'price_calculator.html')
 
-
-
-
-
 def calculate_price(request):
     if request.method == 'POST':
-        try:
-            data = json.loads(request.body)
-            country = data.get('country')
-            travel_mode = data.get('travel_mode')
-            trip_duration = int(data.get('trip_duration'))
+        print(request.POST)  # Debugging line to check received POST data
+        country = request.POST.get('country')
+        travel_mode = request.POST.get('travel_mode')
+        trip_duration = request.POST.get('trip_duration')
 
-            if not all([country, travel_mode, trip_duration]):
-                return HttpResponseBadRequest("Missing required fields.")
+        print(f"Country: {country}, Travel Mode: {travel_mode}, Trip Duration: {trip_duration}")  # Debugging line
 
+        if not all([country, travel_mode, trip_duration]):
+            print("Missing required fields.")
+            return HttpResponseBadRequest("Missing required fields.")
 
-            # Get the risk level of the country
-            country_risk_level = get_country_risk_level(country)
+        # Country risk level
+        country_risk_level = get_country_risk_level(country)
+        print(f"Country Risk Level: {country_risk_level}")  # Debugging line
+        if country_risk_level is None:
+            return HttpResponseBadRequest("Country risk level not found.")
 
-            if country_risk_level is None:
-                return HttpResponseBadRequest("Country risk level not found.")
+        # Country surcharge
+        country_surcharge = get_country_surcharge(country_risk_level)
+        print(f"Country Surcharge: {country_surcharge}")  # Debugging line
 
-            # Get the surcharge based on the country risk level
-            country_surcharge = get_country_surcharge(country_risk_level)
+        # Base price per day
+        base_price_per_day = get_base_price_per_day()
+        print(f"Base Price Per Day: {base_price_per_day}")  # Debugging line
 
-            # Get the base price per day from the database
-            base_price_per_day = get_base_price_per_day()
+        # Calculate total price
+        total_price = calculate_total_price(base_price_per_day, int(trip_duration), country_surcharge, travel_mode)
+        print(f"Total Price: {total_price}")  # Debugging line
 
-            # Calculate total price including surcharge
-            total_price = calculate_total_price(base_price_per_day, trip_duration, country_surcharge, travel_mode)
+        return render(request, 'price_calculator.html', {'total_price': total_price})
 
-            return JsonResponse({
-                'country': country,
-                'travel_mode': travel_mode,
-                'trip_duration': trip_duration,
-                'total_price': total_price
-            })
-        except json.JSONDecodeError:
-            return HttpResponseBadRequest("Invalid JSON.")
     return render(request, 'price_calculator.html')
 
 def get_country_risk_level(country):
     for risk_level, countries in COUNTRY_RISK_LEVELS.items():
         if country in countries:
             return risk_level
-    return "Neturime šios šalies bandykite kitą"
+    return None
 
 def get_country_surcharge(risk_level):
     if risk_level == 'high':
@@ -83,7 +78,7 @@ def get_base_price_per_day():
         paslauga = Paslaugos.objects.get(pavadinimas="Kelionių draudimas")
         return paslauga.kaina
     except Paslaugos.DoesNotExist:
-        return HttpResponseBadRequest("Draudimo paslauga 'Kelionių draudimas' nerasta.")
+        return 10.0
 
 def calculate_total_price(base_price_per_day, trip_duration, country_surcharge, travel_mode):
     TRAVEL_MODE_MULTIPLIERS = {
@@ -195,7 +190,7 @@ def profile_view(request):
         form = ProfileUpdateForm(request.POST, request.FILES, instance=profile)
         if form.is_valid():
             form.save()
-            return redirect('profilis')
+            return redirect('profile')
     else:
         form = ProfileUpdateForm(instance=profile)
-    return render(request, 'profilis.html', {'form': form, 'profile': profile})
+    return render(request, 'profile.html', {'form': form, 'profile': profile})
