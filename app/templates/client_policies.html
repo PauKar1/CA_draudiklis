@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Your Policies - Draudiklis.lt
+{% endblock %}
+
+{% block content %}
+    <h1>Your Policies</h1>
+    <ul>
+        {% for policy in policies %}
+        <li>
+            <h2>Policy Number: {{ policy.policy_number }}</h2>
+            <p>{{ policy.policy_details }}</p>
+        </li>
+        {% empty %}
+        <li>No policies found.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

@@ -1,0 +1,11 @@
+<!-- countries_dropdown.html -->
+
+<label for="country">Pasirinkite šalį:</label>
+<select id="country" name="country" required>
+    <option value="">Pasirinkite šalį</option>
+    {% for risk_level, countries in COUNTRY_RISK_LEVELS.items %}
+        {% for country in countries %}
+            <option value="{{ country }}">{{ country }}</option>
+        {% endfor %}
+    {% endfor %}
+</select>

@@ -1,0 +1,13 @@
+<!-- templates/price_result.html -->
+{% block content %}
+    <h1>Price Calculation Result</h1>
+    <p>Country: {{ country }}</p>
+    <p>Travel Mode: {{ travel_mode }}</p>
+    <p>Departure Date: {{ departure_date }}</p>
+    <p>Return Date: {{ return_date }}</p>
+    <p>Trip Duration: {{ trip_duration }} days</p>
+    {% comment %} Calculate total price based on trip duration and minimum year price {% endcomment %}
+    {% with total_price=trip_duration * (paslaugos.kaina) %}
+        <h2>Total Preliminari kaina nurodytam laikotarpiui: {{ total_price }} EUR</h2>
+    {% endwith %}
+{% endblock %}

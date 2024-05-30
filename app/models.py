@@ -1,5 +1,3 @@
-# app/models.py
-
 from django.db import models
 from PIL import Image
 from django.contrib.auth.models import User
@@ -33,17 +31,16 @@ class Paslaugos(models.Model):
     def __str__(self):
         return self.pavadinimas
 
-
 class Polisai(models.Model):
     klientai = models.ForeignKey(Klientai, on_delete=models.CASCADE, related_name='polisai')
-    brokeriai = models.ForeignKey(Brokeriai, on_delete=models.CASCADE, related_name='polisai')
+    brokeriai = models.ForeignKey(Brokeriai, on_delete=models.SET_NULL, null=True, blank=True, related_name='polisai')
     paslaugos = models.ForeignKey(Paslaugos, on_delete=models.CASCADE, related_name='polisai')
-    poliso_tipas = models.CharField(max_length=100)
+    poliso_tipas = models.CharField(max_length=100, blank=True)
     pradzios_data = models.DateField()
     pabaigos_data = models.DateField()
-    draudimo_suma = models.FloatField()
-    iskaita = models.FloatField()
-    apsauga = models.TextField()
+    draudimo_suma = models.FloatField(default=100000)
+    iskaita = models.FloatField(default=0)
+    apsauga = models.TextField(blank=True)
 
     def __str__(self):
         return f"Polisas {self.id} for {self.klientai}"
