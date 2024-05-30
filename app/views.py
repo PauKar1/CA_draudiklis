@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse, HttpResponseBadRequest
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib import messages
@@ -26,16 +26,75 @@ def price_calculator(request):
         'selected_country': selected_country,
     })
 
+def get_country_risk_level(country):
+    country_obj = Country.objects.filter(name=country).first()
+    return country_obj.risk_level if country_obj else None
+
+def get_country_surcharge(risk_level):
+    # Dummy function for example purposes
+    surcharge_mapping = {
+        'low': 1.1,
+        'medium': 1.5,
+        'high': 2.0,
+        'very high': 3.0
+    }
+    return surcharge_mapping.get(risk_level, 1.0)
+
+def get_base_price_per_day():
+    try:
+        paslauga = Paslaugos.objects.get(pavadinimas="Kelionių draudimas")
+        return paslauga.kaina
+    except Paslaugos.DoesNotExist:
+        return 10.0
+
+def calculate_total_price(base_price, duration, surcharge, travel_mode, draudimo_suma, iskaita, apsauga):
+    # Example calculation logic, adjust as needed
+    travel_mode_factor = {
+        'plane': 1.2,
+        'car': 1.0,
+        'motorcycle': 1.1,
+        'ship': 1.3,
+        'bike': 0.9,
+        'foot': 0.8
+    }
+    mode_factor = travel_mode_factor.get(travel_mode, 1.0)
+    apsauga_factor = {
+        'medicinines_islados': 0.1,
+        'nelaimingi_atsitikimai': 10.0,
+        'civiline_atsakomybe': 2.0
+    }
+    draudimo_suma_factor = {
+        '100,000' : 0.0,
+        '300,000' : 0.5,
+        '500,000' : 0.7,
+    }
+    iskaita_factor = {
+    '0' : 1.0,
+    '50' : 0.8,
+    '80' : 0.6,
+    '100' : 0.5,
+    '120' : 0.4,
+    }
+    apsauga_factor_value = apsauga_factor.get(apsauga, 1.0)
+    draudimo_suma_factor_value = draudimo_suma_factor.get(apsauga, 1.0)
+    iskaita_factor_value = iskaita_factor.get(apsauga, 1.0)
+    total_price = base_price * duration * surcharge * mode_factor * apsauga_factor_value + draudimo_suma_factor_value + iskaita_factor_value
+    return total_price
+
 def calculate_price(request):
+    countries = Country.objects.all()
     if request.method == 'POST':
         print(request.POST)  # Debugging line to check received POST data
         country = request.POST.get('country')
         travel_mode = request.POST.get('travel_mode')
         trip_duration = request.POST.get('trip_duration')
+        draudimo_suma = request.POST.get('draudimo_suma')
+        iskaita = request.POST.get('iskaita')
+        apsauga = request.POST.get('apsauga')
 
-        print(f"Country: {country}, Travel Mode: {travel_mode}, Trip Duration: {trip_duration}")  # Debugging line
+        print(f"Country: {country}, Travel Mode: {travel_mode}, Trip Duration: {trip_duration}, Draudimo Suma: {draudimo_suma}, Iskaita: {iskaita}, Apsauga: {apsauga}")  # Debugging line
 
-        if not all([country, travel_mode, trip_duration]):
+        if not all([country, travel_mode, trip_duration, draudimo_suma, iskaita, apsauga]):
             print("Missing required fields.")
             return HttpResponseBadRequest("Missing required fields.")
 
@@ -54,54 +113,20 @@ def calculate_price(request):
         print(f"Base Price Per Day: {base_price_per_day}")  # Debugging line
 
         # Calculate total price
-        total_price = calculate_total_price(base_price_per_day, int(trip_duration), country_surcharge, travel_mode)
+        total_price = calculate_total_price(
+            base_price_per_day,
+            int(trip_duration),
+            country_surcharge,
+            travel_mode,
+            int(draudimo_suma),
+            int(iskaita),
+            apsauga
+        )
         print(f"Total Price: {total_price}")  # Debugging line
 
-        countries = Country.objects.all()
         return render(request, 'price_calculator.html', {'total_price': total_price, 'countries': countries})
 
-    countries = Country.objects.all()
     return render(request, 'price_calculator.html', {'countries': countries})
-
-def get_country_risk_level(country):
-    try:
-        country_obj = Country.objects.get(name=country)
-        return country_obj.risk_level
-    except Country.DoesNotExist:
-        return None
-
-def get_country_surcharge(risk_level):
-    if risk_level == 'Very High':
-        return 1.50
-    elif risk_level == 'High':
-        return 1.00
-    elif risk_level == 'Medium':
-        return 0.50
-    elif risk_level == 'Low':
-        return 0.20
-    else:
-        return 10.0
-
-def get_base_price_per_day():
-    try:
-        paslauga = Paslaugos.objects.get(pavadinimas="Kelionių draudimas")
-        return paslauga.kaina
-    except Paslaugos.DoesNotExist:
-        return 10.0
-
-def calculate_total_price(base_price_per_day, trip_duration, country_surcharge, travel_mode):
-    TRAVEL_MODE_MULTIPLIERS = {
-        'plane': 1.5,
-        'car': 1.2,
-        'motorcycle': 1.3,
-        'ship': 1.4,
-        'bike': 2.1,
-        'foot': 2.0
-    }
-    travel_mode_multiplier = TRAVEL_MODE_MULTIPLIERS.get(travel_mode, 1.0)
-    base_price = base_price_per_day * trip_duration
-    total_price = base_price * travel_mode_multiplier + country_surcharge
-    return total_price
 
 
 
@@ -198,29 +223,73 @@ def profile_view(request):
 ####################### REGISTER CONTRACT
 from .forms import KlientaiForm, PolisaiForm
 
-@login_required
-def registruoti_sutarti(request):
+
+def register_contract(request):
+    klientai_form = KlientaiForm()
+    polisai_form = PolisaiForm()
 
     if request.method == 'POST':
-        klientai_form = KlientaiForm(request.POST)
-        polisai_form = PolisaiForm(request.POST)
-        if klientai_form.is_valid() and polisai_form.is_valid():
-            klientas = klientai_form.save()
-            polisas = polisai_form.save(commit=False)
-            polisas.klientai = klientas
-            polisas.save()
-            messages.success(request, "Sutartis sėkmingai užregistruota!")
-            return redirect('success_url')  # Replace with your success URL
-    else:
-        klientai_form = KlientaiForm()
-        polisai_form = PolisaiForm()
+        if 'register_client' in request.POST:
+            klientai_form = KlientaiForm(request.POST)
+            if klientai_form.is_valid():
+                klientai_form.save()
+                messages.success(request, 'Client registered successfully.')
+                return redirect('register_contract')
+            else:
+                messages.error(request, 'Error registering client.')
+                print(klientai_form.errors)  # Debugging: Print form errors to the console
+        elif 'register_policy' in request.POST:
+            polisai_form = PolisaiForm(request.POST)
+            if polisai_form.is_valid():
+                polisai_form.save()
+                messages.success(request, 'Policy registered successfully.')
+                return redirect('policy_success')  # Redirect to a success page or appropriate URL
+            else:
+                messages.error(request, 'Error registering policy.')
+                print(polisai_form.errors)  # Debugging: Print form errors to the console
+
+    klientai_list = Klientai.objects.all()  # List of all registered clients
 
     return render(request, 'register_contract.html', {
         'klientai_form': klientai_form,
         'polisai_form': polisai_form,
+        'klientai_list': klientai_list,
     })
 
+def register_client(request):
+    if request.method == 'POST':
+        form = KlientaiForm(request.POST)
+        if form.is_valid():
+            client = form.save()
+            # Store the client ID in the session
+            request.session['client_id'] = client.id
+            messages.success(request, 'Client registered successfully. Now proceed to register the policy.')
+            return redirect('register_policy')
+    else:
+        form = KlientaiForm()
+    return render(request, 'register_client.html', {'form': form})
 
+
+def register_policy(request):
+    client_id = request.session.get('client_id')
+    if not client_id:
+        messages.error(request, 'You need to register a client first.')
+        return redirect('register_client')
+
+    klientai = get_object_or_404(Klientai, id=client_id)
+
+    if request.method == 'POST':
+        form = PolisaiForm(request.POST)
+        if form.is_valid():
+            policy = form.save(commit=False)
+            policy.klientai = klientai
+            policy.save()
+            messages.success(request, 'Policy registered successfully.')
+            return redirect('policy_success')  # Redirect to a success page or appropriate URL
+    else:
+        form = PolisaiForm()
+
+    return render(request, 'register_policy.html', {'form': form, 'klientai': klientai})
 
 ################### MAP
 

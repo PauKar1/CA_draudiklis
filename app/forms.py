@@ -38,7 +38,7 @@ class ProfileUpdateForm(forms.ModelForm):
 class PolisaiForm(forms.ModelForm):
     class Meta:
         model = Polisai
-        fields = '__all__'
+        fields = ['klientai', 'brokeriai', 'paslaugos', 'pradzios_data', 'pabaigos_data', 'draudimo_suma', 'iskaita', 'apsauga']
 
     def clean(self):
         cleaned_data = super().clean()
@@ -52,6 +52,15 @@ class PolisaiForm(forms.ModelForm):
 class KlientaiForm(forms.ModelForm):
     class Meta:
         model = Klientai
-        fields = '__all__'
+        fields = ['vardas', 'pavarde', 'tel_numeris', 'gimimo_data', 'adresas', 'el_pastas']
+
+
+
+########## PRINCING
+
+class PriceCalculatorForm(forms.ModelForm):
+    class Meta:
+        model = Polisai
+        fields = ['draudimo_suma', 'iskaita', 'apsauga']
 
 

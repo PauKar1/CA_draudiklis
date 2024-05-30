@@ -1,37 +1,64 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Skaičiuoti Kainą</h1>
-    <form method="post" action="{% url 'calculate_price' %}">
-        {% csrf_token %}
-        <label for="country">Pasirinkite šalį:</label>
-        <select id="country" name="country" required>
-            {% for country in countries %}
-                <option value="{{ country.name }}" {% if country.name == selected_country %}selected{% endif %}>{{ country.name }}</option>
-            {% endfor %}
-        </select><br><br>
+<h1>Skaičiuoti Kainą</h1>
+<form method="post" action="{% url 'calculate_price' %}">
+    {% csrf_token %}
+    <label for="country">Pasirinkite šalį:</label>
+    <select id="country" name="country" required>
+        {% for country in countries %}
+            <option value="{{ country.name }}" {% if country.name == selected_country %}selected{% endif %}>{{ country.name }}</option>
+        {% endfor %}
+    </select><br><br>
+<p>Apačioje rasite žemėlapį su rekomendacijomis kur šiuo metu saugu keliauti, daugiau informacijos galite rasti: https://keliauk.urm.lt/ .</p>
+    <a href="{% url 'map_view' %}">* Patikrinkite šalies įspėjimo lygi pagal užimtumo tarnybos duomenis </a><br><br>
 
-        <a href="{% url 'map_view' %}">ieškokite kelionės tikslo žemėlapyje</a><br><br>
+    <label for="travel-mode">Keliavimo būdas:</label>
+    <select id="travel-mode" name="travel_mode">
+        <option value="plane">Lėktuvas</option>
+        <option value="car">Automobilis</option>
+        <option value="motorcycle">Motociklas</option>
+        <option value="ship">Laivas</option>
+        <option value="bike">Dviratis</option>
+        <option value="foot">Pėsčiomis</option>
+    </select><br><br>
 
-        <label for="travel-mode">Keliavimo būdas:</label>
-        <select id="travel-mode" name="travel_mode">
-            <option value="plane">Lėktuvas</option>
-            <option value="car">Automobilis</option>
-            <option value="motorcycle">Motociklas</option>
-            <option value="ship">Laivas</option>
-            <option value="bike">Dviratis</option>
-            <option value="foot">Pėsčiomis</option>
-        </select><br><br>
+    <label for="trip-duration">Kelionės dienų skaičius:</label>
+    <input type="number" id="trip-duration" name="trip_duration" required min="1"><br><br>
 
-        <label for="trip-duration">Keliausite dienų skaičius:</label>
-        <input type="number" id="trip-duration" name="trip_duration" required min="1"><br><br>
+    <input type="checkbox" id="medicinines_islaidos" name="apsauga" value="medicinines_islaidos" required>
+    <label for="medicinines_islados">Medicininės išlaidos</label><br>
+    <label for="draudimo_suma">Draudimo suma:</label>
+    <select id="draudimo_suma" name="draudimo_suma">
+        <option value="100000">100,000</option>
+        <option value="300000">300,000</option>
+        <option value="500000">500,000</option>
+    </select><br><br>
 
-        <button type="submit">Skaičiuoti</button>
-    </form>
-    {% if total_price %}
-    <div id="calculation-result">
-        <h2>Preliminari kaina: {{ total_price }} EUR</h2>
-        <a href="{% url 'registruoti_sutarti' %}" class="btn btn-primary">Registruoti sutartį</a>
-    </div>
-    {% endif %}
+     <label for="apsauga">Apsauga:</label><br>
+    <input type="checkbox" id="nelaimingi_atsitikimai" name="apsauga" value="nelaimingi_atsitikimai">
+    <label for="nelaimingi_atsitikimai">Nelaimingi atsitikimai
+<p>(Draudimo suma 3000 EUR per sutarties laikotarpį, papildoma įmoka prie sutarties 10 EUR)</p>
+    </label><br>
+    <input type="checkbox" id="civiline_atsakomybe" name="apsauga" value="civiline_atsakomybe">
+    <label for="civiline_atsakomybe">Civilinė atsakomybė
+<p>(Draudimo suma 1500 EUR per sutarties laikotarpį, papildoma įmoka prie sutarties 2 EUR)</p>
+    </label><br>
+    <label for="iskaita">Taikoma išskaita pasirinktoms paslaugoms:</label>
+    <select id="iskaita" name="iskaita">
+        <option value="0">0</option>
+        <option value="50">50</option>
+        <option value="80">80</option>
+        <option value="100">100</option>
+        <option value="120">120</option>
+    </select><br><br>
+
+    <button type="submit">Skaičiuoti</button>
+</form>
+{% if total_price %}
+<div id="calculation-result">
+    <h2>Preliminari kaina: {{ total_price }} EUR</h2>
+    <a href="{% url 'register_contract' %}" class="btn btn-primary">Registruoti sutartį</a>
+</div>
+{% endif %}
 {% endblock %}

@@ -17,6 +17,8 @@ urlpatterns = [
  path('reset/done/', auth_view.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
  path('profile/', views.profile_view, name='profile'),
  path('client_policies/', views.client_policies, name='client_policies'),
- path('registruoti-sutarti/', views.registruoti_sutarti, name='registruoti_sutarti'),
+ path('register_client/', views.register_client, name='register_client'),
+ path('register_policy/', views.register_policy, name='register_policy'),
+    path('register_contract/', views.register_contract, name='register_contract'),
  path('map/', views.map_view, name='map_view'),
 ]

@@ -32,15 +32,35 @@ class Paslaugos(models.Model):
         return self.pavadinimas
 
 class Polisai(models.Model):
+    DRAUDIMO_SUMA_CHOICES = [
+        (100000, '100,000'),
+        (300000, '300,000'),
+        (500000, '500,000'),
+    ]
+
+    ISKAITA_CHOICES = [
+        (0, '0'),
+        (50, '50'),
+        (80, '80'),
+        (100, '100'),
+        (120, '120'),
+    ]
+
+    APSAUGA_CHOICES = [
+        ('medicinines_islados', 'Medicininės išlaidos'),
+        ('nelaimingi_atsitikimai', 'Nelaimingi atsitikimai'),
+        ('civiline_atsakomybe', 'Civilinė atsakomybė'),
+    ]
+
     klientai = models.ForeignKey(Klientai, on_delete=models.CASCADE, related_name='polisai')
     brokeriai = models.ForeignKey(Brokeriai, on_delete=models.SET_NULL, null=True, blank=True, related_name='polisai')
     paslaugos = models.ForeignKey(Paslaugos, on_delete=models.CASCADE, related_name='polisai')
     poliso_tipas = models.CharField(max_length=100, blank=True)
     pradzios_data = models.DateField()
     pabaigos_data = models.DateField()
-    draudimo_suma = models.FloatField(default=100000)
-    iskaita = models.FloatField(default=0)
-    apsauga = models.TextField(blank=True)
+    draudimo_suma = models.IntegerField(choices=DRAUDIMO_SUMA_CHOICES, default=100000)
+    iskaita = models.IntegerField(choices=ISKAITA_CHOICES, default=0)
+    apsauga = models.CharField(max_length=50, choices=APSAUGA_CHOICES)
 
     def __str__(self):
         return f"Polisas {self.id} for {self.klientai}"
