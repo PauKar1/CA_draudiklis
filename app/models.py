@@ -62,6 +62,8 @@ class Profile(models.Model):
 class Country(models.Model):
     name = models.CharField(max_length=100)
     risk_level = models.CharField(max_length=20)
+    latitude = models.FloatField()
+    longitude = models.FloatField()
 
     def __str__(self):
         return self.name
