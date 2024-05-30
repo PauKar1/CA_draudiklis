@@ -1,15 +1,10 @@
 from django.http import HttpResponse
-from .AA_calculations import COUNTRY_RISK_LEVELS, COUNTRY_SURCHARGES
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect
 from django.http import JsonResponse, HttpResponseBadRequest
-from .models import Paslaugos, Klientai
-from datetime import datetime
-import json
-from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib import messages
 from .forms import ProfileUpdateForm
-from .models import Profile
+from .models import Profile, Country, Paslaugos, Klientai
 
 def susi(request):
  return HttpResponse("Labas, pasauli!")
@@ -21,10 +16,7 @@ def home(request):
 
 ################ PRICE CALC
 def get_all_countries():
-    all_countries = []
-    for risk_level_countries in COUNTRY_RISK_LEVELS.values():
-        all_countries.extend(risk_level_countries)
-    return all_countries
+    return list(Country.objects.values_list('name', flat=True))
 
 def price_calculator(request):
     return render(request, 'price_calculator.html')
@@ -65,17 +57,18 @@ def calculate_price(request):
     return render(request, 'price_calculator.html')
 
 def get_country_risk_level(country):
-    for risk_level, countries in COUNTRY_RISK_LEVELS.items():
-        if country in countries:
-            return risk_level
-    return None
+    try:
+        country_obj = Country.objects.get(name=country)
+        return country_obj.risk_level
+    except Country.DoesNotExist:
+        return None
 
 def get_country_surcharge(risk_level):
-    if risk_level == 'high':
+    if risk_level == 'red':
         return 0.80
-    elif risk_level == 'medium':
+    elif risk_level == 'orange':
         return 0.50
-    elif risk_level == 'low':
+    elif risk_level == 'yellow':
         return 0.20
     else:
         return 10.0

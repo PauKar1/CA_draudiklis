@@ -58,3 +58,10 @@ class Profile(models.Model):
         thumb_size = (200, 200)
         img.thumbnail(thumb_size)
         img.save(self.picture.path)
+
+class Country(models.Model):
+    name = models.CharField(max_length=100)
+    risk_level = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.name
