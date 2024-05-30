@@ -1,7 +1,30 @@
 <!DOCTYPE html>
 <html>
 <head>
-    
+    <meta charset="UTF-8">
+    <title>World Map</title>
+    <style>
+        .green { color: green; }
+        .yellow { color: yellow; }
+        .orange { color: orange; }
+        .red { color: red; }
+        button {
+            position: absolute;
+            top: 160px;
+            left: 0px;
+            right: 0px; /* Adjusted to move to the right side */
+            padding: 15px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 1000; /* Ensure the button is on top */
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     
         <script>
@@ -53,12 +76,25 @@
             
 </head>
 <body>
+ <h1>Užsienio reikalų ministerijos rekomendacijos:</h1>
+    <ul>
+        <li class="green"> Specifinių rekomendacijų nėra</li>
+        <li class="yellow"> Rekomenduojama nevykti į šalį</li>
+        <li class="orange"> Rekomenduojama imtis atsargumo priemonių</li>
+        <li class="red"> Rekomenduojama nedelsiant išvykti iš šalies</li>
+    </ul>
+
+   <button onclick="redirectToPriceCalculator()">Back to Price Calculator</button>
+
     
     
             <div class="folium-map" id="map_859d6847d04c5851addfaa708bafef3e" ></div>
         
 </body>
 <script>
+     function redirectToPriceCalculator() {
+            window.location.href = '/app/price-calculator/';
+        }
     
     
             var map_859d6847d04c5851addfaa708bafef3e = L.map(

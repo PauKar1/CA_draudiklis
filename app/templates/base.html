@@ -7,10 +7,33 @@
     <title>{% block title %}Draudiklis.lt{% endblock %}</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+    <style>
+        /* Additional styles for submenu */
+        .submenu {
+            display: none;
+            position: absolute;
+            background-color: white;
+            border: 1px solid #000;
+        }
+        .submenu a {
+            display: block;
+            padding: 10px;
+            text-decoration: none;
+            color: black;
+        }
+        .submenu a:hover {
+            background-color: #ddd;
+        }
+          .expandable:hover .submenu {
+            display: block;
+        }
+    </style>
 </head>
 <body>
     <div id="top-shelf">
-        <div class="left-top">Draudiklis.lt</div>
+        <div class="left-top">
+            <a href="{% url 'home' %}">Draudiklis.lt</a>
+                </div>
         <div class="right-top">
             {% if user.is_authenticated %}
                 Sveiki, {{ user.username }} | <a href="{% url 'logout' %}">Atsijungti</a>
@@ -24,7 +47,11 @@
             <ul class="selections">
                 <li class="expandable">
                     <img src="{% static 'icons/calculator.png' %}" class="selection-icon" alt="Calculator Icon">
-                    <a href="{% url 'price_calculator' %}">Skaičiuoti kainą</a>
+                    <a href="#" id="price-calc-link">Skaičiuoti kainą</a>
+                    <div class="submenu" id="price-calc-submenu">
+                        <a href="{% url 'price_calculator' %}">Kelionių draudimas</a>
+                        <a href="{% url 'home' %}">Option</a>
+                    </div>
                 </li>
                 <li>
                     <img src="{% static 'icons/products.png' %}" class="selection-icon" alt="Products Icon">
