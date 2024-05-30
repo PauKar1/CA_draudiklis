@@ -1,6 +1,8 @@
 # app/models.py
 
 from django.db import models
+from PIL import Image
+from django.contrib.auth.models import User
 
 class Klientai(models.Model):
     vardas = models.CharField(max_length=100)
@@ -31,6 +33,7 @@ class Paslaugos(models.Model):
     def __str__(self):
         return self.pavadinimas
 
+
 class Polisai(models.Model):
     klientai = models.ForeignKey(Klientai, on_delete=models.CASCADE, related_name='polisai')
     brokeriai = models.ForeignKey(Brokeriai, on_delete=models.CASCADE, related_name='polisai')
@@ -44,3 +47,17 @@ class Polisai(models.Model):
 
     def __str__(self):
         return f"Polisas {self.id} for {self.klientai}"
+
+class Profile(models.Model):
+    picture = models.ImageField(upload_to='profile_pics', default='default-user.png')
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.user.username} profilis'
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)  # numatytieji Model klasės veiksmai suvykdomi
+        img = Image.open(self.picture.path)
+        thumb_size = (200, 200)
+        img.thumbnail(thumb_size)
+        img.save(self.picture.path)

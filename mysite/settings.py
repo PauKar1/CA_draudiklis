@@ -105,12 +105,12 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = "UTC"
+LANGUAGE_CODE = 'lt'  # Set language to Lithuanian
+TIME_ZONE = 'Europe/Vilnius'  # Set the appropriate timezone
 
 USE_I18N = True
-
+USE_L10N = True
 USE_TZ = True
 
 
@@ -127,3 +127,12 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# medija folderis
+MEDIA_URL = 'media/'
+MEDIA_ROOT = Path(BASE_DIR,'app',  'media')
+
+
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'profilis'  # or another view you want to redirect to after login
+LOGOUT_REDIRECT_URL = 'home'
