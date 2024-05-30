@@ -15,11 +15,16 @@ def home(request):
 
 
 ################ PRICE CALC
-def get_all_countries():
-    return list(Country.objects.values_list('name', flat=True))
+
 
 def price_calculator(request):
-    return render(request, 'price_calculator.html')
+    countries = Country.objects.all()
+    selected_country = request.GET.get('country', '')
+
+    return render(request, 'price_calculator.html', {
+        'countries': countries,
+        'selected_country': selected_country,
+    })
 
 def calculate_price(request):
     if request.method == 'POST':
@@ -52,9 +57,11 @@ def calculate_price(request):
         total_price = calculate_total_price(base_price_per_day, int(trip_duration), country_surcharge, travel_mode)
         print(f"Total Price: {total_price}")  # Debugging line
 
-        return render(request, 'price_calculator.html', {'total_price': total_price})
+        countries = Country.objects.all()
+        return render(request, 'price_calculator.html', {'total_price': total_price, 'countries': countries})
 
-    return render(request, 'price_calculator.html')
+    countries = Country.objects.all()
+    return render(request, 'price_calculator.html', {'countries': countries})
 
 def get_country_risk_level(country):
     try:
@@ -64,11 +71,13 @@ def get_country_risk_level(country):
         return None
 
 def get_country_surcharge(risk_level):
-    if risk_level == 'red':
-        return 0.80
-    elif risk_level == 'orange':
+    if risk_level == 'Very High':
+        return 1.50
+    elif risk_level == 'High':
+        return 1.00
+    elif risk_level == 'Medium':
         return 0.50
-    elif risk_level == 'yellow':
+    elif risk_level == 'Low':
         return 0.20
     else:
         return 10.0
@@ -93,7 +102,6 @@ def calculate_total_price(base_price_per_day, trip_duration, country_surcharge, 
     base_price = base_price_per_day * trip_duration
     total_price = base_price * travel_mode_multiplier + country_surcharge
     return total_price
-
 
 
 
@@ -211,3 +219,10 @@ def registruoti_sutarti(request):
         'klientai_form': klientai_form,
         'polisai_form': polisai_form,
     })
+
+
+
+################### MAP
+
+def map_view(request):
+    return render(request, 'country_map.html')

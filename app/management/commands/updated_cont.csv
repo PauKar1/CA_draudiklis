@@ -1,246 +1,246 @@
-country,latitude,longitude,name,risk,Risk
-AD,42.546245,1.601554,Andorra,,Low
-AE,23.424076,54.0,United Arab Emirates,,Low
-AF,33.93911,68.0,Afghanistan,,Very High
-AG,17.060816,-62.0,Antigua and Barbuda,,Low
-AI,18.220554,-63.0,Anguilla,,Low
-AL,41.153332,20.0,Albania,,Medium
-AM,40.069099,45.0,Armenia,,Medium
-AN,12.226079,-69.0,Netherlands Antilles,,Low
-AO,-11.202692,18.0,Angola,,Very High
-AQ,-75.250973,0.0,Antarctica,,Low
-AR,-38.416097,-64.0,Argentina,,Medium
-AS,-14.270972,-170.0,American Samoa,,Low
-AT,47.516231,15.0,Austria,,Low
-AU,-25.274398,134.0,Australia,,Low
-AW,12.52111,-70.0,Aruba,,Low
-AZ,40.143105,48.0,Azerbaijan,,High
-BA,43.915886,18.0,Bosnia and Herzegovina,,Medium
-BB,13.193887,-60.0,Barbados,,Low
-BD,23.684994,90.0,Bangladesh,,High
-BE,50.503887,4.0,Belgium,,Low
-BF,12.238333,-2.0,Burkina Faso,,Very High
-BG,42.733883,25.0,Bulgaria,,Medium
-BH,25.930414,51.0,Bahrain,,Medium
-BI,-3.373056,30.0,Burundi,,Very High
-BJ,9.30769,2.0,Benin,,High
-BM,32.321384,-65.0,Bermuda,,Low
-BN,4.535277,115.0,Brunei,,Medium
-BO,-16.290154,-64.0,Bolivia,,Medium
-BR,-14.235004,-52.0,Brazil,,High
-BS,25.03428,-77.0,Bahamas,,Medium
-BT,27.514162,90.0,Bhutan,,Medium
-BV,-54.423199,3.0,Bouvet Island,,Low
-BW,-22.328474,25.0,Botswana,,Medium
-BY,53.709807,28.0,Belarus,,Very High
-BZ,17.189877,-88.0,Belize,,Medium
-CA,56.130366,-106.0,Canada,,Low
-CC,-12.164165,97.0,Cocos [Keeling] Islands,,Low
-CD,-4.038333,22.0,Congo [DRC],,Low
-CF,6.611111,21.0,Central African Republic,,Very High
-CG,-0.228021,16.0,Congo [Republic],,Low
-CH,46.818188,8.0,Switzerland,,Low
-CI,7.539989,-6.0,Côte d'Ivoire,,Low
-CK,-21.236736,-160.0,Cook Islands,,Low
-CL,-35.675147,-72.0,Chile,,Medium
-CM,7.369722,12.0,Cameroon,,High
-CN,35.86166,104.0,China,,High
-CO,4.570868,-74.0,Colombia,,High
-CR,9.748917,-84.0,Costa Rica,,Medium
-CU,21.521757,-78.0,Cuba,,Medium
-CV,16.002082,-24.0,Cape Verde,,Low
-CX,-10.447525,106.0,Christmas Island,,Low
-CY,35.126413,33.0,Cyprus,,Low
-CZ,49.817492,15.0,Czech Republic,,Low
-DE,51.165691,10.0,Germany,,Low
-DJ,11.825138,43.0,Djibouti,,High
-DK,56.26392,10.0,Denmark,,Low
-DM,15.414999,-61.0,Dominica,,Low
-DO,18.735693,-70.0,Dominican Republic,,Medium
-DZ,28.033886,2.0,Algeria,,High
-EC,-1.831239,-78.0,Ecuador,,Medium
-EE,58.595272,25.0,Estonia,,Low
-EG,26.820553,31.0,Egypt,,High
-EH,24.215527,-13.0,Western Sahara,,Low
-ER,15.179384,40.0,Eritrea,,Very High
-ES,40.463667,-4.0,Spain,,Low
-ET,9.145,40.0,Ethiopia,,Very High
-FI,61.92411,26.0,Finland,,Low
-FJ,-16.578193,179.0,Fiji,,Medium
-FK,-51.796253,-60.0,Falkland Islands [Islas Malvinas],,Low
-FM,7.425554,151.0,Micronesia,,Medium
-FO,61.892635,-7.0,Faroe Islands,,Low
-FR,46.227638,2.0,France,,Low
-GA,-0.803689,12.0,Gabon,,Medium
-GB,55.378051,-3.0,United Kingdom,,Low
-GD,12.262776,-61.604171,Grenada,,Low
-GE,42.315407,43.0,Georgia,,Medium
-GF,3.933889,-53.0,French Guiana,,Low
-GG,49.465691,-3.0,Guernsey,,Low
-GH,7.946527,-1.0,Ghana,,Medium
-GI,36.137741,-5.0,Gibraltar,,Low
-GL,71.706936,-43.0,Greenland,,Low
-GM,13.443182,-15.0,Gambia,,Medium
-GN,9.945587,-10.0,Guinea,,High
-GP,16.995971,-62.0,Guadeloupe,,Low
-GQ,1.650801,10.0,Equatorial Guinea,,High
-GR,39.074208,22.0,Greece,,Low
-GS,-54.429579,-37.0,South Georgia and the South Sandwich Islands,,Low
-GT,15.783471,-90.0,Guatemala,,High
-GU,13.444304,145.0,Guam,,Low
-GW,11.803749,-15.0,Guinea-Bissau,,High
-GY,4.860416,-59.0,Guyana,,Medium
-GZ,31.354676,34.0,Gaza Strip,,Low
-HK,22.396428,114.0,Hong Kong,,Low
-HM,-53.08181,74.0,Heard Island and McDonald Islands,,Low
-HN,15.199999,-86.0,Honduras,,High
-HR,45.1,15.0,Croatia,,Low
-HT,18.971187,-72.0,Haiti,,Very High
-HU,47.162494,20.0,Hungary,,Low
-ID,-0.789275,114.0,Indonesia,,Medium
-IE,53.41291,-8.0,Ireland,,Low
-IL,31.046051,35.0,Israel,,High
-IM,54.236107,-5.0,Isle of Man,,Low
-IN,20.593684,79.0,India,,High
-IO,-6.343194,72.0,British Indian Ocean Territory,,Low
-IQ,33.223191,44.0,Iraq,,Very High
-IR,32.427908,54.0,Iran,,Very High
-IS,64.963051,-19.0,Iceland,,Low
-IT,41.87194,13.0,Italy,,Low
-JE,49.214439,-2.0,Jersey,,Low
-JM,18.109581,-77.0,Jamaica,,Medium
-JO,30.585164,36.0,Jordan,,Medium
-JP,36.204824,138.0,Japan,,Low
-KE,-0.023559,38.0,Kenya,,High
-KG,41.20438,75.0,Kyrgyzstan,,High
-KH,12.565679,105.0,Cambodia,,Medium
-KI,-3.370417,-169.0,Kiribati,,Medium
-KM,-11.875001,44.0,Comoros,,High
-KN,17.357822,-63.0,Saint Kitts and Nevis,,Low
-KP,40.339852,128.0,North Korea,,Low
-KR,35.907757,128.0,South Korea,,Low
-KW,29.31166,47.0,Kuwait,,Medium
-KY,19.513469,-81.0,Cayman Islands,,Low
-KZ,48.019573,67.0,Kazakhstan,,Medium
-LA,19.85627,102.0,Laos,,Medium
-LB,33.854721,36.0,Lebanon,,Very High
-LC,13.909444,-61.0,Saint Lucia,,Low
-LI,47.166,10.0,Liechtenstein,,Low
-LK,7.873054,81.0,Sri Lanka,,Medium
-LR,6.428055,-9.0,Liberia,,High
-LS,-29.609988,28.0,Lesotho,,Medium
-LT,55.169438,24.0,Lithuania,,Low
-LU,49.815273,6.0,Luxembourg,,Low
-LV,56.879635,25.0,Latvia,,Low
-LY,26.3351,17.0,Libya,,Very High
-MA,31.791702,-7.0,Morocco,,Medium
-MC,43.750298,7.0,Monaco,,Low
-MD,47.411631,28.0,Moldova,,Medium
-ME,42.708678,19.0,Montenegro,,Medium
-MG,-18.766947,47.0,Madagascar,,Medium
-MH,7.131474,171.0,Marshall Islands,,Medium
-MK,41.608635,22.0,Macedonia [FYROM],,Low
-ML,17.570692,-4.0,Mali,,Very High
-MM,21.913965,96.0,Myanmar [Burma],,Low
-MN,46.862496,104.0,Mongolia,,Medium
-MO,22.198745,114.0,Macau,,Low
-MP,17.33083,145.0,Northern Mariana Islands,,Low
-MQ,14.641528,-61.0,Martinique,,Low
-MR,21.00789,-11.0,Mauritania,,High
-MS,16.742498,-62.0,Montserrat,,Low
-MT,35.937496,14.0,Malta,,Low
-MU,-20.348404,58.0,Mauritius,,Low
-MV,3.202778,73.0,Maldives,,Medium
-MW,-13.254308,34.0,Malawi,,Medium
-MX,23.634501,-103.0,Mexico,,High
-MY,4.210484,102.0,Malaysia,,Medium
-MZ,-18.665695,36.0,Mozambique,,High
-,-22.95764,18.0,Namibia,,Medium
-NC,-20.904305,166.0,New Caledonia,,Low
-NE,17.607789,8.0,Niger,,High
-NF,-29.040835,168.0,Norfolk Island,,Low
-NG,9.081999,9.0,Nigeria,,Very High
-NI,12.865416,-85.0,Nicaragua,,High
-NL,52.132633,5.0,Netherlands,,Low
-NO,60.472024,8.0,Norway,,Low
-NP,28.394857,84.0,Nepal,,Medium
-NR,-0.522778,167.0,Nauru,,Medium
-NU,-19.054445,-170.0,Niue,,Low
-NZ,-40.900557,175.0,New Zealand,,Low
-OM,21.512583,56.0,Oman,,Medium
-PA,8.537981,-81.0,Panama,,Medium
-PE,-9.189967,-75.0,Peru,,High
-PF,-17.679742,-149.0,French Polynesia,,Low
-PG,-6.314993,144.0,Papua New Guinea,,High
-PH,12.879721,122.0,Philippines,,High
-PK,30.375321,69.0,Pakistan,,Very High
-PL,51.919438,19.0,Poland,,Low
-PM,46.941936,-56.0,Saint Pierre and Miquelon,,Low
-PN,-24.703615,-127.0,Pitcairn Islands,,Low
-PR,18.220833,-67.0,Puerto Rico,,Low
-PS,31.952162,35.0,Palestinian Territories,,Low
-PT,39.399872,-8.0,Portugal,,Low
-PW,7.51498,135.0,Palau,,Medium
-PY,-23.442503,-58.0,Paraguay,,Medium
-QA,25.354826,51.0,Qatar,,Medium
-RE,-21.115141,56.0,Réunion,,Low
-RO,45.943161,25.0,Romania,,Medium
-RS,44.016521,21.0,Serbia,,Medium
-RU,61.52401,105.0,Russia,,Very High
-RW,-1.940278,30.0,Rwanda,,Medium
-SA,23.885942,45.0,Saudi Arabia,,Medium
-SB,-9.64571,160.0,Solomon Islands,,Medium
-SC,-4.679574,55.0,Seychelles,,Low
-SD,12.862807,30.0,Sudan,,Very High
-SE,60.128161,19.0,Sweden,,Low
-SG,1.352083,104.0,Singapore,,Low
-SH,-24.143474,-10.0,Saint Helena,,Low
-SI,46.151241,14.995463,Slovenia,,Low
-SJ,77.553604,23.670272,Svalbard and Jan Mayen,,Low
-SK,48.669026,19.699024,Slovakia,,Low
-SL,8.460555,-11.779889,Sierra Leone,,High
-SM,43.94236,12.457777,San Marino,,Low
-SN,14.497401,-14.452362,Senegal,,Medium
-SO,5.152149,46.199616,Somalia,,Very High
-SR,3.919305,-56.027783,Suriname,,Medium
-ST,0.18636,6.613081,São Tomé and Príncipe,,Low
-SV,13.794185,-88.89653,El Salvador,,High
-SY,34.802075,38.996815,Syria,,Very High
-SZ,-26.522503,31.465866,Swaziland,,Low
-TC,21.694025,-71.797928,Turks and Caicos Islands,,Low
-TD,15.454166,18.732207,Chad,,Very High
-TF,-49.280366,69.348557,French Southern Territories,,Low
-TG,8.619543,0.824782,Togo,,High
-TH,15.870032,100.992541,Thailand,,Medium
-TJ,38.861034,71.276093,Tajikistan,,High
-TK,-8.967363,-171.855881,Tokelau,,Low
-TL,-8.874217,125.727539,Timor-Leste,,Low
-TM,38.969719,59.556278,Turkmenistan,,High
-TN,33.886917,9.537499,Tunisia,,High
-TO,-21.178986,-175.198242,Tonga,,Medium
-TR,38.963745,35.243322,Turkey,,Medium
-TT,10.691803,-61.222503,Trinidad and Tobago,,Medium
-TV,-7.109535,177.64933,Tuvalu,,Medium
-TW,23.69781,120.960515,Taiwan,,Low
-TZ,-6.369028,34.888822,Tanzania,,Medium
-UA,48.379433,31.16558,Ukraine,,Very High
-UG,1.373333,32.290275,Uganda,,Medium
-UM,,,U.S. Minor Outlying Islands,,Low
-US,37.09024,-95.712891,United States,,Low
-UY,-32.522779,-55.765835,Uruguay,,Low
-UZ,41.377491,64.585262,Uzbekistan,,Medium
-VA,41.902916,12.453389,Vatican City,,Low
-VC,12.984305,-61.287228,Saint Vincent and the Grenadines,,Low
-VE,6.42375,-66.58973,Venezuela,,Very High
-VG,18.420695,-64.639968,British Virgin Islands,,Low
-VI,18.335765,-64.896335,U.S. Virgin Islands,,Low
-VN,14.058324,108.277199,Vietnam,,Medium
-VU,-15.376706,166.959158,Vanuatu,,Medium
-WF,-13.768752,-177.156097,Wallis and Futuna,,Low
-WS,-13.759029,-172.104629,Samoa,,Medium
-XK,42.602636,20.902977,Kosovo,,Medium
-YE,15.552727,48.516388,Yemen,,Very High
-YT,-12.8275,45.166244,Mayotte,,Low
-ZA,-30.559482,22.937506,South Africa,,High
-ZM,-13.133897,27.849332,Zambia,,Medium
-ZW,-19.015438,29.154857,Zimbabwe,,High
+country,latitude,longitude,name,Risk
+AD,42.546245,1.601554,Andorra,Low
+AE,23.424076,54,United Arab Emirates,Low
+AF,33.93911,68,Afghanistan,Very High
+AG,17.060816,-62,Antigua and Barbuda,Low
+AI,18.220554,-63,Anguilla,Low
+AL,41.153332,20,Albania,Medium
+AM,40.069099,45,Armenia,Medium
+AN,12.226079,-69,Netherlands Antilles,Low
+AO,-11.202692,18,Angola,Very High
+AQ,-75.250973,0,Antarctica,Low
+AR,-38.416097,-64,Argentina,Medium
+AS,-14.270972,-170,American Samoa,Low
+AT,47.516231,15,Austria,Low
+AU,-25.274398,134,Australia,Low
+AW,12.52111,-70,Aruba,Low
+AZ,40.143105,48,Azerbaijan,High
+BA,43.915886,18,Bosnia and Herzegovina,Medium
+BB,13.193887,-60,Barbados,Low
+BD,23.684994,90,Bangladesh,High
+BE,50.503887,4,Belgium,Low
+BF,12.238333,-2,Burkina Faso,Very High
+BG,42.733883,25,Bulgaria,Medium
+BH,25.930414,51,Bahrain,Medium
+BI,-3.373056,30,Burundi,Very High
+BJ,9.30769,2,Benin,High
+BM,32.321384,-65,Bermuda,Low
+BN,4.535277,115,Brunei,Medium
+BO,-16.290154,-64,Bolivia,Medium
+BR,-14.235004,-52,Brazil,High
+BS,25.03428,-77,Bahamas,Medium
+BT,27.514162,90,Bhutan,Medium
+BV,-54.423199,3,Bouvet Island,Low
+BW,-22.328474,25,Botswana,Medium
+BY,53.709807,28,Belarus,Very High
+BZ,17.189877,-88,Belize,Medium
+CA,56.130366,-106,Canada,Low
+CC,-12.164165,97,Cocos [Keeling] Islands,Low
+CD,-4.038333,22,Congo [DRC],Low
+CF,6.611111,21,Central African Republic,Very High
+CG,-0.228021,16,Congo [Republic],Low
+CH,46.818188,8,Switzerland,Low
+CI,7.539989,-6,Côte d'Ivoire,Low
+CK,-21.236736,-160,Cook Islands,Low
+CL,-35.675147,-72,Chile,Medium
+CM,7.369722,12,Cameroon,High
+CN,35.86166,104,China,High
+CO,4.570868,-74,Colombia,High
+CR,9.748917,-84,Costa Rica,Medium
+CU,21.521757,-78,Cuba,Medium
+CV,16.002082,-24,Cape Verde,Low
+CX,-10.447525,106,Christmas Island,Low
+CY,35.126413,33,Cyprus,Low
+CZ,49.817492,15,Czech Republic,Low
+DE,51.165691,10,Germany,Low
+DJ,11.825138,43,Djibouti,High
+DK,56.26392,10,Denmark,Low
+DM,15.414999,-61,Dominica,Low
+DO,18.735693,-70,Dominican Republic,Medium
+DZ,28.033886,2,Algeria,High
+EC,-1.831239,-78,Ecuador,Medium
+EE,58.595272,25,Estonia,Low
+EG,26.820553,31,Egypt,High
+EH,24.215527,-13,Western Sahara,Low
+ER,15.179384,40,Eritrea,Very High
+ES,40.463667,-4,Spain,Low
+ET,9.145,40,Ethiopia,Very High
+FI,61.92411,26,Finland,Low
+FJ,-16.578193,179,Fiji,Medium
+FK,-51.796253,-60,Falkland Islands [Islas Malvinas],Low
+FM,7.425554,151,Micronesia,Medium
+FO,61.892635,-7,Faroe Islands,Low
+FR,46.227638,2,France,Low
+GA,-0.803689,12,Gabon,Medium
+GB,55.378051,-3,United Kingdom,Low
+GD,12.262776,-61.604171,Grenada,Low
+GE,42.315407,43,Georgia,Medium
+GF,3.933889,-53,French Guiana,Low
+GG,49.465691,-3,Guernsey,Low
+GH,7.946527,-1,Ghana,Medium
+GI,36.137741,-5,Gibraltar,Low
+GL,71.706936,-43,Greenland,Low
+GM,13.443182,-15,Gambia,Medium
+GN,9.945587,-10,Guinea,High
+GP,16.995971,-62,Guadeloupe,Low
+GQ,1.650801,10,Equatorial Guinea,High
+GR,39.074208,22,Greece,Low
+GS,-54.429579,-37,South Georgia and the South Sandwich Islands,Low
+GT,15.783471,-90,Guatemala,High
+GU,13.444304,145,Guam,Low
+GW,11.803749,-15,Guinea-Bissau,High
+GY,4.860416,-59,Guyana,Medium
+GZ,31.354676,34,Gaza Strip,Low
+HK,22.396428,114,Hong Kong,Low
+HM,-53.08181,74,Heard Island and McDonald Islands,Low
+HN,15.199999,-86,Honduras,High
+HR,45.1,15,Croatia,Low
+HT,18.971187,-72,Haiti,Very High
+HU,47.162494,20,Hungary,Low
+ID,-0.789275,114,Indonesia,Medium
+IE,53.41291,-8,Ireland,Low
+IL,31.046051,35,Israel,High
+IM,54.236107,-5,Isle of Man,Low
+IN,20.593684,79,India,High
+IO,-6.343194,72,British Indian Ocean Territory,Low
+IQ,33.223191,44,Iraq,Very High
+IR,32.427908,54,Iran,Very High
+IS,64.963051,-19,Iceland,Low
+IT,41.87194,13,Italy,Low
+JE,49.214439,-2,Jersey,Low
+JM,18.109581,-77,Jamaica,Medium
+JO,30.585164,36,Jordan,Medium
+JP,36.204824,138,Japan,Low
+KE,-0.023559,38,Kenya,High
+KG,41.20438,75,Kyrgyzstan,High
+KH,12.565679,105,Cambodia,Medium
+KI,-3.370417,-169,Kiribati,Medium
+KM,-11.875001,44,Comoros,High
+KN,17.357822,-63,Saint Kitts and Nevis,Low
+KP,40.339852,128,North Korea,Low
+KR,35.907757,128,South Korea,Low
+KW,29.31166,47,Kuwait,Medium
+KY,19.513469,-81,Cayman Islands,Low
+KZ,48.019573,67,Kazakhstan,Medium
+LA,19.85627,102,Laos,Medium
+LB,33.854721,36,Lebanon,Very High
+LC,13.909444,-61,Saint Lucia,Low
+LI,47.166,10,Liechtenstein,Low
+LK,7.873054,81,Sri Lanka,Medium
+LR,6.428055,-9,Liberia,High
+LS,-29.609988,28,Lesotho,Medium
+LT,55.169438,24,Lithuania,Low
+LU,49.815273,6,Luxembourg,Low
+LV,56.879635,25,Latvia,Low
+LY,26.3351,17,Libya,Very High
+MA,31.791702,-7,Morocco,Medium
+MC,43.750298,7,Monaco,Low
+MD,47.411631,28,Moldova,Medium
+ME,42.708678,19,Montenegro,Medium
+MG,-18.766947,47,Madagascar,Medium
+MH,7.131474,171,Marshall Islands,Medium
+MK,41.608635,22,Macedonia [FYROM],Low
+ML,17.570692,-4,Mali,Very High
+MM,21.913965,96,Myanmar [Burma],Low
+MN,46.862496,104,Mongolia,Medium
+MO,22.198745,114,Macau,Low
+MP,17.33083,145,Northern Mariana Islands,Low
+MQ,14.641528,-61,Martinique,Low
+MR,21.00789,-11,Mauritania,High
+MS,16.742498,-62,Montserrat,Low
+MT,35.937496,14,Malta,Low
+MU,-20.348404,58,Mauritius,Low
+MV,3.202778,73,Maldives,Medium
+MW,-13.254308,34,Malawi,Medium
+MX,23.634501,-103,Mexico,High
+MY,4.210484,102,Malaysia,Medium
+MZ,-18.665695,36,Mozambique,High
+,-22.95764,18,Namibia,Medium
+NC,-20.904305,166,New Caledonia,Low
+NE,17.607789,8,Niger,High
+NF,-29.040835,168,Norfolk Island,Low
+NG,9.081999,9,Nigeria,Very High
+NI,12.865416,-85,Nicaragua,High
+NL,52.132633,5,Netherlands,Low
+NO,60.472024,8,Norway,Low
+NP,28.394857,84,Nepal,Medium
+NR,-0.522778,167,Nauru,Medium
+NU,-19.054445,-170,Niue,Low
+NZ,-40.900557,175,New Zealand,Low
+OM,21.512583,56,Oman,Medium
+PA,8.537981,-81,Panama,Medium
+PE,-9.189967,-75,Peru,High
+PF,-17.679742,-149,French Polynesia,Low
+PG,-6.314993,144,Papua New Guinea,High
+PH,12.879721,122,Philippines,High
+PK,30.375321,69,Pakistan,Very High
+PL,51.919438,19,Poland,Low
+PM,46.941936,-56,Saint Pierre and Miquelon,Low
+PN,-24.703615,-127,Pitcairn Islands,Low
+PR,18.220833,-67,Puerto Rico,Low
+PS,31.952162,35,Palestinian Territories,Low
+PT,39.399872,-8,Portugal,Low
+PW,7.51498,135,Palau,Medium
+PY,-23.442503,-58,Paraguay,Medium
+QA,25.354826,51,Qatar,Medium
+RE,-21.115141,56,Réunion,Low
+RO,45.943161,25,Romania,Medium
+RS,44.016521,21,Serbia,Medium
+RU,61.52401,105,Russia,Very High
+RW,-1.940278,30,Rwanda,Medium
+SA,23.885942,45,Saudi Arabia,Medium
+SB,-9.64571,160,Solomon Islands,Medium
+SC,-4.679574,55,Seychelles,Low
+SD,12.862807,30,Sudan,Very High
+SE,60.128161,19,Sweden,Low
+SG,1.352083,104,Singapore,Low
+SH,-24.143474,-10,Saint Helena,Low
+SI,46.151241,14.995463,Slovenia,Low
+SJ,77.553604,23.670272,Svalbard and Jan Mayen,Low
+SK,48.669026,19.699024,Slovakia,Low
+SL,8.460555,-11.779889,Sierra Leone,High
+SM,43.94236,12.457777,San Marino,Low
+SN,14.497401,-14.452362,Senegal,Medium
+SO,5.152149,46.199616,Somalia,Very High
+SR,3.919305,-56.027783,Suriname,Medium
+ST,0.18636,6.613081,São Tomé and Príncipe,Low
+SV,13.794185,-88.89653,El Salvador,High
+SY,34.802075,38.996815,Syria,Very High
+SZ,-26.522503,31.465866,Swaziland,Low
+TC,21.694025,-71.797928,Turks and Caicos Islands,Low
+TD,15.454166,18.732207,Chad,Very High
+TF,-49.280366,69.348557,French Southern Territories,Low
+TG,8.619543,0.824782,Togo,High
+TH,15.870032,100.992541,Thailand,Medium
+TJ,38.861034,71.276093,Tajikistan,High
+TK,-8.967363,-171.855881,Tokelau,Low
+TL,-8.874217,125.727539,Timor-Leste,Low
+TM,38.969719,59.556278,Turkmenistan,High
+TN,33.886917,9.537499,Tunisia,High
+TO,-21.178986,-175.198242,Tonga,Medium
+TR,38.963745,35.243322,Turkey,Medium
+TT,10.691803,-61.222503,Trinidad and Tobago,Medium
+TV,-7.109535,177.64933,Tuvalu,Medium
+TW,23.69781,120.960515,Taiwan,Low
+TZ,-6.369028,34.888822,Tanzania,Medium
+UA,48.379433,31.16558,Ukraine,Very High
+UG,1.373333,32.290275,Uganda,Medium
+UM,0,0,U.S. Minor Outlying Islands,Low
+US,37.09024,-95.712891,United States,Low
+UY,-32.522779,-55.765835,Uruguay,Low
+UZ,41.377491,64.585262,Uzbekistan,Medium
+VA,41.902916,12.453389,Vatican City,Low
+VC,12.984305,-61.287228,Saint Vincent and the Grenadines,Low
+VE,6.42375,-66.58973,Venezuela,Very High
+VG,18.420695,-64.639968,British Virgin Islands,Low
+VI,18.335765,-64.896335,U.S. Virgin Islands,Low
+VN,14.058324,108.277199,Vietnam,Medium
+VU,-15.376706,166.959158,Vanuatu,Medium
+WF,-13.768752,-177.156097,Wallis and Futuna,Low
+WS,-13.759029,-172.104629,Samoa,Medium
+XK,42.602636,20.902977,Kosovo,Medium
+YE,15.552727,48.516388,Yemen,Very High
+YT,-12.8275,45.166244,Mayotte,Low
+ZA,-30.559482,22.937506,South Africa,High
+ZM,-13.133897,27.849332,Zambia,Medium
+ZW,-19.015438,29.154857,Zimbabwe,High

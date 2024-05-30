@@ -4,23 +4,14 @@
     <h1>Skaičiuoti Kainą</h1>
     <form method="post" action="{% url 'calculate_price' %}">
         {% csrf_token %}
+        <label for="country">Pasirinkite šalį:</label>
+        <select id="country" name="country" required>
+            {% for country in countries %}
+                <option value="{{ country.name }}" {% if country.name == selected_country %}selected{% endif %}>{{ country.name }}</option>
+            {% endfor %}
+        </select><br><br>
 
-        <h2>Kur keliausite:</h2>
-        <div id="map-container">
-            <img src="{% static 'images/continents_map.png' %}" usemap="#continents-map" alt="Map of continents">
-            <map name="continents-map">
-                <area shape="rect" coords="34,44,270,350" href="?country=Europe" alt="Europe">
-                <area shape="rect" coords="290,172,333,250" href="?country=Africa" alt="Africa">
-                <area shape="rect" coords="337,300,444,450" href="?country=Asia" alt="Asia">
-                <area shape="rect" coords="120,350,240,550" href="?country=North America" alt="North America">
-                <area shape="rect" coords="100,560,150,700" href="?country=South America" alt="South America">
-                <area shape="rect" coords="500,650,650,800" href="?country=Australia" alt="Australia">
-                <area shape="rect" coords="700,800,750,850" href="?country=Antarctica" alt="Antarctica">
-            </map>
-        </div>
-
-        <label for="country">Arba įveskite šalies pavadinimą:</label>
-        <input type="text" id="country" name="country" required><br><br>
+        <a href="{% url 'map_view' %}">ieškokite kelionės tikslo žemėlapyje</a><br><br>
 
         <label for="travel-mode">Keliavimo būdas:</label>
         <select id="travel-mode" name="travel_mode">

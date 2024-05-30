@@ -18,4 +18,5 @@ urlpatterns = [
  path('profile/', views.profile_view, name='profile'),
  path('client_policies/', views.client_policies, name='client_policies'),
  path('registruoti-sutarti/', views.registruoti_sutarti, name='registruoti_sutarti'),
+ path('map/', views.map_view, name='map_view'),
 ]
