@@ -17,19 +17,18 @@ class Command(BaseCommand):
 
         # Define a function to get the risk level color
         def get_color(risk_level):
-            colors = {
+            return {
                 'Low': 'green',
                 'Medium': 'yellow',
                 'High': 'orange',
                 'Very High': 'red',
                 'Extreme': 'black'
-            }
-            return colors.get(risk_level, 'gray')
+            }.get(risk_level, 'gray')
 
         # Prepare a dictionary with country risk levels
         country_risk_levels = {country.name: country.risk_level for country in Country.objects.all()}
 
-        # Define the style function
+        # Style function
         def style_function(feature):
             return {
                 'fillColor': get_color(country_risk_levels.get(feature['properties']['NAME'], 'Unknown')),
@@ -38,42 +37,25 @@ class Command(BaseCommand):
                 'fillOpacity': 0.7,
             }
 
-        # Define the highlight function
+        # Highlight function for borders
         def highlight_function(feature):
             return {
-                'fillColor': '#000000',
-                'color': '#000000',
-                'fillOpacity': 0.1,
-                'weight': 0.1,
+                'fillColor': get_color(country_risk_levels.get(feature['properties']['NAME'], 'Unknown')),
+                'color': 'blue',
+                'weight': 3,
+                'fillOpacity': 0.7,
             }
 
         # Add GeoJSON to the map with interactivity
-        folium.GeoJson(
+        geojson = folium.GeoJson(
             geojson_data,
             style_function=style_function,
             highlight_function=highlight_function,
             tooltip=folium.GeoJsonTooltip(fields=['NAME'], aliases=['Country:']),
-            name='geojson'
         ).add_to(m)
 
-        # Add custom JavaScript to handle clicks
-        click_js = """
-        function(e) {
-            var country = e.target.feature.properties.NAME;
-            window.location.href = "/calculate/?country=" + country;
-        }
-        """
-
-        # Attach the click event to the map
-        folium.LayerControl().add_to(m)
-        folium.Element("""
-        <script>
-            var geojson = geojson;  // Reference the geojson layer by its name
-            geojson.eachLayer(function (layer) {
-                layer.on('click', """ + click_js + """);
-            });
-        </script>
-        """).add_to(m.get_root())
+        # Add click event to highlight borders
+        geojson.add_child(folium.features.GeoJsonPopup(fields=['NAME']))
 
         # Save the map to an HTML file
         output_file = 'country_map.html'
