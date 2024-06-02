@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Pasirinkite paskyros tipą - Draudiklis.lt
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Pasirinkite paskyros tipą</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="account_type" id="client" value="client" required>
+            <label class="form-check-label" for="client">
+                Klientas
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="account_type" id="broker" value="broker" required>
+            <label class="form-check-label" for="broker">
+                Brokeris
+            </label>
+        </div>
+        <button type="submit" class="btn btn-primary mt-3">Pirmyn</button>
+    </form>
+</div>
+{% endblock %}

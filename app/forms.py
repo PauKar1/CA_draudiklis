@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django import forms
-from .models import Profile, Polisai, Klientai
+from .models import Profile, Polisai, Klientai, Brokeriai
 from .widgets import DeductibleSelect
 from django.db import IntegrityError
 from django.contrib.auth.forms import UserCreationForm
@@ -8,19 +8,6 @@ from django.utils.translation import gettext_lazy as _
 
 
 class KlientasRegistrationForm(forms.ModelForm):
-    username = forms.CharField(
-        label='Username',
-        widget=forms.TextInput(attrs={'class': 'form-control'})
-    )
-    password1 = forms.CharField(
-        label='Password',
-        widget=forms.PasswordInput(attrs={'class': 'form-control'})
-    )
-    password2 = forms.CharField(
-        label='Confirm Password',
-        widget=forms.PasswordInput(attrs={'class': 'form-control'})
-    )
-
     class Meta:
         model = Klientai
         fields = ['vardas', 'pavarde', 'tel_numeris', 'gimimo_data', 'adresas', 'el_pastas']
@@ -32,13 +19,6 @@ class KlientasRegistrationForm(forms.ModelForm):
             'adresas': forms.TextInput(attrs={'class': 'form-control'}),
             'el_pastas': forms.EmailInput(attrs={'class': 'form-control'}),
         }
-
-    def clean_password2(self):
-        password1 = self.cleaned_data.get('password1')
-        password2 = self.cleaned_data.get('password2')
-        if password1 and password2 and password1 != password2:
-            raise forms.ValidationError("Passwords don't match")
-        return password2
 
     def save(self, commit=True):
         klientas = super().save(commit=False)
@@ -52,18 +32,18 @@ class KlientasRegistrationForm(forms.ModelForm):
         if User.objects.filter(email=email).exists():
             raise forms.ValidationError("User with this email already exists.")
 
-        # Sukurkime naują vartotoją
-        user = User(username=username, email=email)
-        user.set_password(self.cleaned_data['password1'])
-        if commit:
-            try:
-                user.save()
-                klientas.user = user
-                klientas.save()
-            except IntegrityError:
-                user.delete()
-                raise forms.ValidationError("Failed to save client. User already associated with another client.")
-        return klientas
+        # # Sukurkime naują vartotoją
+        # user = User(username=username, email=email)
+        # user.set_password(self.cleaned_data['password1'])
+        # if commit:
+        #     try:
+        #         user.save()
+        #         klientas.user = user
+        #         klientas.save()
+        #     except IntegrityError:
+        #         user.delete()
+        #         raise forms.ValidationError("Failed to save client. User already associated with another client.")
+        # return klientas
 
 
 
@@ -97,6 +77,7 @@ class KlientasUpdateForm(forms.ModelForm):
             'adresas': forms.TextInput(attrs={'class': 'form-control'}),
             'el_pastas': forms.EmailInput(attrs={'class': 'form-control'}),
         }
+
 
 class PolisaiForm(forms.ModelForm):
     pradzios_data = forms.DateField(widget=forms.TextInput(attrs={'type': 'date'}))
@@ -147,3 +128,16 @@ class NaujaKlientoRegistracijosForma(UserCreationForm):
         if commit:
             user.save()
         return user
+
+
+class BrokeriaiUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Brokeriai
+        fields = ['vardas', 'pavarde', 'imones_pavadinimas', 'el_pastas', 'tel_numeris']
+        widgets = {
+            'vardas': forms.TextInput(attrs={'class': 'form-control'}),
+            'pavarde': forms.TextInput(attrs={'class': 'form-control'}),
+            'imones_pavadinimas': forms.TextInput(attrs={'class': 'form-control'}),
+            'el_pastas': forms.EmailInput(attrs={'class': 'form-control'}),
+            'tel_numeris': forms.TextInput(attrs={'class': 'form-control'}),
+        }

@@ -1,16 +1,15 @@
-<!-- templates/update_klientas.html -->
 {% extends 'base.html' %}
 
-{% block title %}Update Profile - Draudiklis.lt{% endblock %}
+{% block title %}Atnaujinti brokerio profilį - Draudiklis.lt{% endblock %}
 
 {% block content %}
 <div class="container mt-5">
-    <h2>Kliento duomnenys</h2>
+    <h2>Brokerio duomenys</h2>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit" class="btn btn-primary mt-3">Pirmyn!</button>
-<!--     <button type="reset" value="Reset">Nepildyti duomenų!</button>-->
+        <button type="button" class="btn btn-secondary mt-3" onclick="window.location.href='{% url 'profile' %}'">Nepildyti duomenų!</button>
     </form>
 </div>
 {% endblock %}

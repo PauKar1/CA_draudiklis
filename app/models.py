@@ -21,8 +21,8 @@ class Brokeriai(models.Model):
     vardas = models.CharField(max_length=100)
     pavarde = models.CharField(max_length=100)
     imones_pavadinimas = models.CharField(max_length=100)
-    el_pastas = models.EmailField()
-    tel_numeris = models.IntegerField()
+    el_pastas = models.EmailField(null=True)
+    tel_numeris = models.IntegerField(null=True)
 
     def __str__(self):
         return f"{self.vardas} {self.pavarde} - {self.imones_pavadinimas}"

@@ -25,4 +25,7 @@ urlpatterns = [
     path('update_klientas/', views.update_klientas, name='update_klientas'),
 
     path('naujas_user_register/', views.naujas_user_register, name='naujas_user_register'),
+    path('choose_account_type/', views.choose_account_type, name='choose_account_type'),
+    path('update_klientas/', views.update_klientas, name='update_klientas'),
+    path('update_brokeris/', views.update_brokeris, name='update_brokeris'),
 ]

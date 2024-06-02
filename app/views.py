@@ -3,12 +3,12 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse, HttpResponseBadRequest
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib import messages
-from .forms import KlientasRegistrationForm, ProfileUpdateForm, KlientasUpdateForm, KlientaiForm, PolisaiForm, NaujaKlientoRegistracijosForma
-from .models import Profile, Country, Paslaugos, Klientai
+from .forms import (KlientasRegistrationForm, ProfileUpdateForm, KlientasUpdateForm, KlientaiForm,
+                    PolisaiForm, NaujaKlientoRegistracijosForma, BrokeriaiUpdateForm)
+from .models import Profile, Country, Paslaugos, Klientai, Brokeriai
 from django.contrib.auth.models import User, Group
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from .models import Klientai, Profile
 from django.db import IntegrityError, transaction
 
 
@@ -329,6 +329,7 @@ def register_contract(request):
 ###### for pricing part
 
 def register_client(request):
+
     if request.method == 'POST':
         form = KlientaiForm(request.POST)
         if form.is_valid():
@@ -371,9 +372,41 @@ def naujas_user_register(request):
             user = form.save()
             login(request, user)
             messages.success(request, f"Paskyra sukurta: {user.username}!")
-            return redirect('update_klientas')  # Nukreipkite į tinkamą puslapį po registracijos
+            return redirect('choose_account_type')  # Nukreipkite į tinkamą puslapį po registracijos
         else:
             messages.error(request, "Nepavyko sukurti paskyros. Patikrinkite formą.")
     else:
         form = NaujaKlientoRegistracijosForma()
-    return render(request, 'update_klientas.html', {'form': form})
+    return render(request, 'naujas_user_register.html', {'form': form})
+
+
+@login_required
+def choose_account_type(request):
+    if request.method == 'POST':
+        account_type = request.POST.get('account_type')
+        if account_type == 'client':
+            return redirect('update_klientas')
+        elif account_type == 'broker':
+            return redirect('update_brokeris')
+    return render(request, 'choose_account_type.html')
+
+
+@login_required
+def update_brokeris(request):
+    try:
+        brokeris = request.user.brokeriai
+    except Brokeriai.DoesNotExist:
+        brokeris = Brokeriai(user=request.user)
+
+    if request.method == 'POST':
+        form = BrokeriaiUpdateForm(request.POST, instance=brokeris)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Brokerio profilis sėkmingai atnaujintas!')
+            return redirect('profile')
+        else:
+            messages.error(request, 'Please correct the error below.')
+    else:
+        form = BrokeriaiUpdateForm(instance=brokeris)
+
+    return render(request, 'update_brokeris.html', {'form': form})
