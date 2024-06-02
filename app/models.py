@@ -1,17 +1,21 @@
 from django.db import models
 from PIL import Image
 from django.contrib.auth.models import User
+from datetime import date
+
 
 class Klientai(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     vardas = models.CharField(max_length=100)
     pavarde = models.CharField(max_length=100)
-    tel_numeris = models.IntegerField()
-    gimimo_data = models.DateField()
+    tel_numeris = models.CharField(max_length=15)
+    gimimo_data = models.DateField(null=True)
     adresas = models.TextField()
     el_pastas = models.EmailField()
 
     def __str__(self):
         return f"{self.vardas} {self.pavarde}"
+
 
 class Brokeriai(models.Model):
     vardas = models.CharField(max_length=100)
@@ -23,6 +27,7 @@ class Brokeriai(models.Model):
     def __str__(self):
         return f"{self.vardas} {self.pavarde} - {self.imones_pavadinimas}"
 
+
 class Paslaugos(models.Model):
     pavadinimas = models.CharField(max_length=100)
     aprasymas = models.TextField()
@@ -30,6 +35,7 @@ class Paslaugos(models.Model):
 
     def __str__(self):
         return self.pavadinimas
+
 
 class Polisai(models.Model):
     DRAUDIMO_SUMA_CHOICES = [
@@ -63,7 +69,15 @@ class Polisai(models.Model):
     apsauga = models.CharField(max_length=50, choices=APSAUGA_CHOICES)
 
     def __str__(self):
-        return f"Polisas {self.id} for {self.klientai}"
+        return f"Polisas {self.pk} for {self.klientai}"
+
+    @property
+    def trip_duration(self) -> int:
+        """Calculate the trip duration in days."""
+        if isinstance(self.pradzios_data, date) and isinstance(self.pabaigos_data, date):
+            return (self.pabaigos_data - self.pradzios_data).days
+        return 0
+
 
 class Profile(models.Model):
     picture = models.ImageField(upload_to='profile_pics', default='default-user.png')
@@ -78,6 +92,7 @@ class Profile(models.Model):
         thumb_size = (200, 200)
         img.thumbnail(thumb_size)
         img.save(self.picture.path)
+
 
 class Country(models.Model):
     name = models.CharField(max_length=100)

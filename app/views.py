@@ -3,11 +3,17 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse, HttpResponseBadRequest
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib import messages
-from .forms import ProfileUpdateForm
+from .forms import KlientasRegistrationForm, ProfileUpdateForm, KlientasUpdateForm, KlientaiForm, PolisaiForm, NaujaKlientoRegistracijosForma
 from .models import Profile, Country, Paslaugos, Klientai
+from django.contrib.auth.models import User, Group
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from .models import Klientai, Profile
+from django.db import IntegrityError, transaction
+
 
 def susi(request):
- return HttpResponse("Labas, pasauli!")
+    return HttpResponse("Labas, pasauli!")
 
 
 def home(request):
@@ -26,19 +32,22 @@ def price_calculator(request):
         'selected_country': selected_country,
     })
 
+
 def get_country_risk_level(country):
     country_obj = Country.objects.filter(name=country).first()
     return country_obj.risk_level if country_obj else None
 
+
 def get_country_surcharge(risk_level):
     # Dummy function for example purposes
     surcharge_mapping = {
-        'low': 1.1,
-        'medium': 1.5,
-        'high': 2.0,
+        'low': 0.4,
+        'medium': 0.6,
+        'high': 1.5,
         'very high': 3.0
     }
     return surcharge_mapping.get(risk_level, 1.0)
+
 
 def get_base_price_per_day():
     try:
@@ -47,39 +56,42 @@ def get_base_price_per_day():
     except Paslaugos.DoesNotExist:
         return 10.0
 
+
 def calculate_total_price(base_price, duration, surcharge, travel_mode, draudimo_suma, iskaita, apsauga):
     # Example calculation logic, adjust as needed
     travel_mode_factor = {
-        'plane': 1.2,
-        'car': 1.0,
-        'motorcycle': 1.1,
-        'ship': 1.3,
-        'bike': 0.9,
-        'foot': 0.8
+        'plane': 0.5,
+        'car': 0.8,
+        'motorcycle': 1.0,
+        'ship': 0.6,
+        'bike': 1.5,
+        'foot': 1.7
     }
     mode_factor = travel_mode_factor.get(travel_mode, 1.0)
     apsauga_factor = {
-        'medicinines_islados': 0.1,
-        'nelaimingi_atsitikimai': 10.0,
+        'medicinines_islados': 0.2,
+        'nelaimingi_atsitikimai': 4.0,
         'civiline_atsakomybe': 2.0
     }
     draudimo_suma_factor = {
-        '100,000' : 0.0,
-        '300,000' : 0.5,
-        '500,000' : 0.7,
+        '100,000': 0.0,
+        '300,000': 0.5,
+        '500,000': 0.7,
     }
     iskaita_factor = {
-    '0' : 1.0,
-    '50' : 0.8,
-    '80' : 0.6,
-    '100' : 0.5,
-    '120' : 0.4,
+        '0': 1.0,
+        '50': 0.8,
+        '80': 0.6,
+        '100': 0.5,
+        '120': 0.4,
     }
     apsauga_factor_value = apsauga_factor.get(apsauga, 1.0)
     draudimo_suma_factor_value = draudimo_suma_factor.get(apsauga, 1.0)
     iskaita_factor_value = iskaita_factor.get(apsauga, 1.0)
-    total_price = base_price * duration * surcharge * mode_factor * apsauga_factor_value + draudimo_suma_factor_value + iskaita_factor_value
+    total_price = ((base_price + apsauga_factor_value) * (
+                surcharge * mode_factor * apsauga_factor_value * draudimo_suma_factor_value * iskaita_factor_value) * duration)
     return total_price
+
 
 def calculate_price(request):
     countries = Country.objects.all()
@@ -92,7 +104,8 @@ def calculate_price(request):
         iskaita = request.POST.get('iskaita')
         apsauga = request.POST.get('apsauga')
 
-        print(f"Country: {country}, Travel Mode: {travel_mode}, Trip Duration: {trip_duration}, Draudimo Suma: {draudimo_suma}, Iskaita: {iskaita}, Apsauga: {apsauga}")  # Debugging line
+        print(
+            f"Country: {country}, Travel Mode: {travel_mode}, Trip Duration: {trip_duration}, Draudimo Suma: {draudimo_suma}, Iskaita: {iskaita}, Apsauga: {apsauga}")  # Debugging line
 
         if not all([country, travel_mode, trip_duration, draudimo_suma, iskaita, apsauga]):
             print("Missing required fields.")
@@ -128,22 +141,96 @@ def calculate_price(request):
 
     return render(request, 'price_calculator.html', {'countries': countries})
 
+################### MAP
 
-
-
-
+def map_view(request):
+    return render(request, 'country_map.html')
 
 ############### REGISTRATION
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
-from .forms import CustomLoginForm
+
+
+def registracija(request):
+    if request.method == 'POST':
+        form = KlientasRegistrationForm(request.POST)
+        if form.is_valid():
+            try:
+                with transaction.atomic():
+                    klientas = form.save(commit=False)
+                    password = form.cleaned_data['password1']
+                    username = form.cleaned_data['username']
+                    email = form.cleaned_data['el_pastas']
+
+                    # Ensure the username is unique
+                    if User.objects.filter(username=username).exists():
+                        unique_suffix = 1
+                        while User.objects.filter(username=f"{username}{unique_suffix}").exists():
+                            unique_suffix += 1
+                        username = f"{username}{unique_suffix}"
+
+                    # Check if a user with this email already exists
+                    user, created = User.objects.get_or_create(email=email, defaults={'username': username})
+                    if not created:
+                        if Klientai.objects.filter(user=user).exists():
+                            messages.error(request, "Nepavyko sukurti paskyros. Vartotojas jau susietas su kitu klientu.")
+                            return render(request, 'registracija.html', {'form': form})
+                        else:
+                            # Update the username if it was modified to ensure uniqueness
+                            user.username = username
+                            user.set_password(password)
+                            user.save()
+                    else:
+                        user.set_password(password)
+                        user.save()
+
+                    # Assign user to 'Klientai' group
+                    group, group_created = Group.objects.get_or_create(name='Klientai')
+                    user.groups.add(group)
+
+                    # Attach user to klientas and save
+                    klientas.user = user
+                    klientas.save()
+
+                    # Create or get profile
+                    try:
+                        profile = user.profile
+                    except Profile.DoesNotExist:
+                        profile = Profile(user=user)
+                    profile.save()
+
+                    # Authenticate and login the user
+                    authenticated_user = authenticate(username=username, password=password)
+                    if authenticated_user is not None:
+                        login(request, authenticated_user)
+                        messages.success(request, f"Paskyra sukurta: {username}!")
+                        return redirect('registracija_success')
+            except IntegrityError as e:
+                messages.error(request, "Nepavyko sukurti paskyros dėl vidinės klaidos.")
+                print(f"IntegrityError: {e}")  # Debugging output
+            except Exception as e:
+                messages.error(request, "Nepavyko sukurti paskyros dėl vidinės klaidos.")
+                print(f"Exception: {e}")  # Debugging output
+        else:
+            messages.error(request, "Nepavyko sukurti paskyros. Patikrinkite formą.")
+            print(form.errors)  # Debugging output to check form errors
+    else:
+        form = KlientasRegistrationForm()
+    return render(request, 'registracija.html', {'form': form})
+
+@login_required
+def registracija_success(request):
+    return render(request, 'registracija_success.html', {'user': request.user})
+
+def logout_view(request):
+    logout(request)
+    messages.info(request, "Jūs sėkmingai atsijungėte.")
+    return redirect('home')
 
 def kliento_paskyra(request):
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
-            username = form.cleaned_data.get('Vartotojo vardas')
-            password = form.cleaned_data.get('Slaptažodis')
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
@@ -156,46 +243,6 @@ def kliento_paskyra(request):
     else:
         form = AuthenticationForm()
     return render(request, 'kliento_paskyra.html', {'form': form})
-
-def registracija(request):
-    if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            login(request, user)  # auto log userį suvedant
-            username = form.cleaned_data.get('Vartotojo vardas')
-            messages.success(request, f"Paskyra sukurta: {username}!")
-            return redirect('home')
-        else:
-            messages.error(request, "Nepavyko sukurti paskyros. Patikrinkite formą.")
-    else:
-        form = UserCreationForm()
-    return render(request, 'registracija.html', {'form': form})
-
-def logout_view(request):
-    logout(request)
-    messages.info(request, "Jūs sėkmingai atsijungėte.")
-    return redirect('home')
-
-def kliento_paskyra(request):
-    if request.method == 'POST':
-        form = CustomLoginForm(request.POST)
-        if form.is_valid():
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
-            user = authenticate(request, username=username, password=password)
-            if user is not None:
-                login(request, user)
-                return redirect('home')  # Redirect to home or any other page after successful login
-            else:
-                form.add_error(None, "Neteisingas vartotojo vardas arba slaptažodis")
-    else:
-        form = CustomLoginForm()
-    return render(request, 'registration/login.html', {'form': form})
-
-def logout_view(request):
-    logout(request)
-    return render(request, 'registration/logged_out.html')
 
 @login_required
 def client_policies(request):
@@ -218,11 +265,25 @@ def profile_view(request):
         form = ProfileUpdateForm(instance=profile)
     return render(request, 'profile.html', {'form': form, 'profile': profile})
 
+@login_required
+def update_klientas(request):
+    try:
+        klientas = request.user.klientai
+    except Klientai.DoesNotExist:
+        klientas = Klientai(user=request.user)
 
+    if request.method == 'POST':
+        form = KlientasUpdateForm(request.POST, instance=klientas)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Your profile has been updated!')
+            return redirect('profile')
+        else:
+            messages.error(request, 'Please correct the error below.')
+    else:
+        form = KlientasUpdateForm(instance=klientas)
 
-####################### REGISTER CONTRACT
-from .forms import KlientaiForm, PolisaiForm
-
+    return render(request, 'update_klientas.html', {'form': form})
 
 def register_contract(request):
     klientai_form = KlientaiForm()
@@ -269,7 +330,6 @@ def register_client(request):
         form = KlientaiForm()
     return render(request, 'register_client.html', {'form': form})
 
-
 def register_policy(request):
     client_id = request.session.get('client_id')
     if not client_id:
@@ -291,7 +351,19 @@ def register_policy(request):
 
     return render(request, 'register_policy.html', {'form': form, 'klientai': klientai})
 
-################### MAP
 
-def map_view(request):
-    return render(request, 'country_map.html')
+####### TEST
+
+def naujas_user_register(request):
+    if request.method == 'POST':
+        form = NaujaKlientoRegistracijosForma(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            messages.success(request, f"Paskyra sukurta: {user.username}!")
+            return redirect('update_klientas')  # Nukreipkite į tinkamą puslapį po registracijos
+        else:
+            messages.error(request, "Nepavyko sukurti paskyros. Patikrinkite formą.")
+    else:
+        form = NaujaKlientoRegistracijosForma()
+    return render(request, 'update_klientas.html', {'form': form})

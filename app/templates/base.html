@@ -13,7 +13,7 @@
             display: none;
             position: absolute;
             background-color: white;
-            border: 1px solid #000;
+            border: 0px solid #000;
         }
         .submenu a {
             display: block;
@@ -38,7 +38,7 @@
             {% if user.is_authenticated %}
                 Sveiki, {{ user.username }} | <a href="{% url 'logout' %}">Atsijungti</a>
             {% else %}
-                <a href="{% url 'kliento_paskyra' %}">Kliento paskyra</a>
+                <a href="{% url 'profile' %}">Kliento paskyra</a>
             {% endif %}
         </div>
     </div>
@@ -50,7 +50,7 @@
                     <a href="#" id="price-calc-link">Skaičiuoti kainą</a>
                     <div class="submenu" id="price-calc-submenu">
                         <a href="{% url 'price_calculator' %}">Kelionių draudimas</a>
-                        <a href="{% url 'home' %}">Option</a>
+<!--                        <a href="{% url 'home' %}">Option</a>-->
                     </div>
                 </li>
                 <li>
