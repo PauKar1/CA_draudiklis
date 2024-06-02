@@ -4,6 +4,7 @@ from .models import Profile, Polisai, Klientai
 from .widgets import DeductibleSelect
 from django.db import IntegrityError
 from django.contrib.auth.forms import UserCreationForm
+from django.utils.translation import gettext_lazy as _
 
 
 class KlientasRegistrationForm(forms.ModelForm):
@@ -123,6 +124,23 @@ class NaujaKlientoRegistracijosForma(UserCreationForm):
     class Meta:
         model = User
         fields = ['username', 'password1', 'password2']
+        labels = {
+            'username': _("Vartotojo vardas"),
+            'password1': _("Slaptažodis"),
+            'password2': _("Slaptažodžio patvirtinimas"),
+        }
+        help_texts = {
+            'username': _("Privalomas. 150 arba mažiau simbolių. Raidės, skaičiai bei @/./+/-/_ simboliai."),
+            'password1': _(
+                "<ul>"
+                "<li>Jūsų slaptažodį turi sudaryti bent 8 simboliai.</li>"
+                "<li>Jūsų slaptažodis neturi būti per daug panašus į kitą jūsų asmeninę informaciją.</li>"
+                "<li>Jūsų slaptažodis negali būti dažnai naudojamas slaptažodis.</li>"
+                "<li>Jūsų slaptažodis negali būti vien skaičiai.</li>"
+                "</ul>"
+            ),
+            'password2': _("Patikrinimui įveskite tokį patį slaptažodį, kaip anksčiau."),
+        }
 
     def save(self, commit=True):
         user = super().save(commit=False)

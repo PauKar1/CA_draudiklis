@@ -258,8 +258,13 @@ def profile_view(request):
     profile, created = Profile.objects.get_or_create(user=request.user)
     if request.method == 'POST':
         form = ProfileUpdateForm(request.POST, request.FILES, instance=profile)
+        username = request.POST.get('username')
         if form.is_valid():
+            if username:
+                request.user.username = username
+                request.user.save()
             form.save()
+            messages.success(request, 'Profilis sėkmingai atnaujintas!')
             return redirect('profile')
     else:
         form = ProfileUpdateForm(instance=profile)
@@ -285,6 +290,9 @@ def update_klientas(request):
 
     return render(request, 'update_klientas.html', {'form': form})
 
+
+###### work in progress
+@login_required()
 def register_contract(request):
     klientai_form = KlientaiForm()
     polisai_form = PolisaiForm()
@@ -295,7 +303,7 @@ def register_contract(request):
             if klientai_form.is_valid():
                 klientai_form.save()
                 messages.success(request, 'Client registered successfully.')
-                return redirect('register_contract')
+                return redirect('naujas_user_register')
             else:
                 messages.error(request, 'Error registering client.')
                 print(klientai_form.errors)  # Debugging: Print form errors to the console
@@ -317,12 +325,14 @@ def register_contract(request):
         'klientai_list': klientai_list,
     })
 
+#############
+###### for pricing part
+
 def register_client(request):
     if request.method == 'POST':
         form = KlientaiForm(request.POST)
         if form.is_valid():
             client = form.save()
-            # Store the client ID in the session
             request.session['client_id'] = client.id
             messages.success(request, 'Client registered successfully. Now proceed to register the policy.')
             return redirect('register_policy')
@@ -351,7 +361,7 @@ def register_policy(request):
 
     return render(request, 'register_policy.html', {'form': form, 'klientai': klientai})
 
-
+###### for pricing part END
 ####### TEST
 
 def naujas_user_register(request):

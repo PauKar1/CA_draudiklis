@@ -1,0 +1,14 @@
+<!-- templates/registracija_success.html -->
+{% extends 'base.html' %}
+
+{% block title %}Registration Successful - Draudiklis.lt{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Registration Successful</h2>
+    <div class="alert alert-success" role="alert">
+        Your account has been successfully created. Welcome to Draudiklis.lt, {{ user.username }}!
+    </div>
+    <a href="{% url 'profile' %}" class="btn btn-primary">Go to Home</a>
+</div>
+{% endblock %}
