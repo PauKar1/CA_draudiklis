@@ -5,7 +5,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib import messages
 from .forms import (KlientasRegistrationForm, ProfileUpdateForm, KlientasUpdateForm, KlientaiForm,
                     PolisaiForm, NaujaKlientoRegistracijosForma, BrokeriaiUpdateForm)
-from .models import Profile, Country, Paslaugos, Klientai, Brokeriai
+from .models import Profile, Country, Paslaugos, Klientai, Brokeriai, Polisai
 from django.contrib.auth.models import User, Group
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -190,7 +190,7 @@ def registracija(request):
                     klientas.user = user
                     klientas.save()
 
-                    # Create or get profile
+
                     try:
                         profile = user.profile
                     except Profile.DoesNotExist:
@@ -253,22 +253,7 @@ def client_policies(request):
         policies = []
     return render(request, 'client_policies.html', {'policies': policies})
 
-@login_required
-def profile_view(request):
-    profile, created = Profile.objects.get_or_create(user=request.user)
-    if request.method == 'POST':
-        form = ProfileUpdateForm(request.POST, request.FILES, instance=profile)
-        username = request.POST.get('username')
-        if form.is_valid():
-            if username:
-                request.user.username = username
-                request.user.save()
-            form.save()
-            messages.success(request, 'Profilis sėkmingai atnaujintas!')
-            return redirect('profile')
-    else:
-        form = ProfileUpdateForm(instance=profile)
-    return render(request, 'profile.html', {'form': form, 'profile': profile})
+
 
 @login_required
 def update_klientas(request):
@@ -395,3 +380,48 @@ def update_brokeris(request):
         form = BrokeriaiUpdateForm(instance=brokeris)
 
     return render(request, 'update_brokeris.html', {'form': form})
+
+
+
+##### profilis
+@login_required
+def profile_view(request):
+    profile, created = Profile.objects.get_or_create(user=request.user)
+    if request.method == 'POST':
+        form = ProfileUpdateForm(request.POST, request.FILES, instance=profile)
+        username = request.POST.get('username')
+        if form.is_valid():
+            if username:
+                request.user.username = username
+                request.user.save()
+            form.save()
+            messages.success(request, 'Profilis sėkmingai atnaujintas!')
+            return redirect('profile')
+    else:
+        form = ProfileUpdateForm(instance=profile)
+    return render(request, 'profile_edit.html', {'form': form, 'profile': profile})
+
+@login_required
+def profile(request):
+    username = request.user.username
+    try:
+        klientai = Klientai.objects.get(user__username=username)
+        contracts = Polisai.objects.filter(klientai=klientai)
+    except Klientai.DoesNotExist:
+        klientai = None
+        contracts = []
+
+    # Debugging output
+    print("Username:", username)
+    print("Klientai:", klientai)
+    for contract in contracts:
+        print("Contract ID:", contract.id, "Klientai ID:", contract.klientai_id)
+
+    return render(request, 'profile.html', {'profile': klientai, 'contracts': contracts})
+
+
+
+
+
+
+

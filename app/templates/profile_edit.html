@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Edit Profile - Draudiklis.lt
+{% endblock %}
+
+{% block content %}
+    <h1>{{ profile.user.username }} Profilis</h1>
+    <img src="{{ profile.picture.url }}" alt="Profile Picture" style="width: 150px; height: 150px; border-radius: 100%; margin-right: 20px;">
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="username">Vartotojo vardas:</label>
+        <input type="text" name="username" value="{{ profile.user.username }}" style="font-size: 24px; width: 30%; padding: 5px; border-radius: 8px; border: 1px solid #ccc; margin-bottom: 10px;">
+        {{ form.as_p }}
+        <div style="display: none;">
+            {{ form.picture }}
+        </div>
+        <button type="submit">Išsaugoti pakeitimus</button>
+        <button type="button" onclick="document.getElementById('file-input').click();">Pakeisti nuotrauka</button>
+        <input type="file" id="file-input" name="picture" style="display: none;" onchange="this.form.submit();">
+
+        <a href="{% url 'profile' %}">
+            <button type="button">Atgal į profilį</button>
+        </a>
+    </form>
+{% endblock %}

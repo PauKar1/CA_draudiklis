@@ -5,23 +5,50 @@
 {% endblock %}
 
 {% block content %}
-    <h1>{{ profile.user.username }} Profilis</h1>
+<div style="margin: 20px auto; width: 80%; max-width: 800px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h1>{{ profile.user.username }} Profilis</h1>
+        <a href="{% url 'profile_view' %}" style="font-size: 16px; text-decoration: none; color: #007bff;">Redaguoti profilį</a>
+    </div>
 
-    <img src="{{ profile.picture.url }}" alt="Profile Picture" style="width: 200px; height: 200px;">
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <label for="username">Vartotojo vardas:</label>
-        <input type="text" name="username" value="{{ profile.user.username }}" style="font-size: 24px; width: 30%; padding: 5px; border-radius: 8px; border: 1px solid #ccc; margin-bottom: 10px;">
-        {{ form.as_p }}
-        <div style="display: none;">
-            {{ form.picture }}
-        </div>
-        <button type="submit">Išsaugoti pakeitimus</button>
-        <button type="button" onclick="document.getElementById('file-input').click();">Pakeisti nuotrauka</button>
-        <input type="file" id="file-input" name="picture" style="display: none;" onchange="this.form.submit();">
+    <div style="display: flex; align-items: center; margin-bottom: 20px;">
+        <img src="{{ profile.picture.url }}" alt="Profile Picture" style="width: 150px; height: 150px; border-radius: 50%; margin-right: 20px;">
+    </div>
 
-        <a href="{% url 'update_klientas' %}">
-            <button type="button">Papildyti kliento duomenis</button>
-        </a>
-    </form>
+    <div> <!-- Debugging section -->
+        <p>Profile Picture URL: {{ profile.picture.url }}</p>
+    </div>
+
+    <h2>Jūsų sudarytos sutartys</h2>
+    <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+        <thead>
+            <tr style="background-color: #f8f9fa;">
+                <th style="padding: 10px; border: 1px solid #dee2e6;">Brokeris</th>
+                <th style="padding: 10px; border: 1px solid #dee2e6;">Paslaugos</th>
+                <th style="padding: 10px; border: 1px solid #dee2e6;">Pradžios data</th>
+                <th style="padding: 10px; border: 1px solid #dee2e6;">Pabaigos data</th>
+                <th style="padding: 10px; border: 1px solid #dee2e6;">Draudimo suma</th>
+                <th style="padding: 10px; border: 1px solid #dee2e6;">Įskaita</th>
+                <th style="padding: 10px; border: 1px solid #dee2e6;">Apsauga</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for contract in contracts %}
+            <tr>
+                <td style="padding: 10px; border: 1px solid #dee2e6;">{{ contract.brokeriai }}</td>
+                <td style="padding: 10px; border: 1px solid #dee2e6;">{{ contract.paslaugos }}</td>
+                <td style="padding: 10px; border: 1px solid #dee2e6;">{{ contract.pradzios_data }}</td>
+                <td style="padding: 10px; border: 1px solid #dee2e6;">{{ contract.pabaigos_data }}</td>
+                <td style="padding: 10px; border: 1px solid #dee2e6;">{{ contract.draudimo_suma }}</td>
+                <td style="padding: 10px; border: 1px solid #dee2e6;">{{ contract.iskaita }}</td>
+                <td style="padding: 10px; border: 1px solid #dee2e6;">{{ contract.apsauga }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="7" style="padding: 10px; border: 1px solid #dee2e6; text-align: center;">No contracts found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% endblock %}
