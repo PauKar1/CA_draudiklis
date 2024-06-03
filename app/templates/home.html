@@ -1,9 +1,38 @@
-<!-- templates/home.html -->
 {% extends 'base.html' %}
 
 {% block title %}Home - Draudiklis.lt{% endblock %}
 
 {% block content %}
-    <h1>Sveiki atvykę į svetainę!!!!</h1>
-    <p>Šiuo metu dirbame su kelionių draudimo pasiūlymais. Prašome pamėginti ir paskaičiuoti kiek gali kainuoti jūsų draudimo sutartis.</p>
+<div class="container">
+    <div class="jumbotron text-center my-4">
+        <h1 class="display-4">Sveiki atvykę į Draudiklis.lt!</h1>
+        <p class="lead">Mes esame čia, kad padėtume jums rasti geriausius kelionių draudimo pasiūlymus.</p>
+        <hr class="my-4">
+        <p>Pasinaudokite mūsų kainų skaičiuokle, kad sužinotumėte, kiek kainuos jūsų draudimo sutartis.</p>
+        <a class="btn btn-primary btn-lg" href="{% url 'price_calculator' %}" role="button">Skaičiuoti kainą</a>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <h2>Mūsų Paslaugos</h2>
+            <p>Siūlome platų kelionių draudimo paslaugų spektrą, kad jūsų kelionė būtų saugi ir be rūpesčių.</p>
+            <a class="btn btn-secondary" href="{% url 'draudimo_produktai' %}" role="button">Daugiau &raquo;</a>
+        </div>
+        <div class="col-md-4">
+            <h2>Dažniausiai Užduodami Klausimai</h2>
+            <p>Turite klausimų? Peržiūrėkite mūsų DUK skiltį, kur rasite atsakymus į dažniausiai užduodamus klausimus.</p>
+            <a class="btn btn-secondary" href="#" role="button">Daugiau &raquo;</a>
+        </div>
+        <div class="col-md-4">
+            <h2>Kontaktai</h2>
+            <p>Susisiekite su mumis, jei turite papildomų klausimų ar reikia pagalbos renkantis draudimą.</p>
+            <a class="btn btn-secondary" href="#" role="button">Daugiau &raquo;</a>
+        </div>
+    </div>
+
+    <div class="mt-5">
+        <h2>Naujienos ir Patarimai</h2>
+        <p>Pasitikrinkite naujausią informaciją apie kelionių draudimą ir mūsų patarimus, kaip pasiruošti kelionei.</p>
+    </div>
+</div>
 {% endblock %}
