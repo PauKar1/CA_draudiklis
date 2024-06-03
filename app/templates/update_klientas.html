@@ -5,11 +5,11 @@
 
 {% block content %}
 <div class="container mt-5">
-    <h2>Kliento duomnenys</h2>
+    <h2>Kliento duomenys</h2>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit" class="btn btn-primary mt-3">Pirmyn!</button>
+        <button type="submit" class="btn btn-primary mt-3">Išsaugoti!</button>
 <!--     <button type="reset" value="Reset">Nepildyti duomenų!</button>-->
     </form>
 </div>

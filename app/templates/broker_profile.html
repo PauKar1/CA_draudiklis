@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Brokerio Profilis
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>{{ profile.broker.vardas }} {{ profile.broker.pavarde }} Profilis</h1>
+    <div>
+        <img src="{{ user_profile_picture }}" alt="Profile Picture" style="width: 200px; height: 200px;">
+        <p>Įmonė: {{ profile.broker.imones_pavadinimas }}</p>
+        <p>El. paštas: {{ profile.broker.el_pastas }}</p>
+        <p>Tel. numeris: {{ profile.broker.tel_numeris }}</p>
+    </div>
+</div>
+{% endblock %}

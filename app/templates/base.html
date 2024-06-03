@@ -14,18 +14,23 @@
             background-color: white;
             border: 1px solid #ddd;
             z-index: 1000;
+            border-radius: 50%;
         }
         .submenu a {
             display: block;
             padding: 10px;
             text-decoration: none;
             color: black;
+
         }
         .submenu a:hover {
             background-color: #ddd;
+            border-radius: 50%;
+
         }
         .expandable:hover .submenu {
             display: block;
+            margin-right: 100px;
         }
         .navbar-brand {
             font-size: 1.5em;
@@ -51,8 +56,14 @@
         </div>
         <div class="right-top profile-welcome">
             {% if user.is_authenticated %}
-                <img src="{{ user.profile.picture.url }}" alt="Profile Picture">
-                Sveiki, {{ user.username }} | <a href="{% url 'logout' %}" class="text-primary">Atsijungti</a>
+                {% if user.brokerprofile %}
+                    <a href="{% url 'broker_profile' broker_id=user.brokerprofile.broker.id %}">
+                        <img src="{{ user.brokerprofile.profile_picture.url }}" alt="Profile Picture">
+                        Sveiki, {{ user.username }}
+                    </a> | <a href="{% url 'broker_logout' %}" class="text-primary">Atsijungti</a>
+                {% else %}
+                    Sveiki, {{ user.username }} | <a href="{% url 'broker_logout' %}" class="text-primary">Atsijungti</a>
+                {% endif %}
             {% else %}
                 <a href="{% url 'profile' %}">Kliento paskyra</a>
             {% endif %}
@@ -72,6 +83,18 @@
                     <img src="{% static 'icons/products.png' %}" class="selection-icon" alt="Products Icon">
                     <a href="{% url 'draudimo_produktai' %}" class="text-dark">Draudimo produktai</a>
                 </li>
+               <li class="expandable position-relative">
+                    <img src="{% static 'icons/about.png' %}" class="selection-icon" alt="Partners Icon">
+                    <a href="#" class="text-dark">Partneriams</a>
+                    <div class="submenu" id="partner-submenu">
+                        <a href="{% url 'broker_register' %}">Registracija</a>
+                        <a href="{% url 'broker_login' %}">Prisijungimas</a>
+                    </div>
+                </li>
+                <li>
+                    <img src="{% static 'icons/account.png' %}" class="selection-icon" alt="Account Icon">
+                    <a href="{% url 'profile' %}" class="text-dark">Kliento paskyra</a>
+                </li>
                 <li>
                     <img src="{% static 'icons/faq.png' %}" class="selection-icon" alt="FAQ Icon">
                     <a href="#" class="text-dark">Dažniausiai užduodami klausimai</a>
@@ -79,14 +102,6 @@
                 <li>
                     <img src="{% static 'icons/contact.png' %}" class="selection-icon" alt="Contact Icon">
                     <a href="#" class="text-dark">Kontaktai</a>
-                </li>
-                <li>
-                    <img src="{% static 'icons/about.png' %}" class="selection-icon" alt="About Icon">
-                    <a href="#" class="text-dark">Apie mus</a>
-                </li>
-                <li>
-                    <img src="{% static 'icons/account.png' %}" class="selection-icon" alt="Account Icon">
-                    <a href="{% url 'profile' %}" class="text-dark">Kliento paskyra</a>
                 </li>
             </ul>
         </div>

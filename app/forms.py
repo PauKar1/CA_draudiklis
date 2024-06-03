@@ -126,7 +126,7 @@ class NaujaKlientoRegistracijosForma(UserCreationForm):
             user.save()
         return user
 
-
+##### TEST nenaudojama
 class BrokeriaiUpdateForm(forms.ModelForm):
     class Meta:
         model = Brokeriai
@@ -138,3 +138,33 @@ class BrokeriaiUpdateForm(forms.ModelForm):
             'el_pastas': forms.EmailInput(attrs={'class': 'form-control'}),
             'tel_numeris': forms.TextInput(attrs={'class': 'form-control'}),
         }
+
+###### Brokerių etapas
+class BrokerLoginForm(forms.Form):
+    # username = forms.CharField(max_length=100, label='Vartotojo vardas')
+    # company = forms.CharField(max_length=100, label='Brokerio įmonė')
+    email = forms.EmailField(label='El. paštas')
+    password = forms.CharField(widget=forms.PasswordInput, label='Slaptažodis')
+
+
+class BrokerRegisterForm(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput, label='Slaptažodis')
+    password1 = forms.CharField(widget=forms.PasswordInput, label='Slaptažodžio patvirtinimas')
+
+    class Meta:
+        model = Brokeriai
+        fields = ['vardas', 'pavarde', 'imones_pavadinimas', 'el_pastas', 'tel_numeris']
+        widgets = {
+            'vardas': forms.TextInput(attrs={'class': 'form-control'}),
+            'pavarde': forms.TextInput(attrs={'class': 'form-control'}),
+            'imones_pavadinimas': forms.TextInput(attrs={'class': 'form-control'}),
+            'el_pastas': forms.EmailInput(attrs={'class': 'form-control'}),
+            'tel_numeris': forms.TextInput(attrs={'class': 'form-control'}),
+        }
+
+        def clean_password1(self):
+            password = self.cleaned_data.get('password')
+            password1 = self.cleaned_data.get('password1')
+            if password and password1 and password != password1:
+                raise forms.ValidationError("Slaptažodžiai nesutampa")
+            return password1

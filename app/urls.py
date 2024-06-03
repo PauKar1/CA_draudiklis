@@ -34,4 +34,10 @@ urlpatterns = [
     path('draudimo-produktai/', views.draudimo_produktai, name='draudimo_produktai'),
     path('draudimo-produktai/keliones-draudimas/', views.keliones_draudimas, name='keliones_draudimas'),
 
+    path('partneriams/', views.broker_login, name='broker_login'),
+    path('partneriams/register/', views.broker_register, name='broker_register'),
+    path('partneriams/profile/<int:broker_id>/', views.broker_profile, name='broker_profile'),
+    path('partneriams/logout/', auth_view.LogoutView.as_view(next_page='home'), name='broker_logout'),
+    path('logout/', auth_view.LogoutView.as_view(next_page='home'), name='logout'),
+
 ]

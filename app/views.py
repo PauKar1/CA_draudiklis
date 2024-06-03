@@ -4,8 +4,9 @@ from django.http import JsonResponse, HttpResponseBadRequest
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib import messages
 from .forms import (KlientasRegistrationForm, ProfileUpdateForm, KlientasUpdateForm, KlientaiForm,
-                    PolisaiForm, NaujaKlientoRegistracijosForma, BrokeriaiUpdateForm)
-from .models import Profile, Country, Paslaugos, Klientai, Brokeriai, Polisai
+                    PolisaiForm, NaujaKlientoRegistracijosForma, BrokeriaiUpdateForm, BrokerLoginForm,
+                    BrokerRegisterForm)
+from .models import Profile, Country, Paslaugos, Klientai, Brokeriai, Polisai, BrokerProfile
 from django.contrib.auth.models import User, Group
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -431,8 +432,59 @@ def keliones_draudimas(request):
     return render(request, 'keliones_draudimas.html')
 
 
+###### Brokerių
+
+def broker_login(request):
+    if request.method == 'POST':
+        form = BrokerLoginForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            password = form.cleaned_data['password']
+            user = authenticate(request, username=email, password=password)
+            if user is not None:
+                try:
+                    broker = Brokeriai.objects.get(el_pastas=email)
+                    login(request, user)
+                    return redirect('broker_profile', broker_id=broker.id)
+                except Brokeriai.DoesNotExist:
+                    form.add_error(None, 'Brokerio informacija neteisinga.')
+            else:
+                form.add_error(None, 'Neteisingas vartotojo vardas arba slaptažodis.')
+    else:
+        form = BrokerLoginForm()
+    return render(request, 'broker_login.html', {'form': form})
 
 
+def broker_register(request):
+    if request.method == 'POST':
+        form = BrokerRegisterForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data['el_pastas']
+            password = form.cleaned_data['password']
+
+            user = User.objects.create_user(username=email, email=email, password=password)
+            broker = form.save(commit=False)
+            broker.user = user
+            broker.save()
+
+            # Create a BrokerProfile
+            broker_profile = BrokerProfile.objects.create(user=user, broker=broker)
+
+            login(request, user)
+            return redirect('broker_profile', broker_id=broker.id)
+    else:
+        form = BrokerRegisterForm()
+    return render(request, 'broker_register.html', {'form': form})
+
+def broker_profile(request, broker_id):
+    profile = get_object_or_404(BrokerProfile, broker__id=broker_id)
+    return render(request, 'broker_profile.html', {
+        'profile': profile,
+        'user_profile_picture': request.user.brokerprofile.profile_picture.url
+    })
+def broker_logout(request):
+    logout(request)
+    return render(request, 'broker_logout.html')
 
 
 

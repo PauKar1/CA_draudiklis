@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Brokerių Prisijungimas
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Partneriams Prisijungimas</h1>
+    <form method="post" action="{% url 'broker_login' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Prisijungti</button>
+    </form>
+</div>
+{% endblock %}

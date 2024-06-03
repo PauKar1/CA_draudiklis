@@ -102,3 +102,11 @@ class Country(models.Model):
 
     def __str__(self):
         return self.name
+
+class BrokerProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    broker = models.OneToOneField(Brokeriai, on_delete=models.CASCADE)
+    profile_picture = models.ImageField(upload_to='broker_pics', default='default-broker.png')
+
+    def __str__(self):
+        return f'{self.broker.vardas} {self.broker.pavarde} Profile'
