@@ -399,7 +399,7 @@ def profile_view(request):
             return redirect('profile')
     else:
         form = ProfileUpdateForm(instance=profile)
-    return render(request, 'profile_edit.html', {'form': form, 'profile': profile})
+    return render(request, 'profile_edit.html', {'form': form, 'profile': profile, 'user_profile_picture': profile.picture.url})
 
 @login_required
 def profile(request):
@@ -417,7 +417,8 @@ def profile(request):
     for contract in contracts:
         print("Contract ID:", contract.id, "Klientai ID:", contract.klientai_id)
 
-    return render(request, 'profile.html', {'profile': klientai, 'contracts': contracts})
+    return render(request, 'profile.html', {'profile': klientai, 'contracts': contracts,
+                                            'user_profile_picture': request.user.profile.picture.url})
 
 
 

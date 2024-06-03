@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
     <style>
-        /* Additional styles for submenu */
         .submenu {
             display: none;
             position: absolute;
@@ -33,7 +32,7 @@
             font-weight: bold;
         }
         .profile-welcome {
-            color: #0c0d0c; /* profile color */
+            color: #c90618; /* profile wiew color */
             display: flex;
             align-items: center;
         }
@@ -52,7 +51,7 @@
         </div>
         <div class="right-top profile-welcome">
             {% if user.is_authenticated %}
-                <img src="{{ profile.picture.url }}" alt="Profile Picture">
+                <img src="{{ user.profile.picture.url }}" alt="Profile Picture">
                 Sveiki, {{ user.username }} | <a href="{% url 'logout' %}" class="text-primary">Atsijungti</a>
             {% else %}
                 <a href="{% url 'profile' %}">Kliento paskyra</a>
