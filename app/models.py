@@ -60,7 +60,7 @@ class Polisai(models.Model):
 
     klientai = models.ForeignKey(Klientai, on_delete=models.CASCADE, related_name='polisai')
     brokeriai = models.ForeignKey(Brokeriai, on_delete=models.SET_NULL, null=True, blank=True, related_name='polisai')
-    paslaugos = models.ForeignKey(Paslaugos, on_delete=models.CASCADE, related_name='polisai')
+    paslaugos = models.ForeignKey(Paslaugos, on_delete=models.CASCADE, related_name='polisai', default="Kelionių draudimas")
     poliso_tipas = models.CharField(max_length=100, blank=True)
     pradzios_data = models.DateField()
     pabaigos_data = models.DateField()

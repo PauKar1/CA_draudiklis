@@ -292,38 +292,23 @@ def update_klientas(request):
 
 
 ###### work in progress
-@login_required()
+@login_required
 def register_contract(request):
-    klientai_form = KlientaiForm()
-    polisai_form = PolisaiForm()
-
+    klientai = Klientai.objects.all()
     if request.method == 'POST':
-        if 'register_client' in request.POST:
-            klientai_form = KlientaiForm(request.POST)
-            if klientai_form.is_valid():
-                klientai_form.save()
-                messages.success(request, 'Client registered successfully.')
-                return redirect('naujas_user_register')
-            else:
-                messages.error(request, 'Error registering client.')
-                print(klientai_form.errors)  # Debugging: Print form errors to the console
-        elif 'register_policy' in request.POST:
-            polisai_form = PolisaiForm(request.POST)
-            if polisai_form.is_valid():
-                polisai_form.save()
-                messages.success(request, 'Policy registered successfully.')
-                return redirect('policy_success')  # Redirect to a success page or appropriate URL
-            else:
-                messages.error(request, 'Error registering policy.')
-                print(polisai_form.errors)  # Debugging: Print form errors to the console
+        form = PolisaiForm(request.POST)
+        if form.is_valid():
+            polisai = form.save(commit=False)
+            polisai.klientai = Klientai.objects.get(user=request.user)  # Assuming Klientai model has a user field
+            polisai.save()
+            messages.success(request, 'Contract registered successfully.')
+            return redirect('profile')  # Redirect to a success page or appropriate URL
+    else:
+        form = PolisaiForm()
 
-    klientai_list = Klientai.objects.all()  # List of all registered clients
+    return render(request, 'register_policy.html', {'form': form, 'klientai': klientai})
 
-    return render(request, 'register_contract.html', {
-        'klientai_form': klientai_form,
-        'polisai_form': polisai_form,
-        'klientai_list': klientai_list,
-    })
+
 
 #############
 ###### for pricing part

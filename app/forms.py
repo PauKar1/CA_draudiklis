@@ -82,14 +82,11 @@ class KlientasUpdateForm(forms.ModelForm):
 class PolisaiForm(forms.ModelForm):
     pradzios_data = forms.DateField(widget=forms.TextInput(attrs={'type': 'date'}))
     pabaigos_data = forms.DateField(widget=forms.TextInput(attrs={'type': 'date'}))
-    iskaita = forms.ChoiceField(
-        choices=Polisai.ISKAITA_CHOICES,
-        widget=DeductibleSelect  # not used
-    )
+
 
     class Meta:
         model = Polisai
-        fields = ['klientai', 'brokeriai', 'paslaugos', 'pradzios_data', 'pabaigos_data', 'draudimo_suma', 'iskaita', 'apsauga']
+        fields = ['brokeriai', 'paslaugos', 'pradzios_data', 'pabaigos_data', 'draudimo_suma', 'iskaita', 'apsauga']
 
 
 class PriceCalculatorForm(forms.ModelForm):

@@ -1,38 +1,17 @@
-{% extends 'base.html' %}
-
-{% block title %}Registruoti sutartį - Draudiklis.lt{% endblock %}
+{% extends "base.html" %}
 
 {% block content %}
-<div class="container mt-5">
-    <h1>Registruoti sutartį</h1>
+    {% if not klientas_exists %}
+        <form method="post" action="">
+            {% csrf_token %}
+            {{ klientai_form.as_p }}
+            <button type="submit" name="register_client">Register Client</button>
+        </form>
+    {% endif %}
 
-    <!-- Form for registering a client -->
-    <form method="post">
+    <form method="post" action="">
         {% csrf_token %}
-        <div class="card mb-3">
-            <div class="card-header">
-                <h2>Kliento informacija</h2>
-            </div>
-            <div class="card-body">
-                {{ klientai_form.as_p }}
-            </div>
-            <button type="submit" name="naujas_user_register" class="btn btn-primary">Registruoti klientą</button>
-        </div>
+        {{ polisai_form.as_p }}
+        <button type="submit" name="register_policy">Register Policy</button>
     </form>
-
-
-    <!-- Form for registering a policy -->
-    <form method="post">
-        {% csrf_token %}
-        <div class="card mb-3">
-            <div class="card-header">
-                <h2>Poliso informacija</h2>
-            </div>
-            <div class="card-body">
-                {{ polisai_form.as_p }}
-            </div>
-            <button type="submit" name="register_policy" class="btn btn-primary">Registruoti polisą</button>
-        </div>
-    </form>
-</div>
 {% endblock %}
