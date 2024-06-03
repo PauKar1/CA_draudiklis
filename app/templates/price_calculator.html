@@ -1,23 +1,23 @@
 {% extends "base.html" %}
 
 {% block content %}
- <style>
-         .deductible-group {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            gap: 0px;
-        }
-        .deductible-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin: 100 50px; /* Adjust the margin to reduce the gaps */
-        }
-        .deductible-item label {
-            margin-bottom: 0px; /* Adjust the margin between label and radio button */
-        }
-    </style>
+<style>
+    .deductible-group {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        gap: 0px;
+    }
+    .deductible-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 10px 50px; /* Adjust the margin to reduce the gaps */
+    }
+    .deductible-item label {
+        margin-bottom: 0px; /* Adjust the margin between label and radio button */
+    }
+</style>
 <h1>Skaičiuoti Kainą</h1>
 <form method="post" action="{% url 'calculate_price' %}">
     {% csrf_token %}
@@ -30,7 +30,7 @@
 
     <p>Apačioje rasite žemėlapį su rekomendacijomis kur šiuo metu saugu keliauti, daugiau informacijos galite rasti: <a
             href="https://keliauk.urm.lt/">https://keliauk.urm.lt/</a>.</p>
-    <a href="{% url 'map_view' %}">* Patikrinkite šalies įspėjimo lygi pagal užimtumo tarnybos duomenis</a><br><br>
+    <a href="{% url 'map_view' %}">* Patikrinkite šalies įspėjimo lygį pagal Užsienio reikalų ministerijos duomenis</a><br><br>
 
     <label for="travel-mode">Keliavimo būdas:</label>
     <select id="travel-mode" name="travel_mode">
@@ -62,29 +62,29 @@
     <label for="civiline_atsakomybe">Civilinė atsakomybė</label>
     <p>(Draudimo suma 1500 EUR per sutarties laikotarpį, papildoma įmoka prie sutarties 2 EUR)</p><br>
 
-<label >Taikoma išskaita pasirinktoms paslaugoms:</label><br>
-<div class="deductible-group">
-    <div class="deductible-item">
-        <label for="iskaita0">0</label>
-        <input type="radio" id="iskaita0" name="iskaita" value="0" checked>
+    <label>Taikoma išskaita pasirinktoms paslaugoms:</label><br>
+    <div class="deductible-group">
+        <div class="deductible-item">
+            <label for="iskaita0">0</label>
+            <input type="radio" id="iskaita0" name="iskaita" value="0" checked>
+        </div>
+        <div class="deductible-item">
+            <label for="iskaita50">50</label>
+            <input type="radio" id="iskaita50" name="iskaita" value="50">
+        </div>
+        <div class="deductible-item">
+            <label for="iskaita80">80</label>
+            <input type="radio" id="iskaita80" name="iskaita" value="80">
+        </div>
+        <div class="deductible-item">
+            <label for="iskaita100">100</label>
+            <input type="radio" id="iskaita100" name="iskaita" value="100">
+        </div>
+        <div class="deductible-item">
+            <label for="iskaita120">120</label>
+            <input type="radio" id="iskaita120" name="iskaita" value="120">
+        </div>
     </div>
-    <div class="deductible-item">
-        <label for="iskaita50">50</label>
-        <input type="radio" id="iskaita50" name="iskaita" value="50">
-    </div>
-    <div class="deductible-item">
-        <label for="iskaita80">80</label>
-        <input type="radio" id="iskaita80" name="iskaita" value="80">
-    </div>
-    <div class="deductible-item">
-        <label for="iskaita100">100</label>
-        <input type="radio" id="iskaita100" name="iskaita" value="100">
-    </div>
-    <div class="deductible-item">
-        <label for="iskaita120">120</label>
-        <input type="radio" id="iskaita120" name="iskaita" value="120">
-    </div>
-</div>
 
     <button type="submit">Skaičiuoti</button>
 </form>
@@ -94,7 +94,5 @@
     <h2>Preliminari kaina: {{ total_price }} EUR</h2>
     <a href="{% url 'register_contract' %}" class="btn btn-primary">Registruoti sutartį</a>
 </div>
-
-
 {% endif %}
 {% endblock %}

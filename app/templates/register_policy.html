@@ -6,7 +6,7 @@
 
 {% block content %}
 <div class="container mt-5">
-    <h1>Register Policy for {{ klientai.vardas }} {{ klientai.pavarde }}</h1>
+    <h1>Registruojama sutartis {{ klientai.vardas }} {{ klientai.pavarde }}</h1>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}

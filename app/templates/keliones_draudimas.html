@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Kelionės Draudimas
+{% endblock %}
+
+{% block content %}
+<h1>Kelionės Draudimas</h1>
+<p>Kelionių draudimas sumažins kelionėje Jums iškilusius rūpesčius:</p>
+<ul>
+    <li>Būtinoji medicinos pagalba susižeidus, susirgus ar apsinuodijus</li>
+    <li>Nelaimingų atsitikimų draudimas traumų, neįgalumo ar mirties atvejais</li>
+    <li>Žala padaryta kitiems ar jų turtui</li>
+</ul>
+<p>Draudimo įmoka priklauso nuo teritorijos, kelionės tikslo, trukmės, amžiaus ir produkto paketo. Svarbu atkreipti dėmesį į draudimo sumas, kurios nurodomos draudimo taisyklėse bei polise.</p>
+
+<h2>Kas įeina į kelionės draudimą?</h2>
+<ul>
+    <li>Medicininių išlaidų draudimas</li>
+    <li>Nelaimingų atsitikimų draudimas</li>
+    <li>Civilinės atsakomybės draudimas</li>
+
+</ul>
+
+<h2>Kaip veikia kelionių draudimas?</h2>
+<p>Polisą reikia įsigyti būnant Lietuvoje. Jei kelionės metu prireiktų skubios medicinos pagalbos ar įvyktų nelaimingas atsitikimas, draudimo bendrovė kompensuos išlaidas pagal draudimo taisykles. Taip pat draudimas galioja padarytai žalai tretiesiems asmenims ar jų turtui kompensuoti bei bagažo draudimui.</p>
+
+<h2>Kelionių draudimas internetu</h2>
+<p>Kelionių draudimą internetu užsakyti paprasta, tereikia nurodyti kelionės kryptį, tikslą, datą ir apdraustuosius. Pasiūlymai bus pateikti ekrane, iš kurių galėsite pasirinkti tinkamiausią ir polisas bus išduotas gavus apmokėjimą.</p>
+
+<h2>Kas yra Europos sveikatos draudimo kortelė?</h2>
+<p>Europos sveikatos draudimo kortelė (ESDK) suteikia būtinąją medicininę pagalbą ES ir kitose šalyse. Tačiau ESDK neturi kelionės draudimo apsaugos ir neapima privačių sveikatos priežiūros paslaugų, todėl rekomenduojama įsigyti papildomą kelionių draudimą.</p>
+
+<a href="{% url 'draudimo_produktai' %}">Atgal į produktų sąrašą</a>
+{% endblock %}

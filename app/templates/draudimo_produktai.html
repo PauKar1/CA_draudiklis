@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Draudimo Produktai
+{% endblock %}
+
+{% block content %}
+<h1>Draudimo produktai</h1>
+<div style="display: flex; flex-wrap: wrap;">
+    <div style="width: 30%; margin: 10px; border: 1px solid #ccc; padding: 10px; border-radius: 8px;">
+        <h2><a href="{% url 'keliones_draudimas' %}">Kelionės draudimas</a></h2>
+        <p>Aprašas apie kelionės draudimą.</p>
+    </div>
+</div>
+{% endblock %}

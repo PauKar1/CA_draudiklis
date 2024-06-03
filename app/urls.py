@@ -31,4 +31,7 @@ urlpatterns = [
     path('profile/edit/', views.profile_view, name='profile_view'),
     path('profile/', views.profile, name='profile'),
 
+    path('draudimo-produktai/', views.draudimo_produktai, name='draudimo_produktai'),
+    path('draudimo-produktai/keliones-draudimas/', views.keliones_draudimas, name='keliones_draudimas'),
+
 ]

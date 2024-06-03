@@ -13,7 +13,8 @@
             display: none;
             position: absolute;
             background-color: white;
-            border: 0px solid #000;
+            border: 1px solid #ddd;
+            z-index: 1000;
         }
         .submenu a {
             display: block;
@@ -24,58 +25,73 @@
         .submenu a:hover {
             background-color: #ddd;
         }
-          .expandable:hover .submenu {
+        .expandable:hover .submenu {
             display: block;
+        }
+        .navbar-brand {
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+        .profile-welcome {
+            color: #0c0d0c; /* profile color */
+            display: flex;
+            align-items: center;
+        }
+        .profile-welcome img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-right: 10px;
         }
     </style>
 </head>
 <body>
-    <div id="top-shelf">
+    <div id="top-shelf" class="d-flex justify-content-between align-items-center p-2 bg-light">
         <div class="left-top">
-            <a href="{% url 'home' %}">Draudiklis.lt</a>
-                </div>
-        <div class="right-top">
+            <a href="{% url 'home' %}" class="navbar-brand text-dark">Draudiklis.lt</a>
+        </div>
+        <div class="right-top profile-welcome">
             {% if user.is_authenticated %}
-                Sveiki, {{ user.username }} | <a href="{% url 'logout' %}">Atsijungti</a>
+                <img src="{{ profile.picture.url }}" alt="Profile Picture">
+                Sveiki, {{ user.username }} | <a href="{% url 'logout' %}" class="text-primary">Atsijungti</a>
             {% else %}
                 <a href="{% url 'profile' %}">Kliento paskyra</a>
             {% endif %}
         </div>
     </div>
-    <div class="main-content">
-        <div class="left-section">
-            <ul class="selections">
-                <li class="expandable">
+    <div class="d-flex">
+        <div class="left-section bg-light p-3" style="width: 200px;">
+            <ul class="selections list-unstyled">
+                <li class="expandable position-relative">
                     <img src="{% static 'icons/calculator.png' %}" class="selection-icon" alt="Calculator Icon">
-                    <a href="#" id="price-calc-link">Skaičiuoti kainą</a>
+                    <a href="#" id="price-calc-link" class="text-dark">Skaičiuoti kainą</a>
                     <div class="submenu" id="price-calc-submenu">
                         <a href="{% url 'price_calculator' %}">Kelionių draudimas</a>
-<!--                        <a href="{% url 'home' %}">Option</a>-->
                     </div>
                 </li>
                 <li>
                     <img src="{% static 'icons/products.png' %}" class="selection-icon" alt="Products Icon">
-                    <a href="#">Draudimo produktai</a>
+                    <a href="{% url 'draudimo_produktai' %}" class="text-dark">Draudimo produktai</a>
                 </li>
                 <li>
                     <img src="{% static 'icons/faq.png' %}" class="selection-icon" alt="FAQ Icon">
-                    <a href="#">Dažniausiai užduodami klausimai</a>
+                    <a href="#" class="text-dark">Dažniausiai užduodami klausimai</a>
                 </li>
                 <li>
                     <img src="{% static 'icons/contact.png' %}" class="selection-icon" alt="Contact Icon">
-                    <a href="#">Kontaktai</a>
+                    <a href="#" class="text-dark">Kontaktai</a>
                 </li>
                 <li>
                     <img src="{% static 'icons/about.png' %}" class="selection-icon" alt="About Icon">
-                    <a href="#">Apie mus</a>
+                    <a href="#" class="text-dark">Apie mus</a>
                 </li>
                 <li>
                     <img src="{% static 'icons/account.png' %}" class="selection-icon" alt="Account Icon">
-                    <a href="{% url 'profile' %}">Kliento paskyra</a>
+                    <a href="{% url 'profile' %}" class="text-dark">Kliento paskyra</a>
                 </li>
             </ul>
         </div>
-        <div class="center-section">
+        <div class="center-section p-3" style="flex-grow: 1;">
             {% block content %}
             {% endblock %}
         </div>

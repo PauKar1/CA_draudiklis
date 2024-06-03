@@ -421,6 +421,16 @@ def profile(request):
 
 
 
+#####static() fields
+
+def draudimo_produktai(request):
+    return render(request, 'draudimo_produktai.html')
+
+def keliones_draudimas(request):
+    return render(request, 'keliones_draudimas.html')
+
+
+
 
 
 
