@@ -322,14 +322,7 @@ def broker_logout(request):
 def price_calculator(request):
     if request.method == 'POST':
         form = InsuranceCostCalculationForm(request.POST)
-        print(request.POST)  # Print the POST data to ensure the hidden field is included
         if form.is_valid():
-            print(form.cleaned_data) # Print cleaned data to ensure 'paslaugos' is set
-            # Ensure the paslaugos field is correctly set
-            if 'paslaugos' not in form.cleaned_data or not form.cleaned_data['paslaugos']:
-                default_paslaugos = Paslaugos.objects.get(pk=1)  # Assuming the default is Kelionių draudimas
-                form.cleaned_data['paslaugos'] = default_paslaugos
-
             # Extract data from the form
             country = form.cleaned_data['country']
             travel_mode = form.cleaned_data['travel_mode']
@@ -367,6 +360,7 @@ def price_calculator(request):
             print(form.errors)
     else:
         form = InsuranceCostCalculationForm()
+        form.initial['country'] = form.fields['country'].queryset.first().pk
 
     return render(request, 'price_calculator.html', {'form': form})
 

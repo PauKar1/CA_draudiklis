@@ -9,7 +9,20 @@
         {% csrf_token %}
         <div class="form-group">
             {{ form.country.label_tag }}<br>
-            {{ form.country }}
+            <select name="{{ form.country.name }}" id="id_country" class="form-control">
+                {% for choice in form.country.field.queryset %}
+                    <option value="{{ choice.pk }}"
+                        {% if choice.pk == form.initial.country.pk %}selected{% endif %}
+                        data-risk="{{ choice.map_risk }}" data-link="{{ choice.link }}">{{ choice.name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+        <div id="risk-level" class="form-group" style="padding: 10px;">
+            <!-- This will be updated dynamically based on the selected country -->
+        </div>
+        <div id="country-link" class="form-group" style="padding: 10px;">
+            <!-- This will be updated dynamically based on the selected country -->
         </div>
         <div class="form-group">
             {{ form.travel_mode.label_tag }}<br>
@@ -47,4 +60,39 @@
         </div>
     {% endif %}
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var countryField = document.querySelector('[name="country"]');
+        var riskLevelDiv = document.getElementById('risk-level');
+        var countryLinkDiv = document.getElementById('country-link');
+        var countryRisks = {
+            'low': { color: 'green', text: 'Žemas' },
+            'medium': { color: 'yellow', text: 'Vidutinis' },
+            'high': { color: 'orange', text: 'Aukštas' },
+            'very high': { color: 'red', text: 'Labai aukštas' },
+            'extreme': { color: 'black', text: 'Ekstremalus' }
+        };
+
+        function updateRiskLevel() {
+            var selectedOption = countryField.options[countryField.selectedIndex];
+            var riskLevel = selectedOption.getAttribute('data-risk').toLowerCase().replace(' ', '_');
+            var countryLink = selectedOption.getAttribute('data-link');
+
+            if (riskLevel && countryRisks[riskLevel]) {
+                var riskText = countryRisks[riskLevel].text;
+                var riskColor = countryRisks[riskLevel].color;
+
+                riskLevelDiv.innerHTML = `Rizikos lygis: <span style="border-bottom: 2px solid ${riskColor};">${riskText}</span>`;
+                countryLinkDiv.innerHTML = `<a href="${countryLink}" target="_blank">Užsienio reikalų ministerijos informacija apie šalį</a>`;
+            } else {
+                riskLevelDiv.innerHTML = '';
+                countryLinkDiv.innerHTML = '';
+            }
+        }
+
+        countryField.addEventListener('change', updateRiskLevel);
+        updateRiskLevel();  // Initial call to set the risk level based on the default selection
+    });
+</script>
 {% endblock %}
