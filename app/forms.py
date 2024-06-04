@@ -88,14 +88,6 @@ class PolisaiForm(forms.ModelForm):
         model = Polisai
         fields = ['brokeriai', 'paslaugos', 'pradzios_data', 'pabaigos_data', 'draudimo_suma', 'iskaita', 'apsauga']
 
-
-class PriceCalculatorForm(forms.ModelForm):
-    class Meta:
-        model = Polisai
-        fields = ['draudimo_suma', 'iskaita', 'apsauga']
-
-
-
 ###### TEST
 class NaujaKlientoRegistracijosForma(UserCreationForm):
 

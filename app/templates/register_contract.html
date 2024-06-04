@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 
 {% block content %}
-    {% if not klientas_exists %}
+ {% if user.is_authenticated %}
+                {% if user.brokerprofile %}
         <form method="post" action="">
             {% csrf_token %}
             {{ klientai_form.as_p }}

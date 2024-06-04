@@ -288,7 +288,7 @@ def register_contract(request):
             polisai.klientai = Klientai.objects.get(user=request.user)  # Assuming Klientai model has a user field
             polisai.save()
             messages.success(request, 'Contract registered successfully.')
-            return redirect('profile')  # Redirect to a success page or appropriate URL
+            return redirect('broker_profile')  # Redirect to a success page or appropriate URL
     else:
         form = PolisaiForm()
 
@@ -307,7 +307,7 @@ def register_client(request):
             client = form.save()
             request.session['client_id'] = client.id
             messages.success(request, 'Client registered successfully. Now proceed to register the policy.')
-            return redirect('register_policy')
+            return redirect('broker_profile')
     else:
         form = KlientaiForm()
     return render(request, 'register_client.html', {'form': form})
@@ -343,7 +343,7 @@ def naujas_user_register(request):
             user = form.save()
             login(request, user)
             messages.success(request, f"Paskyra sukurta: {user.username}!")
-            return redirect('choose_account_type')  # Nukreipkite į tinkamą puslapį po registracijos
+            return redirect('profile')  # Nukreipkite į tinkamą puslapį po registracijos
         else:
             messages.error(request, "Nepavyko sukurti paskyros. Patikrinkite formą.")
     else:
@@ -406,7 +406,7 @@ def profile_view(request):
 def profile(request):
     username = request.user.username
     try:
-        klientai = Klientai.objects.get(user__username=username)
+        klientai = request.user.klientai
         contracts = Polisai.objects.filter(klientai=klientai)
     except Klientai.DoesNotExist:
         klientai = None
@@ -418,8 +418,7 @@ def profile(request):
     for contract in contracts:
         print("Contract ID:", contract.id, "Klientai ID:", contract.klientai_id)
 
-    return render(request, 'profile.html', {'profile': klientai, 'contracts': contracts,
-                                            'user_profile_picture': request.user.profile.picture.url})
+    return render(request, 'profile.html', {'profile': klientai, 'contracts': contracts})
 
 
 
