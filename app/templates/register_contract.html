@@ -1,18 +1,27 @@
 {% extends "base.html" %}
 
 {% block content %}
- {% if user.is_authenticated %}
-                {% if user.brokerprofile %}
-        <form method="post" action="">
-            {% csrf_token %}
-            {{ klientai_form.as_p }}
-            <button type="submit" name="register_client">Register Client</button>
-        </form>
+    {% if user.is_authenticated %}
+        {% if user.brokerprofile %}
+            <h2>Register Contract</h2>
+            <hr>
+            <h3>Client Information</h3>
+            <form method="post" action="{% url 'register_client' %}">
+                {% csrf_token %}
+                {{ klientai_form.as_p }}
+                <button type="submit" class="btn btn-primary">Register Client</button>
+            </form>
+            <br>
+            <h3>Policy Information</h3>
+            <form method="post" action="{% url 'register_policy' %}">
+                {% csrf_token %}
+                {{ polisai_form.as_p }}
+                <button type="submit" class="btn btn-primary">Register Policy</button>
+            </form>
+        {% else %}
+            <p>You need to be a broker to register a contract.</p>
+        {% endif %}
+    {% else %}
+        <p>Please log in to register a contract.</p>
     {% endif %}
-
-    <form method="post" action="">
-        {% csrf_token %}
-        {{ polisai_form.as_p }}
-        <button type="submit" name="register_policy">Register Policy</button>
-    </form>
 {% endblock %}

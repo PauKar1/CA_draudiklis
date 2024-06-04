@@ -17,7 +17,7 @@ class Command(BaseCommand):
             for row in reader:
                 Country.objects.create(
                     name=row['name'],
-                    risk_level=row['Risk'],
+                    map_risk=row['map_risk'],
                     latitude=float(row['latitude']),
                     longitude=float(row['longitude']),
                 )

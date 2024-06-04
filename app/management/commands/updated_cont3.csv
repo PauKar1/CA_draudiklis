@@ -1,0 +1,246 @@
+country,latitude,longitude,name,Risk,,,,,,,,
+AD,42.546245,1.601554,Andorra,Low,,,,,,{,,
+AE,23.424076,54,United Arab Emirates,Low,,,,,,,Afghanistan,Afganistanas
+AF,33.93911,68,Afghanistan,Very High,,,,,,,Albania,Albanija
+AG,17.060816,-62,Antigua and Barbuda,Low,,,,,,,Algeria,Alûyras
+AI,18.220554,-63,Anguilla,Low,,,,,,,Angola,Angola
+AL,41.153332,20,Albania,Medium,,,,,,,Antarctica,Antarktida
+AM,40.069099,45,Armenia,Medium,,,,,,,Argentina,Argentina
+AN,12.226079,-69,Netherlands Antilles,Low,,,,,,,Armenia,Armenija
+AO,-11.202692,18,Angola,Very High,,,,,,,Australia,Australija
+AQ,-75.250973,0,Antarctica,Low,,,,,,,Austria,Austrija
+AR,-38.416097,-64,Argentina,Medium,,,,,,,Azerbaijan,Azerbaidûanas
+AS,-14.270972,-170,American Samoa,Low,,,,,,,Bahamas,Bahamos
+AT,47.516231,15,Austria,Low,,,,,,,Bangladesh,Bangladeöas
+AU,-25.274398,134,Australia,Low,,,,,,,Belarus,Baltarusija
+AW,12.52111,-70,Aruba,Low,,,,,,,Belgium,Belgija
+AZ,40.143105,48,Azerbaijan,High,,,,,,,Belize,Belizas
+BA,43.915886,18,Bosnia and Herzegovina,Medium,,,,,,,Benin,Beninas
+BB,13.193887,-60,Barbados,Low,,,,,,,Bhutan,Butanas
+BD,23.684994,90,Bangladesh,High,,,,,,,Bolivia,Bolivija
+BE,50.503887,4,Belgium,Low,,,,,,,Bosnia and Herz.,Bosnija ir Hercegovina
+BF,12.238333,-2,Burkina Faso,Very High,,,,,,,Botswana,Botsvana
+BG,42.733883,25,Bulgaria,Medium,,,,,,,Brazil,Brazilija
+BH,25.930414,51,Bahrain,Medium,,,,,,,Brunei,Brunejus
+BI,-3.373056,30,Burundi,Very High,,,,,,,Bulgaria,Bulgarija
+BJ,9.30769,2,Benin,High,,,,,,,Burkina Faso,Burkina Fasas
+BM,32.321384,-65,Bermuda,Low,,,,,,,Burundi,Burundis
+BN,4.535277,115,Brunei,Medium,,,,,,,Cambodia,Kambodûa
+BO,-16.290154,-64,Bolivia,Medium,,,,,,,Cameroon,Kamerunas
+BR,-14.235004,-52,Brazil,High,,,,,,,Canada,Kanada
+BS,25.03428,-77,Bahamas,Medium,,,,,,,Central African Rep.,Centrines Afrikos Respublika
+BT,27.514162,90,Bhutan,Medium,,,,,,,Chad,Cadas
+BV,-54.423199,3,Bouvet Island,Low,,,,,,,Chile,Cile
+BW,-22.328474,25,Botswana,Medium,,,,,,,China,Kinija
+BY,53.709807,28,Belarus,Very High,,,,,,,Colombia,Kolumbija
+BZ,17.189877,-88,Belize,Medium,,,,,,,Congo,Kongas
+CA,56.130366,-106,Canada,Low,,,,,,,Costa Rica,Kosta Rika
+CC,-12.164165,97,Cocos [Keeling] Islands,Low,,,,,,,Croatia,Kroatija
+CD,-4.038333,22,Congo [DRC],Low,,,,,,,Cuba,Kuba
+CF,6.611111,21,Central African Republic,Very High,,,,,,,Cyprus,Kipras
+CG,-0.228021,16,Congo [Republic],Low,,,,,,,Czechia,Cekija
+CH,46.818188,8,Switzerland,Low,,,,,,,CÙte dIvoire,Dramblio Kaulo Krantas
+CI,7.539989,-6,C√¥te dIvoire,Low,,,,,,,Dem. Rep. Congo,Kongo Demokratine Respublika
+CK,-21.236736,-160,Cook Islands,Low,,,,,,,Denmark,Danija
+CL,-35.675147,-72,Chile,Medium,,,,,,,Djibouti,Dûibutis
+CM,7.369722,12,Cameroon,High,,,,,,,Dominican Rep.,Dominikos Respublika
+CN,35.86166,104,China,High,,,,,,,Ecuador,Ekvadoras
+CO,4.570868,-74,Colombia,High,,,,,,,Egypt,Egiptas
+CR,9.748917,-84,Costa Rica,Medium,,,,,,,El Salvador,Salvadoras
+CU,21.521757,-78,Cuba,Medium,,,,,,,Eq. Guinea,Pusiaujo Gvineja
+CV,16.002082,-24,Cape Verde,Low,,,,,,,Eritrea,Eritreja
+CX,-10.447525,106,Christmas Island,Low,,,,,,,Estonia,Estija
+CY,35.126413,33,Cyprus,Low,,,,,,,Ethiopia,Etiopija
+CZ,49.817492,15,Czech Republic,Low,,,,,,,Falkland Is.,Folklando Salos
+DE,51.165691,10,Germany,Low,,,,,,,Fiji,Fidûis
+DJ,11.825138,43,Djibouti,High,,,,,,,Finland,Suomija
+DK,56.26392,10,Denmark,Low,,,,,,,Fr. S. Antarctic Lands,Prancuzijos Pietu ir Antarkties éemes
+DM,15.414999,-61,Dominica,Low,,,,,,,France,Prancuzija
+DO,18.735693,-70,Dominican Republic,Medium,,,,,,,Gabon,Gabonas
+DZ,28.033886,2,Algeria,High,,,,,,,Gambia,Gambija
+EC,-1.831239,-78,Ecuador,Medium,,,,,,,Georgia,Gruzija
+EE,58.595272,25,Estonia,Low,,,,,,,Germany,Vokietija
+EG,26.820553,31,Egypt,High,,,,,,,Ghana,Gana
+EH,24.215527,-13,Western Sahara,Low,,,,,,,Greece,Graikija
+ER,15.179384,40,Eritrea,Very High,,,,,,,Greenland,Grenlandija
+ES,40.463667,-4,Spain,Low,,,,,,,Guatemala,Gvatemala
+ET,9.145,40,Ethiopia,Very High,,,,,,,Guinea,Gvineja
+FI,61.92411,26,Finland,Low,,,,,,,Guinea-Bissau,Bisau Gvineja
+FJ,-16.578193,179,Fiji,Medium,,,,,,,Guyana,Gajana
+FK,-51.796253,-60,Falkland Islands [Islas Malvinas],Low,,,,,,,Haiti,Haitis
+FM,7.425554,151,Micronesia,Medium,,,,,,,Honduras,Honduras
+FO,61.892635,-7,Faroe Islands,Low,,,,,,,Hungary,Vengrija
+FR,46.227638,2,France,Low,,,,,,,Iceland,Islandija
+GA,-0.803689,12,Gabon,Medium,,,,,,,India,Indija
+GB,55.378051,-3,United Kingdom,Low,,,,,,,Indonesia,Indonezija
+GD,12.262776,-61.604171,Grenada,Low,,,,,,,Iran,Iranas
+GE,42.315407,43,Georgia,Medium,,,,,,,Iraq,Irakas
+GF,3.933889,-53,French Guiana,Low,,,,,,,Ireland,Airija
+GG,49.465691,-3,Guernsey,Low,,,,,,,Israel,Izraelis
+GH,7.946527,-1,Ghana,Medium,,,,,,,Italy,Italija
+GI,36.137741,-5,Gibraltar,Low,,,,,,,Jamaica,Jamaika
+GL,71.706936,-43,Greenland,Low,,,,,,,Japan,Japonija
+GM,13.443182,-15,Gambia,Medium,,,,,,,Jordan,Jordanija
+GN,9.945587,-10,Guinea,High,,,,,,,Kazakhstan,Kazachstanas
+GP,16.995971,-62,Guadeloupe,Low,,,,,,,Kenya,Kenija
+GQ,1.650801,10,Equatorial Guinea,High,,,,,,,Kosovo,Kosovas
+GR,39.074208,22,Greece,Low,,,,,,,Kuwait,Kuveitas
+GS,-54.429579,-37,South Georgia and the South Sandwich Islands,Low,,,,,,,Kyrgyzstan,Kirgizija
+GT,15.783471,-90,Guatemala,High,,,,,,,Laos,Laosas
+GU,13.444304,145,Guam,Low,,,,,,,Latvia,Latvija
+GW,11.803749,-15,Guinea-Bissau,High,,,,,,,Lebanon,Libanas
+GY,4.860416,-59,Guyana,Medium,,,,,,,Lesotho,Lesotas
+GZ,31.354676,34,Gaza Strip,Low,,,,,,,Liberia,Liberija
+HK,22.396428,114,Hong Kong,Low,,,,,,,Libya,Libija
+HM,-53.08181,74,Heard Island and McDonald Islands,Low,,,,,,,Lithuania,Lietuva
+HN,15.199999,-86,Honduras,High,,,,,,,Luxembourg,Liuksemburgas
+HR,45.1,15,Croatia,Low,,,,,,,Madagascar,Madagaskaras
+HT,18.971187,-72,Haiti,Very High,,,,,,,Malawi,Malavis
+HU,47.162494,20,Hungary,Low,,,,,,,Malaysia,Malaizija
+ID,-0.789275,114,Indonesia,Medium,,,,,,,Mali,Malis
+IE,53.41291,-8,Ireland,Low,,,,,,,Mauritania,Mauritanija
+IL,31.046051,35,Israel,High,,,,,,,Mexico,Meksika
+IM,54.236107,-5,Isle of Man,Low,,,,,,,Moldova,Moldova
+IN,20.593684,79,India,High,,,,,,,Mongolia,Mongolija
+IO,-6.343194,72,British Indian Ocean Territory,Low,,,,,,,Montenegro,Juodkalnija
+IQ,33.223191,44,Iraq,Very High,,,,,,,Morocco,Marokas
+IR,32.427908,54,Iran,Very High,,,,,,,Mozambique,Mozambikas
+IS,64.963051,-19,Iceland,Low,,,,,,,Myanmar,Mianmaras
+IT,41.87194,13,Italy,Low,,,,,,,N. Cyprus,äiaures Kipras
+JE,49.214439,-2,Jersey,Low,,,,,,,Namibia,Namibija
+JM,18.109581,-77,Jamaica,Medium,,,,,,,Nepal,Nepalas
+JO,30.585164,36,Jordan,Medium,,,,,,,Netherlands,Nyderlandai
+JP,36.204824,138,Japan,Low,,,,,,,New Caledonia,Naujoji Kaledonija
+KE,-0.023559,38,Kenya,High,,,,,,,New Zealand,Naujoji Zelandija
+KG,41.20438,75,Kyrgyzstan,High,,,,,,,Nicaragua,Nikaragva
+KH,12.565679,105,Cambodia,Medium,,,,,,,Niger,Nigeris
+KI,-3.370417,-169,Kiribati,Medium,,,,,,,Nigeria,Nigerija
+KM,-11.875001,44,Comoros,High,,,,,,,North Korea,äiaures Koreja
+KN,17.357822,-63,Saint Kitts and Nevis,Low,,,,,,,North Macedonia,äiaures Makedonija
+KP,40.339852,128,North Korea,Low,,,,,,,Norway,Norvegija
+KR,35.907757,128,South Korea,Low,,,,,,,Oman,Omanas
+KW,29.31166,47,Kuwait,Medium,,,,,,,Pakistan,Pakistanas
+KY,19.513469,-81,Cayman Islands,Low,,,,,,,Palestine,Palestina
+KZ,48.019573,67,Kazakhstan,Medium,,,,,,,Panama,Panama
+LA,19.85627,102,Laos,Medium,,,,,,,Papua New Guinea,Papua Naujoji Gvineja
+LB,33.854721,36,Lebanon,Very High,,,,,,,Paraguay,Paragvajus
+LC,13.909444,-61,Saint Lucia,Low,,,,,,,Peru,Peru
+LI,47.166,10,Liechtenstein,Low,,,,,,,Philippines,Filipinai
+LK,7.873054,81,Sri Lanka,Medium,,,,,,,Poland,Lenkija
+LR,6.428055,-9,Liberia,High,,,,,,,Portugal,Portugalija
+LS,-29.609988,28,Lesotho,Medium,,,,,,,Puerto Rico,Puerto Rikas
+LT,55.169438,24,Lithuania,Low,,,,,,,Qatar,Kataras
+LU,49.815273,6,Luxembourg,Low,,,,,,,Romania,Rumunija
+LV,56.879635,25,Latvia,Low,,,,,,,Russia,Rusija
+LY,26.3351,17,Libya,Very High,,,,,,,Rwanda,Ruanda
+MA,31.791702,-7,Morocco,Medium,,,,,,,S. Sudan,Pietu Sudanas
+MC,43.750298,7,Monaco,Low,,,,,,,Saudi Arabia,Saudo Arabija
+MD,47.411631,28,Moldova,Medium,,,,,,,Senegal,Senegalas
+ME,42.708678,19,Montenegro,Medium,,,,,,,Serbia,Serbija
+MG,-18.766947,47,Madagascar,Medium,,,,,,,Sierra Leone,Siera Leone
+MH,7.131474,171,Marshall Islands,Medium,,,,,,,Slovakia,Slovakija
+MK,41.608635,22,Macedonia [FYROM],Low,,,,,,,Slovenia,Slovenija
+ML,17.570692,-4,Mali,Very High,,,,,,,Solomon Is.,Saliamono Salos
+MM,21.913965,96,Myanmar [Burma],Low,,,,,,,Somalia,Somalis
+MN,46.862496,104,Mongolia,Medium,,,,,,,Somaliland,Somalis
+MO,22.198745,114,Macau,Low,,,,,,,South Africa,Pietu Afrika
+MP,17.33083,145,Northern Mariana Islands,Low,,,,,,,South Korea,Pietu Koreja
+MQ,14.641528,-61,Martinique,Low,,,,,,,Spain,Ispanija
+MR,21.00789,-11,Mauritania,High,,,,,,,Sri Lanka,äri Lanka
+MS,16.742498,-62,Montserrat,Low,,,,,,,Sudan,Sudanas
+MT,35.937496,14,Malta,Low,,,,,,,Suriname,Surinamas
+MU,-20.348404,58,Mauritius,Low,,,,,,,Sweden,ävedija
+MV,3.202778,73,Maldives,Medium,,,,,,,Switzerland,äveicarija
+MW,-13.254308,34,Malawi,Medium,,,,,,,Syria,Sirija
+MX,23.634501,-103,Mexico,High,,,,,,,Taiwan,Taivanas
+MY,4.210484,102,Malaysia,Medium,,,,,,,Tajikistan,Tadûikistanas
+MZ,-18.665695,36,Mozambique,High,,,,,,,Tanzania,Tanzanija
+,-22.95764,18,Namibia,Medium,,,,,,,Thailand,Tailandas
+NC,-20.904305,166,New Caledonia,Low,,,,,,,Timor-Leste,Rytu Timoras
+NE,17.607789,8,Niger,High,,,,,,,Togo,Togas
+NF,-29.040835,168,Norfolk Island,Low,,,,,,,Trinidad and Tobago,Trinidadas ir Tobagas
+NG,9.081999,9,Nigeria,Very High,,,,,,,Tunisia,Tunisas
+NI,12.865416,-85,Nicaragua,High,,,,,,,Turkey,Turkija
+NL,52.132633,5,Netherlands,Low,,,,,,,Turkmenistan,Turkmenistanas
+NO,60.472024,8,Norway,Low,,,,,,,Uganda,Uganda
+NP,28.394857,84,Nepal,Medium,,,,,,,Ukraine,Ukraina
+NR,-0.522778,167,Nauru,Medium,,,,,,,United Arab Emirates,Jungtiniai Arabu Emyratai
+NU,-19.054445,-170,Niue,Low,,,,,,,United Kingdom,Jungtine Karalyste
+NZ,-40.900557,175,New Zealand,Low,,,,,,,United States of America,Jungtines Amerikos Valstijos
+OM,21.512583,56,Oman,Medium,,,,,,,Uruguay,Urugvajus
+PA,8.537981,-81,Panama,Medium,,,,,,,Uzbekistan,Uzbekistanas
+PE,-9.189967,-75,Peru,High,,,,,,,Vanuatu,Vanuatu
+PF,-17.679742,-149,French Polynesia,Low,,,,,,,Venezuela,Venesuela
+PG,-6.314993,144,Papua New Guinea,High,,,,,,,Vietnam,Vietnamas
+PH,12.879721,122,Philippines,High,,,,,,,W. Sahara,Vakaru Sachara
+PK,30.375321,69,Pakistan,Very High,,,,,,,Yemen,Jemenas
+PL,51.919438,19,Poland,Low,,,,,,,Zambia,Zambija
+PM,46.941936,-56,Saint Pierre and Miquelon,Low,,,,,,,Zimbabwe,Zimbabve
+PN,-24.703615,-127,Pitcairn Islands,Low,,,,,,,eSwatini,Esvatinis
+PR,18.220833,-67,Puerto Rico,Low,,,,,,},,
+PS,31.952162,35,Palestinian Territories,Low,,,,,,,,
+PT,39.399872,-8,Portugal,Low,,,,,,,,
+PW,7.51498,135,Palau,Medium,,,,,,,,
+PY,-23.442503,-58,Paraguay,Medium,,,,,,,,
+QA,25.354826,51,Qatar,Medium,,,,,,,,
+RE,-21.115141,56,R√©union,Low,,,,,,,,
+RO,45.943161,25,Romania,Medium,,,,,,,,
+RS,44.016521,21,Serbia,Medium,,,,,,,,
+RU,61.52401,105,Russia,Very High,,,,,,,,
+RW,-1.940278,30,Rwanda,Medium,,,,,,,,
+SA,23.885942,45,Saudi Arabia,Medium,,,,,,,,
+SB,-9.64571,160,Solomon Islands,Medium,,,,,,,,
+SC,-4.679574,55,Seychelles,Low,,,,,,,,
+SD,12.862807,30,Sudan,Very High,,,,,,,,
+SE,60.128161,19,Sweden,Low,,,,,,,,
+SG,1.352083,104,Singapore,Low,,,,,,,,
+SH,-24.143474,-10,Saint Helena,Low,,,,,,,,
+SI,46.151241,14.995463,Slovenia,Low,,,,,,,,
+SJ,77.553604,23.670272,Svalbard and Jan Mayen,Low,,,,,,,,
+SK,48.669026,19.699024,Slovakia,Low,,,,,,,,
+SL,8.460555,-11.779889,Sierra Leone,High,,,,,,,,
+SM,43.94236,12.457777,San Marino,Low,,,,,,,,
+SN,14.497401,-14.452362,Senegal,Medium,,,,,,,,
+SO,5.152149,46.199616,Somalia,Very High,,,,,,,,
+SR,3.919305,-56.027783,Suriname,Medium,,,,,,,,
+ST,0.18636,6.613081,S√£o Tom√© and Pr√≠ncipe,Low,,,,,,,,
+SV,13.794185,-88.89653,El Salvador,High,,,,,,,,
+SY,34.802075,38.996815,Syria,Very High,,,,,,,,
+SZ,-26.522503,31.465866,Swaziland,Low,,,,,,,,
+TC,21.694025,-71.797928,Turks and Caicos Islands,Low,,,,,,,,
+TD,15.454166,18.732207,Chad,Very High,,,,,,,,
+TF,-49.280366,69.348557,French Southern Territories,Low,,,,,,,,
+TG,8.619543,0.824782,Togo,High,,,,,,,,
+TH,15.870032,100.992541,Thailand,Medium,,,,,,,,
+TJ,38.861034,71.276093,Tajikistan,High,,,,,,,,
+TK,-8.967363,-171.855881,Tokelau,Low,,,,,,,,
+TL,-8.874217,125.727539,Timor-Leste,Low,,,,,,,,
+TM,38.969719,59.556278,Turkmenistan,High,,,,,,,,
+TN,33.886917,9.537499,Tunisia,High,,,,,,,,
+TO,-21.178986,-175.198242,Tonga,Medium,,,,,,,,
+TR,38.963745,35.243322,Turkey,Medium,,,,,,,,
+TT,10.691803,-61.222503,Trinidad and Tobago,Medium,,,,,,,,
+TV,-7.109535,177.64933,Tuvalu,Medium,,,,,,,,
+TW,23.69781,120.960515,Taiwan,Low,,,,,,,,
+TZ,-6.369028,34.888822,Tanzania,Medium,,,,,,,,
+UA,48.379433,31.16558,Ukraine,Very High,,,,,,,,
+UG,1.373333,32.290275,Uganda,Medium,,,,,,,,
+UM,0,0,U.S. Minor Outlying Islands,Low,,,,,,,,
+US,37.09024,-95.712891,United States,Low,,,,,,,,
+UY,-32.522779,-55.765835,Uruguay,Low,,,,,,,,
+UZ,41.377491,64.585262,Uzbekistan,Medium,,,,,,,,
+VA,41.902916,12.453389,Vatican City,Low,,,,,,,,
+VC,12.984305,-61.287228,Saint Vincent and the Grenadines,Low,,,,,,,,
+VE,6.42375,-66.58973,Venezuela,Very High,,,,,,,,
+VG,18.420695,-64.639968,British Virgin Islands,Low,,,,,,,,
+VI,18.335765,-64.896335,U.S. Virgin Islands,Low,,,,,,,,
+VN,14.058324,108.277199,Vietnam,Medium,,,,,,,,
+VU,-15.376706,166.959158,Vanuatu,Medium,,,,,,,,
+WF,-13.768752,-177.156097,Wallis and Futuna,Low,,,,,,,,
+WS,-13.759029,-172.104629,Samoa,Medium,,,,,,,,
+XK,42.602636,20.902977,Kosovo,Medium,,,,,,,,
+YE,15.552727,48.516388,Yemen,Very High,,,,,,,,
+YT,-12.8275,45.166244,Mayotte,Low,,,,,,,,
+ZA,-30.559482,22.937506,South Africa,High,,,,,,,,
+ZM,-13.133897,27.849332,Zambia,Medium,,,,,,,,
+ZW,-19.015438,29.154857,Zimbabwe,High,,,,,,,,

@@ -13,5 +13,9 @@
         <p>El. paštas: {{ profile.broker.el_pastas }}</p>
         <p>Tel. numeris: {{ profile.broker.tel_numeris }}</p>
     </div>
+    <div>
+        <a href="{% url 'register_contract' %}" class="btn btn-primary">Register Contract</a>
+        <a href="{% url 'register_client' %}" class="btn btn-primary">Register Client</a>
+    </div>
 </div>
 {% endblock %}

@@ -1,4 +1,4 @@
-country,latitude,longitude,name,Risk
+country,latitude,longitude,name,map_risk
 AD,42.546245,1.601554,Andorra,Low
 AE,23.424076,54,United Arab Emirates,Low
 AF,33.93911,68,Afghanistan,Very High

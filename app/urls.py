@@ -6,7 +6,7 @@ from django.contrib.auth import views as auth_view
 urlpatterns = [
     path('', views.home, name='home'),
     path('price-calculator/', views.price_calculator, name='price_calculator'),
-    path('calculate-price/', views.calculate_price, name='calculate_price'),
+    # path('calculate-price/', views.calculate_price, name='calculate_price'),
     path('app/kliento_paskyra/', views.kliento_paskyra, name='kliento_paskyra'),
     path('registracija/', views.registracija, name='registracija'),
     path('app/atsijungti/', views.logout_view, name='logout'),

@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django import forms
-from .models import Profile, Polisai, Klientai, Brokeriai
+from .models import Profile, Polisai, Klientai, Brokeriai, Country, Paslaugos, TravelMode, Cover1, Cover2, Cover3, Iskaita
 from .widgets import DeductibleSelect
 from django.db import IntegrityError
 from django.contrib.auth.forms import UserCreationForm
@@ -86,7 +86,7 @@ class PolisaiForm(forms.ModelForm):
 
     class Meta:
         model = Polisai
-        fields = ['brokeriai', 'paslaugos', 'pradzios_data', 'pabaigos_data', 'draudimo_suma', 'iskaita', 'apsauga']
+        fields = ['brokeriai', 'paslaugos', 'pradzios_data', 'pabaigos_data', 'iskaita']
 
 ###### TEST
 class NaujaKlientoRegistracijosForma(UserCreationForm):
@@ -160,3 +160,52 @@ class BrokerRegisterForm(forms.ModelForm):
             if password and password1 and password != password1:
                 raise forms.ValidationError("Slaptažodžiai nesutampa")
             return password1
+
+###### TEST
+class TravelContractForm(forms.Form):
+    klientas = forms.ModelChoiceField(queryset=Klientai.objects.all(), label='Klientas', required=False)
+    brokeris = forms.ModelChoiceField(queryset=Brokeriai.objects.all(), label='Brokeris', required=False)
+    country = forms.ModelChoiceField(queryset=Country.objects.all(), label='Šalis')
+    travel_start_date = forms.DateField(label='Kelionės pradžios data')
+    travel_end_date = forms.DateField(label='Kelionės pabaigos data')
+    paslaugos = forms.ModelChoiceField(queryset=Paslaugos.objects.all(), label='Paslaugos')
+    cover3 = forms.ModelChoiceField(queryset=Cover1.objects.all(), label='Medicininės išlaidos', required=False)
+    cover1 = forms.ModelChoiceField(queryset=Cover2.objects.all(), label='Nelaimingi atsitikimai', required=False)
+    cover2 = forms.ModelChoiceField(queryset=Cover3.objects.all(), label='Civilinė atsakomybė', required=False)
+    travel_mode = forms.ModelChoiceField(queryset=TravelMode.objects.all(), label='Kelionės būdas')
+    iskaita = forms.ModelChoiceField(queryset=Iskaita.objects.all(), label='Išskaita', required=False)
+    total_price = forms.FloatField(label='Viso kaina', required=False, widget=forms.TextInput(attrs={'readonly': 'readonly'}))
+
+
+##### price calc
+
+class InsuranceCostCalculationForm(forms.ModelForm):
+    country = forms.ModelChoiceField(queryset=Country.objects.all(), label='Pasirinkite šalį')
+    travel_mode = forms.ModelChoiceField(queryset=TravelMode.objects.all(), label='Keliavimo būdas')
+    trip_duration = forms.IntegerField(label='Kelionės dienų skaičius')
+    cover1 = forms.ModelChoiceField(queryset=Cover1.objects.all(), label='Nelaimingi atsitikimai', required=False)
+    cover2 = forms.ModelChoiceField(queryset=Cover2.objects.all(), label='Civilinė atsakomybė', required=False)
+    cover3 = forms.ModelChoiceField(queryset=Cover3.objects.all(), label='Medicininės išlaidos', required=True)
+    iskaita = forms.ModelChoiceField(queryset=Iskaita.objects.all(), label='Taikoma išskaita')
+    paslaugos = forms.ModelChoiceField(queryset=Paslaugos.objects.all(), label='Paslaugos', widget=forms.HiddenInput, required=True)
+
+    class Meta:
+        model = Polisai
+        fields = ['country', 'travel_mode', 'trip_duration', 'cover1', 'cover2', 'cover3', 'iskaita', 'paslaugos']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if 'initial' in kwargs and 'paslaugos' not in kwargs['initial']:
+            default_paslaugos = Paslaugos.objects.get(pk=1)  # Assuming the default is Kelionių draudimas
+            self.fields['paslaugos'].initial = default_paslaugos.pk
+        elif not self.fields['paslaugos'].initial:
+            default_paslaugos = Paslaugos.objects.get(pk=1)
+            self.fields['paslaugos'].initial = default_paslaugos.pk
+
+    def clean_paslaugos(self):
+        paslaugos = self.cleaned_data.get('paslaugos')
+        if not paslaugos:
+            default_paslaugos = Paslaugos.objects.get(pk=1)  # Assuming the default is Kelionių draudimas
+            return default_paslaugos
+        return paslaugos
+

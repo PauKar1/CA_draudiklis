@@ -1,98 +1,50 @@
 {% extends "base.html" %}
-
+{% block title %}
+    Skaičiuoti Kainą
+{% endblock %}
 {% block content %}
-<style>
-    .deductible-group {
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-        gap: 0px;
-    }
-    .deductible-item {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin: 10px 50px; /* Adjust the margin to reduce the gaps */
-    }
-    .deductible-item label {
-        margin-bottom: 0px; /* Adjust the margin between label and radio button */
-    }
-</style>
-<h1>Skaičiuoti Kainą</h1>
-<form method="post" action="{% url 'calculate_price' %}">
-    {% csrf_token %}
-    <label for="country">Pasirinkite šalį:</label>
-    <select id="country" name="country" required>
-       {% for country in countries %}
-            <option value="{{ country.name }}" {% if country.name == selected_country %}selected{% endif %}>{{ country.name }}</option>
-        {% endfor %}
-    </select><br><br>
-
-    <p>Apačioje rasite žemėlapį su rekomendacijomis kur šiuo metu saugu keliauti, daugiau informacijos galite rasti: <a
-            href="https://keliauk.urm.lt/">https://keliauk.urm.lt/</a>.</p>
-    <a href="{% url 'map_view' %}">* Patikrinkite šalies įspėjimo lygį pagal Užsienio reikalų ministerijos duomenis</a><br><br>
-
-    <label for="travel-mode">Keliavimo būdas:</label>
-    <select id="travel-mode" name="travel_mode">
-        <option value="plane">Lėktuvas</option>
-        <option value="car">Automobilis</option>
-        <option value="motorcycle">Motociklas</option>
-        <option value="ship">Laivas</option>
-        <option value="bike">Dviratis</option>
-        <option value="foot">Pėsčiomis</option>
-    </select><br><br>
-
-    <label for="trip-duration">Kelionės dienų skaičius:</label>
-    <input type="number" id="trip-duration" name="trip_duration" required min="1"><br><br>
-    <input type="checkbox" id="medicinines_islaidos" name="apsauga" value="medicinines_islaidos" required checked>
-    <label for="medicinines_islaidos">Medicininės išlaidos</label><br>
-
-    <label for="draudimo_suma">Draudimo suma:</label>
-    <select id="draudimo_suma" name="draudimo_suma">
-        <option value="100000">100,000</option>
-        <option value="300000">300,000</option>
-        <option value="500000">500,000</option>
-    </select><br><br>
-    <p>Papildomi produktai: </p>
-    <input type="checkbox" id="nelaimingi_atsitikimai" name="apsauga" value="nelaimingi_atsitikimai">
-    <label for="nelaimingi_atsitikimai">Nelaimingi atsitikimai</label>
-    <p>(Draudimo suma 3000 EUR per sutarties laikotarpį, papildoma įmoka prie sutarties 10 EUR)</p><br>
-
-    <input type="checkbox" id="civiline_atsakomybe" name="apsauga" value="civiline_atsakomybe">
-    <label for="civiline_atsakomybe">Civilinė atsakomybė</label>
-    <p>(Draudimo suma 1500 EUR per sutarties laikotarpį, papildoma įmoka prie sutarties 2 EUR)</p><br>
-
-    <label>Taikoma išskaita pasirinktoms paslaugoms:</label><br>
-    <div class="deductible-group">
-        <div class="deductible-item">
-            <label for="iskaita0">0</label>
-            <input type="radio" id="iskaita0" name="iskaita" value="0" checked>
+<div class="container">
+    <h1>Skaičiuoti Kainą</h1>
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ form.country.label_tag }}<br>
+            {{ form.country }}
         </div>
-        <div class="deductible-item">
-            <label for="iskaita50">50</label>
-            <input type="radio" id="iskaita50" name="iskaita" value="50">
+        <div class="form-group">
+            {{ form.travel_mode.label_tag }}<br>
+            {{ form.travel_mode }}
         </div>
-        <div class="deductible-item">
-            <label for="iskaita80">80</label>
-            <input type="radio" id="iskaita80" name="iskaita" value="80">
+        <div class="form-group">
+            {{ form.trip_duration.label_tag }}<br>
+            {{ form.trip_duration }}
         </div>
-        <div class="deductible-item">
-            <label for="iskaita100">100</label>
-            <input type="radio" id="iskaita100" name="iskaita" value="100">
+        <div class="form-group">
+            <h3>Medicininės išlaidos</h3>
+            {{ form.cover3 }}
         </div>
-        <div class="deductible-item">
-            <label for="iskaita120">120</label>
-            <input type="radio" id="iskaita120" name="iskaita" value="120">
+        <div class="form-group">
+            <h3>Papildomi produktai:</h3>
+            <label>
+                {{ form.cover1 }} {{ form.cover1.label_tag }}
+            </label><br>
+            <label>
+                {{ form.cover2 }} {{ form.cover2.label_tag }}
+            </label>
         </div>
-    </div>
+        <div class="form-group">
+            {{ form.iskaita.label_tag }}<br>
+            {{ form.iskaita }}
+        </div>
+        {{ form.paslaugos }}  <!-- Ensure this hidden field is included in the form -->
+        <input type="hidden" name="paslaugos" value="{{ form.fields.paslaugos.initial }}">  <!-- Manually add hidden input -->
+        <button type="submit">Skaičiuoti</button>
+    </form>
 
-    <button type="submit">Skaičiuoti</button>
-</form>
-
-{% if total_price %}
-<div id="calculation-result">
-    <h2>Preliminari kaina: {{ total_price }} EUR</h2>
-    <a href="{% url 'register_contract' %}" class="btn btn-primary">Registruoti sutartį</a>
+    {% if total_cost %}
+        <div>
+            <h2>Preliminari kaina: {{ total_cost }} EUR</h2>
+        </div>
+    {% endif %}
 </div>
-{% endif %}
 {% endblock %}
