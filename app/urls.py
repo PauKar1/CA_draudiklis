@@ -33,6 +33,8 @@ urlpatterns = [
 
     path('draudimo-produktai/', views.draudimo_produktai, name='draudimo_produktai'),
     path('draudimo-produktai/keliones-draudimas/', views.keliones_draudimas, name='keliones_draudimas'),
+    path('faq/', views.faq, name='faq'),
+    path('contact/', views.contact, name='contact'),
 
     path('partneriams/', views.broker_login, name='broker_login'),
     path('partneriams/register/', views.broker_register, name='broker_register'),
