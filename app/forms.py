@@ -186,12 +186,21 @@ class BrokerRegisterForm(forms.ModelForm):
             'tel_numeris': forms.TextInput(attrs={'class': 'form-control'}),
         }
 
-        def clean_password1(self):
-            password = self.cleaned_data.get('password')
-            password1 = self.cleaned_data.get('password1')
-            if password and password1 and password != password1:
-                raise forms.ValidationError("Slaptažodžiai nesutampa")
-            return password1
+    def clean_password1(self):
+        password = self.cleaned_data.get('password')
+        password1 = self.cleaned_data.get('password1')
+        if password and password1 and password != password1:
+            raise forms.ValidationError("Slaptažodžiai nesutampa")
+        return password1
+
+    def clean(self):
+        cleaned_data = super().clean()
+        password = cleaned_data.get("password")
+        password1 = cleaned_data.get("password1")
+
+        if password and password1 and password != password1:
+            self.add_error('password1', "Slaptažodžiai nesutampa")
+
 
 ###### TEST
 class TravelContractForm(forms.Form):

@@ -5,17 +5,90 @@
 {% endblock %}
 
 {% block content %}
-<div class="container">
-    <h1>{{ profile.broker.vardas }} {{ profile.broker.pavarde }} Profilis</h1>
-    <div>
-        <img src="{{ user_profile_picture }}" alt="Profile Picture" style="width: 200px; height: 200px;">
-        <p>Įmonė: {{ profile.broker.imones_pavadinimas }}</p>
-        <p>El. paštas: {{ profile.broker.el_pastas }}</p>
-        <p>Tel. numeris: {{ profile.broker.tel_numeris }}</p>
-    </div>
-    <div>
-        <a href="{% url 'register_contract' %}" class="btn btn-primary">Register Contract</a>
-        <a href="{% url 'register_client' %}" class="btn btn-primary">Register Client</a>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-3">
+            <h1>{{ profile.broker.vardas }} {{ profile.broker.pavarde }} Profilis</h1>
+            <div>
+                <img src="{{ user_profile_picture }}" alt="Profile Picture" class="img-fluid rounded-circle">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-primary">Update Profile</button>
+                </form>
+            </div>
+            <div class="mt-3">
+                <a href="{% url 'register_contract' %}" class="btn btn-primary">Register Contract</a>
+                <a href="{% url 'register_client' %}" class="btn btn-primary">Register Client</a>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <h2>Issued Policies</h2>
+            <table class="table table-bordered table-hover mt-3">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Brokeris</th>
+                        <th>Paslaugos</th>
+                        <th>Pradžios data</th>
+                        <th>Pabaigos data</th>
+                        <th>Išskaita</th>
+                        <th>Nelaimingi atsitikimai</th>
+                        <th>Civilinė atsakomybė</th>
+                        <th>Medicininės išlaidos</th>
+                        <th>Kaina</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for contract in contracts %}
+                    <tr>
+                        <td>{{ contract.brokeriai }}</td>
+                        <td>{{ contract.paslaugos }}</td>
+                        <td>{{ contract.pradzios_data }}</td>
+                        <td>{{ contract.pabaigos_data }}</td>
+                        <td>{{ contract.iskaita }}</td>
+                        <td>{{ contract.cover1 }}</td>
+                        <td>{{ contract.cover2 }}</td>
+                        <td>{{ contract.cover3 }}</td>
+                        <td>{{ contract.price }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="9" class="text-center">No contracts found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <h2>Registered Clients</h2>
+            <table class="table table-bordered table-hover mt-3">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Vardas</th>
+                        <th>Pavardė</th>
+                        <th>El. paštas</th>
+                        <th>Tel. numeris</th>
+                        <th>Gimimo data</th>
+                        <th>Adresas</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for client in clients %}
+                    <tr>
+                        <td>{{ client.vardas }}</td>
+                        <td>{{ client.pavarde }}</td>
+                        <td>{{ client.el_pastas }}</td>
+                        <td>{{ client.tel_numeris }}</td>
+                        <td>{{ client.gimimo_data }}</td>
+                        <td>{{ client.adresas }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="text-center">No clients found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 {% endblock %}

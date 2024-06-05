@@ -298,6 +298,11 @@ def broker_register(request):
             email = form.cleaned_data['el_pastas']
             password = form.cleaned_data['password']
 
+            # Check if the email already exists
+            if User.objects.filter(username=email).exists():
+                messages.error(request, 'Email is already registered.')
+                return redirect('broker_register')
+
             user = User.objects.create_user(username=email, email=email, password=password)
             broker = form.save(commit=False)
             broker.user = user
@@ -312,12 +317,45 @@ def broker_register(request):
         form = BrokerRegisterForm()
     return render(request, 'broker_register.html', {'form': form})
 
+
+@login_required
 def broker_profile(request, broker_id):
     profile = get_object_or_404(BrokerProfile, broker__id=broker_id)
+    clients = Klientai.objects.filter(polisai__brokeriai=profile.broker).distinct()
+    contracts = Polisai.objects.filter(brokeriai=profile.broker)
+
+    if request.method == 'POST':
+        form = BrokeriaiUpdateForm(request.POST, instance=profile.broker)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Profile updated successfully!')
+            return redirect('broker_profile', broker_id=broker_id)
+    else:
+        form = BrokeriaiUpdateForm(instance=profile.broker)
+
     return render(request, 'broker_profile.html', {
         'profile': profile,
-        'user_profile_picture': request.user.brokerprofile.profile_picture.url
+        'form': form,
+        'clients': clients,
+        'contracts': contracts,
+        'user_profile_picture': profile.profile_picture.url if profile.profile_picture else None
     })
+
+# @login_required
+# def profile_edit(request):
+#     profile = get_object_or_404(BrokerProfile, user=request.user)
+#     if request.method == 'POST':
+#         form = BrokerProfileForm(request.POST, request.FILES, instance=profile)
+#         if form.is_valid():
+#             form.save()
+#             messages.success(request, 'Profile updated successfully!')
+#             return redirect('broker_profile', broker_id=profile.broker.id)
+#     else:
+#         form = BrokerProfileForm(instance=profile)
+#     return render(request, 'profile_edit.html', {'form': form, 'profile': profile})
+
+
+
 def broker_logout(request):
     logout(request)
     return render(request, 'broker_logout.html')

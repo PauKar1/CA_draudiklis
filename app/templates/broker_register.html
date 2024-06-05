@@ -1,16 +1,24 @@
 {% extends "base.html" %}
 
 {% block title %}
-    Brokerių Registracija
+    Broker Register - Draudiklis.lt
 {% endblock %}
 
 {% block content %}
-<div class="container">
-    <h1>Partneriams Registracija</h1>
-    <form method="post" action="{% url 'broker_register' %}">
+<div class="container mt-5">
+    <h1>Register Broker</h1>
+    <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Registruotis</button>
+        <button type="submit" class="btn btn-primary">Register</button>
     </form>
+
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
 </div>
 {% endblock %}

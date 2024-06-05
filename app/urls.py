@@ -45,11 +45,11 @@ urlpatterns = [
     path('faq/', views.faq, name='faq'),
     path('contact/', views.contact, name='contact'),
 
-    path('partneriams/', views.broker_login, name='broker_login'),
+    path('partneriams/login/', views.broker_login, name='broker_login'),
     path('partneriams/register/', views.broker_register, name='broker_register'),
     path('partneriams/profile/<int:broker_id>/', views.broker_profile, name='broker_profile'),
-    path('partneriams/logout/', auth_view.LogoutView.as_view(next_page='home'), name='broker_logout'),
-    path('logout/', auth_view.LogoutView.as_view(next_page='home'), name='logout'),
+    path('partneriams/logout/', views.broker_logout, name='broker_logout'),
+    # path('partneriams/profile/edit/', views.profile_edit, name='profile_edit'),  # Add this line
 
 ]
 if settings.DEBUG:
