@@ -16,17 +16,17 @@ class Command(BaseCommand):
         m = folium.Map(location=[0, 0], zoom_start=2)
 
         # Define a function to get the risk level color
-        def get_color(risk_level):
+        def get_color(map_risk):
             return {
                 'Low': 'green',
                 'Medium': 'yellow',
                 'High': 'orange',
                 'Very High': 'red',
                 'Extreme': 'black'
-            }.get(risk_level, 'gray')
+            }.get(map_risk, 'gray')
 
         # Prepare a dictionary with country risk levels
-        country_risk_levels = {country.name: country.risk_level for country in Country.objects.all()}
+        country_risk_levels = {country.name: country.map_risk for country in Country.objects.all()}
 
         # Style function
         def style_function(feature):

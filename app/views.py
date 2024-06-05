@@ -1,8 +1,7 @@
 from django.http import HttpResponse
 from django.urls import reverse
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import JsonResponse, HttpResponseBadRequest
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 from .forms import (KlientasRegistrationForm, ProfileUpdateForm, KlientasUpdateForm, KlientaiForm,
                     PolisaiForm, NaujaKlientoRegistracijosForma, BrokeriaiUpdateForm, BrokerLoginForm,
@@ -24,13 +23,11 @@ def home(request):
     return render(request, 'home.html')
 
 
-
-
-
 ################### MAP
 
 def map_view(request):
     return render(request, 'country_map.html')
+
 
 ############### REGISTRATION
 
@@ -57,7 +54,8 @@ def registracija(request):
                     user, created = User.objects.get_or_create(email=email, defaults={'username': username})
                     if not created:
                         if Klientai.objects.filter(user=user).exists():
-                            messages.error(request, "Nepavyko sukurti paskyros. Vartotojas jau susietas su kitu klientu.")
+                            messages.error(request,
+                                           "Nepavyko sukurti paskyros. Vartotojas jau susietas su kitu klientu.")
                             return render(request, 'registracija.html', {'form': form})
                         else:
                             # Update the username if it was modified to ensure uniqueness
@@ -75,7 +73,6 @@ def registracija(request):
                     # Attach user to klientas and save
                     klientas.user = user
                     klientas.save()
-
 
                     try:
                         profile = user.profile
@@ -102,14 +99,17 @@ def registracija(request):
         form = KlientasRegistrationForm()
     return render(request, 'registracija.html', {'form': form})
 
+
 @login_required
 def registracija_success(request):
     return render(request, 'registracija_success.html', {'user': request.user})
+
 
 def logout_view(request):
     logout(request)
     messages.info(request, "Jūs sėkmingai atsijungėte.")
     return redirect('home')
+
 
 def kliento_paskyra(request):
     if request.method == 'POST':
@@ -130,6 +130,7 @@ def kliento_paskyra(request):
         form = AuthenticationForm()
     return render(request, 'kliento_paskyra.html', {'form': form})
 
+
 @login_required
 def client_policies(request):
     try:
@@ -138,7 +139,6 @@ def client_policies(request):
     except Klientai.DoesNotExist:
         policies = []
     return render(request, 'client_policies.html', {'policies': policies})
-
 
 
 @login_required
@@ -160,7 +160,6 @@ def update_klientas(request):
         form = KlientasUpdateForm(instance=klientas)
 
     return render(request, 'update_klientas.html', {'form': form})
-
 
 
 ####### TEST
@@ -212,7 +211,6 @@ def update_brokeris(request):
     return render(request, 'update_brokeris.html', {'form': form})
 
 
-
 ##### profilis
 @login_required
 def profile_view(request):
@@ -231,7 +229,8 @@ def profile_view(request):
         form = ProfileUpdateForm(instance=profile)
 
     profile_picture_url = profile.picture.url if profile.picture else None
-    return render(request, 'profile_edit.html', {'form': form, 'profile': profile, 'user_profile_picture': profile_picture_url})
+    return render(request, 'profile_edit.html',
+                  {'form': form, 'profile': profile, 'user_profile_picture': profile_picture_url})
 
 
 @login_required
@@ -253,17 +252,19 @@ def profile(request):
     return render(request, 'profile.html', {'profile': klientai, 'contracts': contracts, })
 
 
-
 #####static() fields
 
 def draudimo_produktai(request):
     return render(request, 'draudimo_produktai.html')
 
+
 def keliones_draudimas(request):
     return render(request, 'keliones_draudimas.html')
 
+
 def faq(request):
     return render(request, 'faq.html')
+
 
 def contact(request):
     return render(request, 'contact.html')
@@ -380,9 +381,11 @@ def broker_update_klientas(request, client_id):
 
     return render(request, 'broker_update_klientas.html', {'form': form})
 
+
 def broker_logout(request):
     logout(request)
     return render(request, 'broker_logout.html')
+
 
 ################ PRICE CALC
 
@@ -443,7 +446,6 @@ def price_calculator(request):
     return render(request, 'price_calculator.html', {'form': form})
 
 
-
 @login_required
 def register_contract(request):
     if request.method == 'POST':
@@ -463,8 +465,6 @@ def register_contract(request):
                 # Redirect to a success page or appropriate URL
                 return redirect('broker_profile')
             else:
-                # Broker does not have permission to register contract for this client
-                # You can add error handling or redirect to an error page
                 pass
 
     else:
@@ -488,6 +488,7 @@ def register(request):
     else:
         form = UserRegisterForm()
     return render(request, 'register.html', {'form': form})
+
 
 @login_required
 def register_client(request):
@@ -583,12 +584,8 @@ def register_policy(request):
 
     return render(request, 'register_policy.html', {'klientai_form': klientai_form, 'polisai_form': polisai_form})
 
+
 def policy_success(request):
     return render(request, 'policy_success.html')
-
-
-
-
-
 
 ###### for pricing part END
