@@ -94,6 +94,9 @@ class CountryRisk(models.Model):
     risk_level = models.CharField(max_length=100)  # Šalies rizikos lygis
     kof = models.FloatField()  # Šalies rizikos koeficientas
 
+    def __str__(self):
+        return f"Rizikos lygis {self.risk_level}"
+
 
 # Modelis, skirtas šalies informacijai saugoti
 class Country(models.Model):
@@ -134,6 +137,19 @@ class Polisai(models.Model):
         if isinstance(self.pradzios_data, date) and isinstance(self.pabaigos_data, date):
             return (self.pabaigos_data - self.pradzios_data).days
         return 0
+
+    def save(self, *args, **kwargs):
+        # Calculate the price based on the covers and trip duration
+        trip_duration = self.trip_duration
+        base_cost = self.paslaugos.kaina * trip_duration
+        cover1_cost = base_cost * self.cover1.na_kof if self.cover1 else 0
+        cover2_cost = base_cost * self.cover2.civ_kof if self.cover2 else 0
+        cover3_cost = base_cost * self.cover3.med_kof if self.cover3 else 0
+        iskaita_cost = base_cost * self.iskaita.kof if self.iskaita else 0
+
+        self.price = base_cost + cover1_cost + cover2_cost + cover3_cost + iskaita_cost
+
+        super().save(*args, **kwargs)
 
 
 # Modelis, skirtas vartotojo profiliui saugoti
