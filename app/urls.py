@@ -49,7 +49,9 @@ urlpatterns = [
     path('partneriams/register/', views.broker_register, name='broker_register'),
     path('partneriams/profile/<int:broker_id>/', views.broker_profile, name='broker_profile'),
     path('partneriams/logout/', views.broker_logout, name='broker_logout'),
-    # path('partneriams/profile/edit/', views.profile_edit, name='profile_edit'),  # Add this line
+    # path('broker/register-client/', views.broker_register_client, name='broker_register_client'),
+    path('broker/register-client-user/', views.broker_klientai_user_create, name='broker_klientai_user_create'),
+    path('broker/update-klientas/<int:client_id>/', views.broker_update_klientas, name='broker_update_klientas'),
 
 ]
 if settings.DEBUG:

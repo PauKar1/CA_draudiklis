@@ -24,6 +24,9 @@
         <div id="country-link" class="form-group" style="padding: 10px;">
             <!-- This will be updated dynamically based on the selected country -->
         </div>
+        <div id="map-link" class="form-group" style="padding: 10px;">
+            <a href="{% url 'map_view' %}" style="font-size: 16px; text-decoration: none; color: #007bff;">Peržiūrėti URM rizikų žemėlapį</a>
+        </div>
         <div class="form-group">
             {{ form.travel_mode.label_tag }}<br>
             {{ form.travel_mode }}
@@ -49,8 +52,8 @@
             {{ form.iskaita.label_tag }}<br>
             {{ form.iskaita }}
         </div>
-        {{ form.paslaugos }}  <!-- Ensure this hidden field is included in the form -->
-        <input type="hidden" name="paslaugos" value="{{ form.fields.paslaugos.initial }}">  <!-- Manually add hidden input -->
+        {{ form.paslaugos }}
+        <input type="hidden" name="paslaugos" value="{{ form.fields.paslaugos.initial }}">
         <button type="submit">Skaičiuoti</button>
     </form>
 
@@ -67,6 +70,7 @@
         var countryField = document.querySelector('[name="country"]');
         var riskLevelDiv = document.getElementById('risk-level');
         var countryLinkDiv = document.getElementById('country-link');
+
         var countryRisks = {
             'low': { color: 'green', text: 'Žemas' },
             'medium': { color: 'yellow', text: 'Vidutinis' },

@@ -201,6 +201,28 @@ class BrokerRegisterForm(forms.ModelForm):
         if password and password1 and password != password1:
             self.add_error('password1', "Slaptažodžiai nesutampa")
 
+class BrokerKlientaiUserCreateForm(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput, label='Slaptažodis')
+    password_confirmation = forms.CharField(widget=forms.PasswordInput, label='Patvirtinkite slaptažodį')
+
+    class Meta:
+        model = User
+        fields = ['username', 'password']
+
+    def clean_password_confirmation(self):
+        password = self.cleaned_data.get('password')
+        password_confirmation = self.cleaned_data.get('password_confirmation')
+        if password and password_confirmation and password != password_confirmation:
+            raise forms.ValidationError("Slaptažodžiai nesutampa")
+        return password_confirmation
+
+class KlientaiUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Klientai
+        fields = ['vardas', 'pavarde', 'adresas', 'tel_numeris', 'el_pastas', 'gimimo_data']
+        widgets = {
+            'gimimo_data': forms.DateInput(attrs={'type': 'date'}),
+        }
 
 ###### TEST
 class TravelContractForm(forms.Form):

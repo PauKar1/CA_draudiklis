@@ -6,7 +6,8 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib import messages
 from .forms import (KlientasRegistrationForm, ProfileUpdateForm, KlientasUpdateForm, KlientaiForm,
                     PolisaiForm, NaujaKlientoRegistracijosForma, BrokeriaiUpdateForm, BrokerLoginForm,
-                    BrokerRegisterForm, TravelContractForm, InsuranceCostCalculationForm, UserRegisterForm)
+                    BrokerRegisterForm, TravelContractForm, InsuranceCostCalculationForm, UserRegisterForm,
+                    BrokerKlientaiUserCreateForm, KlientaiUpdateForm)
 from .models import (Profile, Country, Paslaugos, Klientai, Brokeriai, Polisai, BrokerProfile,
                      CountryRisk, Cover1, Cover2, Cover3, TravelMode, Iskaita)
 from django.contrib.auth.models import User, Group
@@ -341,20 +342,43 @@ def broker_profile(request, broker_id):
         'user_profile_picture': profile.profile_picture.url if profile.profile_picture else None
     })
 
-# @login_required
-# def profile_edit(request):
-#     profile = get_object_or_404(BrokerProfile, user=request.user)
-#     if request.method == 'POST':
-#         form = BrokerProfileForm(request.POST, request.FILES, instance=profile)
-#         if form.is_valid():
-#             form.save()
-#             messages.success(request, 'Profile updated successfully!')
-#             return redirect('broker_profile', broker_id=profile.broker.id)
-#     else:
-#         form = BrokerProfileForm(instance=profile)
-#     return render(request, 'profile_edit.html', {'form': form, 'profile': profile})
+
+def broker_klientai_user_create(request):
+    profile = BrokerProfile.objects.get(user=request.user)
+    if request.method == 'POST':
+        form = BrokerKlientaiUserCreateForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.set_password(form.cleaned_data['password'])
+            user.save()
+
+            # Create a Klientai instance and associate it with the newly created user
+            client = Klientai(user=user)
+            client.save()
+
+            messages.success(request, f'Klientas sėkmingai užregistruotas! Vartotojo vardas: {user.username}')
+            return redirect('broker_update_klientas', client_id=client.id)
+    else:
+        form = BrokerKlientaiUserCreateForm()
+
+    return render(request, 'broker_update_klientas.html', {'form': form})
 
 
+def broker_update_klientas(request, client_id):
+    klientas = get_object_or_404(Klientai, id=client_id, user=request.user)
+
+    if request.method == 'POST':
+        form = KlientaiUpdateForm(request.POST, instance=klientas)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Your profile has been updated!')
+            return redirect('broker_profile', client_id=klientas.id)
+        else:
+            messages.error(request, 'Please correct the error below.')
+    else:
+        form = KlientaiUpdateForm(instance=klientas)
+
+    return render(request, 'broker_update_klientas.html', {'form': form})
 
 def broker_logout(request):
     logout(request)

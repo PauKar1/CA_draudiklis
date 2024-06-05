@@ -14,16 +14,16 @@
                 <form method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     {{ form.as_p }}
-                    <button type="submit" class="btn btn-primary">Update Profile</button>
+                    <button type="submit" class="btn btn-primary">Atnaujinti profilį</button>
                 </form>
             </div>
             <div class="mt-3">
-                <a href="{% url 'register_contract' %}" class="btn btn-primary">Register Contract</a>
-                <a href="{% url 'register_client' %}" class="btn btn-primary">Register Client</a>
+<!--                <a href="{% url 'register_policy' %}" class="btn btn-primary">Registruoti sutartį</a>-->
+<!--                 <a href="{% url 'broker_klientai_user_create' %}" class="btn btn-primary">Registruoti naują klientą</a>-->
             </div>
         </div>
         <div class="col-md-9">
-            <h2>Issued Policies</h2>
+            <h2>Išduotos sutartys</h2>
             <table class="table table-bordered table-hover mt-3">
                 <thead class="thead-light">
                     <tr>
@@ -59,7 +59,7 @@
                 </tbody>
             </table>
 
-            <h2>Registered Clients</h2>
+            <h2>Registruotos sutartys </h2>
             <table class="table table-bordered table-hover mt-3">
                 <thead class="thead-light">
                     <tr>

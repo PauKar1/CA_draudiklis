@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Register Client User
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Register Client User</h1>
+    <form method="post" class="row g-3">
+        {% csrf_token %}
+        <div class="col-md-6">
+            <div class="form-group mb-3">
+                {{ klientai_form.vardas.label_tag }}
+                {{ klientai_form.vardas }}
+            </div>
+            <div class="form-group mb-3">
+                {{ klientai_form.pavarde.label_tag }}
+                {{ klientai_form.pavarde }}
+            </div>
+            <div class="form-group mb-3">
+                {{ klientai_form.tel_numeris.label_tag }}
+                {{ klientai_form.tel_numeris }}
+            </div>
+            <div class="form-group mb-3">
+                {{ klientai_form.gimimo_data.label_tag }}
+                {{ klientai_form.gimimo_data }}
+            </div>
+            <div class="form-group mb-3">
+                {{ klientai_form.adresas.label_tag }}
+                {{ klientai_form.adresas }}
+            </div>
+            <div class="form-group mb-3">
+                {{ klientai_form.el_pastas.label_tag }}
+                {{ klientai_form.el_pastas }}
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Register Client</button>
+    </form>
+</div>
+{% endblock %}
