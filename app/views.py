@@ -1,4 +1,3 @@
-from django.http import HttpResponse
 from django.urls import reverse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import AuthenticationForm
@@ -8,30 +7,24 @@ from .forms import (KlientasRegistrationForm, ProfileUpdateForm, KlientasUpdateF
                     BrokerRegisterForm, TravelContractForm, InsuranceCostCalculationForm, UserRegisterForm,
                     BrokerKlientaiUserCreateForm, KlientaiUpdateForm)
 from .models import (Profile, Country, Paslaugos, Klientai, Brokeriai, Polisai, BrokerProfile,
-                     CountryRisk, Cover1, Cover2, Cover3, TravelMode, Iskaita)
+                     Cover1, Cover2, Cover3, TravelMode, Iskaita)
 from django.contrib.auth.models import User, Group
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError, transaction
 
 
-def susi(request):
-    return HttpResponse("Labas, pasauli!")
-
-
+# Pagrindinis puslapis
 def home(request):
     return render(request, 'home.html')
 
 
-################### MAP
-
+# Žemėlapio peržiūra
 def map_view(request):
     return render(request, 'country_map.html')
 
 
-############### REGISTRATION
-
-
+# Vartotojo registracija
 def registracija(request):
     if request.method == 'POST':
         form = KlientasRegistrationForm(request.POST)
@@ -43,14 +36,14 @@ def registracija(request):
                     username = form.cleaned_data['username']
                     email = form.cleaned_data['el_pastas']
 
-                    # Ensure the username is unique
+                    # Užtikrinti, kad vartotojo vardas būtų unikalus
                     if User.objects.filter(username=username).exists():
                         unique_suffix = 1
                         while User.objects.filter(username=f"{username}{unique_suffix}").exists():
                             unique_suffix += 1
                         username = f"{username}{unique_suffix}"
 
-                    # Check if a user with this email already exists
+                    # Patikrinti, ar el. paštas jau egzistuoja
                     user, created = User.objects.get_or_create(email=email, defaults={'username': username})
                     if not created:
                         if Klientai.objects.filter(user=user).exists():
@@ -58,7 +51,6 @@ def registracija(request):
                                            "Nepavyko sukurti paskyros. Vartotojas jau susietas su kitu klientu.")
                             return render(request, 'registracija.html', {'form': form})
                         else:
-                            # Update the username if it was modified to ensure uniqueness
                             user.username = username
                             user.set_password(password)
                             user.save()
@@ -66,21 +58,21 @@ def registracija(request):
                         user.set_password(password)
                         user.save()
 
-                    # Assign user to 'Klientai' group
+                    # Priskirti vartotoją 'Klientai' grupei
                     group, group_created = Group.objects.get_or_create(name='Klientai')
                     user.groups.add(group)
 
-                    # Attach user to klientas and save
+                    # Priskirti vartotoją klientui ir išsaugoti
                     klientas.user = user
                     klientas.save()
 
                     try:
-                        profile = user.profile
+                        user_profile = user.profile
                     except Profile.DoesNotExist:
-                        profile = Profile(user=user)
-                    profile.save()
+                        user_profile = Profile(user=user)
+                    user_profile.save()
 
-                    # Authenticate and login the user
+                    # Autentifikuoti ir prisijungti vartotoją
                     authenticated_user = authenticate(username=username, password=password)
                     if authenticated_user is not None:
                         login(request, authenticated_user)
@@ -100,17 +92,20 @@ def registracija(request):
     return render(request, 'registracija.html', {'form': form})
 
 
+# Registracijos sėkmės puslapis (tik prisijungusiems vartotojams)
 @login_required
 def registracija_success(request):
     return render(request, 'registracija_success.html', {'user': request.user})
 
 
+# Vartotojo atsijungimas
 def logout_view(request):
     logout(request)
     messages.info(request, "Jūs sėkmingai atsijungėte.")
     return redirect('home')
 
 
+# Kliento paskyros peržiūra ir prisijungimas
 def kliento_paskyra(request):
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
@@ -131,6 +126,7 @@ def kliento_paskyra(request):
     return render(request, 'kliento_paskyra.html', {'form': form})
 
 
+# Kliento poliso peržiūra (tik prisijungusiems vartotojams)
 @login_required
 def client_policies(request):
     try:
@@ -141,6 +137,7 @@ def client_policies(request):
     return render(request, 'client_policies.html', {'policies': policies})
 
 
+# Kliento informacijos atnaujinimas (tik prisijungusiems vartotojams)
 @login_required
 def update_klientas(request):
     try:
@@ -152,18 +149,17 @@ def update_klientas(request):
         form = KlientasUpdateForm(request.POST, instance=klientas)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Your profile has been updated!')
+            messages.success(request, 'Profilis sėkmingai atnaujintas!')
             return redirect('profile')
         else:
-            messages.error(request, 'Please correct the error below.')
+            messages.error(request, 'Prašome ištaisyti klaidas formoje.')
     else:
         form = KlientasUpdateForm(instance=klientas)
 
     return render(request, 'update_klientas.html', {'form': form})
 
 
-####### TEST
-
+# Naujo vartotojo registracija
 def naujas_user_register(request):
     if request.method == 'POST':
         form = NaujaKlientoRegistracijosForma(request.POST)
@@ -171,7 +167,7 @@ def naujas_user_register(request):
             user = form.save()
             login(request, user)
             messages.success(request, f"Paskyra sukurta: {user.username}!")
-            return redirect('profile')  # Nukreipkite į tinkamą puslapį po registracijos
+            return redirect('profile')
         else:
             messages.error(request, "Nepavyko sukurti paskyros. Patikrinkite formą.")
     else:
@@ -179,6 +175,7 @@ def naujas_user_register(request):
     return render(request, 'naujas_user_register.html', {'form': form})
 
 
+# Pasirinkti paskyros tipą (tik prisijungusiems vartotojams)
 @login_required
 def choose_account_type(request):
     if request.method == 'POST':
@@ -190,6 +187,7 @@ def choose_account_type(request):
     return render(request, 'choose_account_type.html')
 
 
+# Brokerio informacijos atnaujinimas (tik prisijungusiems vartotojams)
 @login_required
 def update_brokeris(request):
     try:
@@ -204,19 +202,19 @@ def update_brokeris(request):
             messages.success(request, 'Brokerio profilis sėkmingai atnaujintas!')
             return redirect('profile')
         else:
-            messages.error(request, 'Please correct the error below.')
+            messages.error(request, 'Prašome ištaisyti klaidas formoje.')
     else:
         form = BrokeriaiUpdateForm(instance=brokeris)
 
     return render(request, 'update_brokeris.html', {'form': form})
 
 
-##### profilis
+# Profilio redagavimas (tik prisijungusiems vartotojams)
 @login_required
 def profile_view(request):
-    profile, created = Profile.objects.get_or_create(user=request.user)
+    user_profile, created = Profile.objects.get_or_create(user=request.user)
     if request.method == 'POST':
-        form = ProfileUpdateForm(request.POST, request.FILES, instance=profile)
+        form = ProfileUpdateForm(request.POST, request.FILES, instance=user_profile)
         username = request.POST.get('username')
         if form.is_valid():
             if username:
@@ -226,16 +224,17 @@ def profile_view(request):
             messages.success(request, 'Profilis sėkmingai atnaujintas!')
             return redirect('profile')
     else:
-        form = ProfileUpdateForm(instance=profile)
+        form = ProfileUpdateForm(instance=user_profile)
 
-    profile_picture_url = profile.picture.url if profile.picture else None
+    profile_picture_url = user_profile.picture.url if user_profile.picture else None
     return render(request, 'profile_edit.html',
-                  {'form': form, 'profile': profile, 'user_profile_picture': profile_picture_url})
+                  {'form': form, 'profile': user_profile, 'user_profile_picture': profile_picture_url})
 
 
+# Profilio peržiūra (tik prisijungusiems vartotojams)
 @login_required
 def profile(request):
-    username = request.user.username
+    request.user.username
     try:
         klientai = request.user.klientai
         contracts = Polisai.objects.filter(klientai=klientai)
@@ -243,35 +242,30 @@ def profile(request):
         klientai = None
         contracts = []
 
-    # Debugging output
-    print("Username:", username)
-    print("Klientai:", klientai)
-    for contract in contracts:
-        print("Contract ID:", contract.id, "Klientai ID:", contract.klientai_id)
-
-    return render(request, 'profile.html', {'profile': klientai, 'contracts': contracts, })
+    return render(request, 'profile.html', {'profile': klientai, 'contracts': contracts})
 
 
-#####static() fields
-
+# Draudimo produktų peržiūra
 def draudimo_produktai(request):
     return render(request, 'draudimo_produktai.html')
 
 
+# Kelionių draudimo peržiūra
 def keliones_draudimas(request):
     return render(request, 'keliones_draudimas.html')
 
 
+# Dažniausiai užduodami klausimai
 def faq(request):
     return render(request, 'faq.html')
 
 
+# Kontaktų forma
 def contact(request):
     return render(request, 'contact.html')
 
 
-###### Brokerių
-
+# Brokerio prisijungimas
 def broker_login(request):
     if request.method == 'POST':
         form = BrokerLoginForm(request.POST)
@@ -293,6 +287,7 @@ def broker_login(request):
     return render(request, 'broker_login.html', {'form': form})
 
 
+# Brokerio registracija
 def broker_register(request):
     if request.method == 'POST':
         form = BrokerRegisterForm(request.POST)
@@ -300,9 +295,9 @@ def broker_register(request):
             email = form.cleaned_data['el_pastas']
             password = form.cleaned_data['password']
 
-            # Check if the email already exists
+            # Patikrinti, ar el. paštas jau egzistuoja
             if User.objects.filter(username=email).exists():
-                messages.error(request, 'Email is already registered.')
+                messages.error(request, 'Šis el. paštas jau užregistruotas.')
                 return redirect('broker_register')
 
             user = User.objects.create_user(username=email, email=email, password=password)
@@ -310,8 +305,8 @@ def broker_register(request):
             broker.user = user
             broker.save()
 
-            # Create a BrokerProfile
-            broker_profile = BrokerProfile.objects.create(user=user, broker=broker)
+            # Sukurti BrokerProfile
+            BrokerProfile.objects.create(user=user, broker=broker)
 
             login(request, user)
             return redirect('broker_profile', broker_id=broker.id)
@@ -320,32 +315,34 @@ def broker_register(request):
     return render(request, 'broker_register.html', {'form': form})
 
 
+# Brokerio profilis (tik prisijungusiems vartotojams)
 @login_required
 def broker_profile(request, broker_id):
-    profile = get_object_or_404(BrokerProfile, broker__id=broker_id)
-    clients = Klientai.objects.filter(polisai__brokeriai=profile.broker).distinct()
-    contracts = Polisai.objects.filter(brokeriai=profile.broker)
+    broker_profile = get_object_or_404(BrokerProfile, broker__id=broker_id)
+    clients = Klientai.objects.filter(polisai__brokeriai=broker_profile.broker).distinct()
+    contracts = Polisai.objects.filter(brokeriai=broker_profile.broker)
 
     if request.method == 'POST':
-        form = BrokeriaiUpdateForm(request.POST, instance=profile.broker)
+        form = BrokeriaiUpdateForm(request.POST, instance=broker_profile.broker)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Profile updated successfully!')
+            messages.success(request, 'Profilis sėkmingai atnaujintas!')
             return redirect('broker_profile', broker_id=broker_id)
     else:
-        form = BrokeriaiUpdateForm(instance=profile.broker)
+        form = BrokeriaiUpdateForm(instance=broker_profile.broker)
 
     return render(request, 'broker_profile.html', {
-        'profile': profile,
+        'profile': broker_profile,
         'form': form,
         'clients': clients,
         'contracts': contracts,
-        'user_profile_picture': profile.profile_picture.url if profile.profile_picture else None
+        'user_profile_picture': broker_profile.profile_picture.url if broker_profile.profile_picture else None
     })
 
 
+# Brokeris sukuria kliento vartotoją
 def broker_klientai_user_create(request):
-    profile = BrokerProfile.objects.get(user=request.user)
+    BrokerProfile.objects.get(user=request.user)
     if request.method == 'POST':
         form = BrokerKlientaiUserCreateForm(request.POST)
         if form.is_valid():
@@ -353,7 +350,7 @@ def broker_klientai_user_create(request):
             user.set_password(form.cleaned_data['password'])
             user.save()
 
-            # Create a Klientai instance and associate it with the newly created user
+            # Sukurti Klientai įrašą ir priskirti vartotoją
             client = Klientai(user=user)
             client.save()
 
@@ -365,6 +362,7 @@ def broker_klientai_user_create(request):
     return render(request, 'broker_update_klientas.html', {'form': form})
 
 
+# Brokeris atnaujina kliento informaciją
 def broker_update_klientas(request, client_id):
     klientas = get_object_or_404(Klientai, id=client_id, user=request.user)
 
@@ -372,23 +370,23 @@ def broker_update_klientas(request, client_id):
         form = KlientaiUpdateForm(request.POST, instance=klientas)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Your profile has been updated!')
+            messages.success(request, 'Profilis sėkmingai atnaujintas!')
             return redirect('broker_profile', client_id=klientas.id)
         else:
-            messages.error(request, 'Please correct the error below.')
+            messages.error(request, 'Prašome ištaisyti klaidas formoje.')
     else:
         form = KlientaiUpdateForm(instance=klientas)
 
     return render(request, 'broker_update_klientas.html', {'form': form})
 
 
+# Brokerio atsijungimas
 def broker_logout(request):
     logout(request)
     return render(request, 'broker_logout.html')
 
 
-################ PRICE CALC
-
+# Draudimo kainos skaičiuoklė
 def price_calculator(request):
     if request.method == 'POST':
         form = InsuranceCostCalculationForm(request.POST)
@@ -403,7 +401,7 @@ def price_calculator(request):
             paslaugos = form.cleaned_data['paslaugos']
             paslaugos_kaina = paslaugos.kaina
 
-            # Perform the cost calculation logic
+            # Atlikti kainos skaičiavimą
             base_cost = paslaugos_kaina * trip_duration
             cover1_cost = base_cost * cover1.na_kof if cover1 else 0
             cover2_cost = base_cost * cover2.civ_kof if cover2 else 0
@@ -412,7 +410,7 @@ def price_calculator(request):
 
             total_cost = base_cost + cover1_cost + cover2_cost + cover3_cost - iskaita_cost
 
-            # Save the form data in the session
+            # Išsaugoti formos duomenis sesijoje
             request.session['policy_data'] = {
                 'country': country.id,
                 'travel_mode': travel_mode.id,
@@ -435,7 +433,7 @@ def price_calculator(request):
                 'cover3': cover3,
                 'iskaita': iskaita,
                 'paslaugos_kaina': paslaugos_kaina,
-                'register_contract_url': reverse('register_policy'),  # Updated to 'register_policy'
+                'register_contract_url': reverse('register_policy'),
             }
             return render(request, 'price_calculator.html', context)
         else:
@@ -446,6 +444,7 @@ def price_calculator(request):
     return render(request, 'price_calculator.html', {'form': form})
 
 
+# Kontrakto registracija (tik prisijungusiems vartotojams)
 @login_required
 def register_contract(request):
     if request.method == 'POST':
@@ -453,20 +452,17 @@ def register_contract(request):
         polisai_form = TravelContractForm(request.POST)
         if klientai_form.is_valid() and polisai_form.is_valid():
             klientai = klientai_form.save(commit=False)
-            klientai.user = request.user  # Associate with authenticated user
+            klientai.user = request.user
             klientai.save()
 
             polisai = polisai_form.save(commit=False)
             polisai.klientai = klientai
 
-            # Check if the klientai belongs to the broker
             if klientai.broker == request.user.brokerprofile.broker:
                 polisai.save()
-                # Redirect to a success page or appropriate URL
                 return redirect('broker_profile')
             else:
                 pass
-
     else:
         klientai_form = KlientaiForm()
         polisai_form = TravelContractForm()
@@ -474,8 +470,7 @@ def register_contract(request):
     return render(request, 'register_contract.html', {'klientai_form': klientai_form, 'polisai_form': polisai_form})
 
 
-#############
-###### calculate and register client
+# Vartotojo registracija
 def register(request):
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
@@ -490,6 +485,7 @@ def register(request):
     return render(request, 'register.html', {'form': form})
 
 
+# Kliento registracija (tik prisijungusiems vartotojams)
 @login_required
 def register_client(request):
     try:
@@ -514,6 +510,7 @@ def register_client(request):
     return render(request, 'register_client.html', {'form': form})
 
 
+# Poliso registracija (tik prisijungusiems vartotojams)
 @login_required
 def register_policy(request):
     klientai = get_object_or_404(Klientai, user=request.user)
@@ -527,9 +524,9 @@ def register_policy(request):
             policy = polisai_form.save(commit=False)
             policy.klientai = klientai
 
-            # Calculate the price
-            country = policy.country
-            travel_mode = policy.travel_mode
+            # Kainos apskaičiavimas
+            policy.country
+            policy.travel_mode
             trip_duration = (policy.pabaigos_data - policy.pradzios_data).days
             paslaugos_kaina = policy.paslaugos.kaina
 
@@ -542,7 +539,6 @@ def register_policy(request):
             total_cost = base_cost + cover1_cost + cover2_cost + cover3_cost - iskaita_cost
             policy.price = total_cost
 
-            # Set the price in the form's cleaned data
             polisai_form.data = polisai_form.data.copy()
             polisai_form.data['price'] = total_cost
 
@@ -562,10 +558,9 @@ def register_policy(request):
         else:
             polisai_form = PolisaiForm()
 
-        # Calculate price if data is available in session
         if 'country' in policy_data and 'paslaugos' in policy_data:
-            country = Country.objects.get(id=policy_data['country'])
-            travel_mode = TravelMode.objects.get(id=policy_data['travel_mode'])
+            Country.objects.get(id=policy_data['country'])
+            TravelMode.objects.get(id=policy_data['travel_mode'])
             paslaugos = Paslaugos.objects.get(id=policy_data['paslaugos'])
             trip_duration = policy_data['trip_duration']
             cover1 = Cover1.objects.get(id=policy_data['cover1']) if policy_data['cover1'] else None
@@ -585,7 +580,6 @@ def register_policy(request):
     return render(request, 'register_policy.html', {'klientai_form': klientai_form, 'polisai_form': polisai_form})
 
 
+# Poliso registracijos sėkmės puslapis
 def policy_success(request):
     return render(request, 'policy_success.html')
-
-###### for pricing part END
