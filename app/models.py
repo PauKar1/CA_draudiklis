@@ -121,8 +121,8 @@ class Polisai(models.Model):
     pradzios_data = models.DateField()  # Poliso pradžios data
     pabaigos_data = models.DateField()  # Poliso pabaigos data
     iskaita = models.ForeignKey(Iskaita, on_delete=models.CASCADE)  # Susiejimas su išskaita
-    cover1 = models.ForeignKey(Cover1, on_delete=models.CASCADE)  # Susiejimas su nelaimingų atsitikimų draudimu
-    cover2 = models.ForeignKey(Cover2, on_delete=models.CASCADE)  # Susiejimas su civilinės atsakomybės draudimu
+    cover1 = models.ForeignKey(Cover1, on_delete=models.CASCADE, null=True, blank=True)  # Susiejimas su nelaimingų atsitikimų draudimu
+    cover2 = models.ForeignKey(Cover2, on_delete=models.CASCADE, null=True, blank=True)  # Susiejimas su civilinės atsakomybės draudimu
     cover3 = models.ForeignKey(Cover3, on_delete=models.CASCADE)  # Susiejimas su medicininių išlaidų draudimu
     travel_mode = models.ForeignKey(TravelMode, on_delete=models.CASCADE)  # Susiejimas su kelionės būdu
     country = models.ForeignKey(Country, on_delete=models.CASCADE)  # Susiejimas su šalimi

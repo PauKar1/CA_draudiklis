@@ -1,6 +1,12 @@
-/* styles.css */
+/* Bendras šrifto stilius visiems elementams */
+body, select, input, button, label, p, h1, h2, h3, h4, h5, h6 {
+    font-family: Arial, sans-serif; /* Vienodas šriftas */
+    font-size: 16px; /* Vienodas šrifto dydis */
+    color: #333; /* Vienoda teksto spalva */
+    line-height: 1.5; /* Vienodas eilutės aukštis */
+}
 
-/* Style for the top shelf */
+/* Viršutinės juostos stilius */
 #top-shelf {
     background-color: #333;
     color: #fff;
@@ -18,26 +24,26 @@
     margin-right: 20px;
 }
 
-/* Main content area style */
+/* Pagrindinės turinio srities stilius */
 .main-content {
     display: flex;
-    justify-content: flex-start; /* Align items to the left */
+    justify-content: flex-start; /* Išlygiuoti elementus į kairę */
     align-items: flex-start;
-    height: calc(100vh - 50px); /* Adjust height minus top-shelf */
+    height: calc(100vh - 50px); /* Reguliuoti aukštį, atimant viršutinės juostos aukštį */
 }
 
-/* Style the left section */
+/* Kairės sekcijos stilius */
 .left-section {
-    width: 230px; /* Fixed width for the sidebar */
-    background-color: white; /* White background */
-    padding: 5px; /* Add padding for spacing */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional: Add box shadow */
-    height: 100%; /* Full height */
-    position: fixed; /* Fix to the side */
-    overflow-y: auto; /* Scroll if content overflows */
+    width: 230px; /* Fiksuotas šoninės juostos plotis */
+    background-color: white; /* Balta fonas */
+    padding: 5px; /* Pridėti tarpą */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Neprivaloma: pridėti šešėlį */
+    height: 100%; /* Pilnas aukštis */
+    position: fixed; /* Fiksuoti šoną */
+    overflow-y: auto; /* Slankiklis, jei turinys per didelis */
 }
 
-/* Style the selections */
+/* Selekcijų stilius */
 .selections {
     list-style-type: none;
     padding: 0;
@@ -47,22 +53,22 @@
     margin-bottom: 20px;
     display: flex;
     align-items: center;
-    height: 50px; /* Ensure height for alignment */
+    height: 50px; /* Užtikrinti aukštį */
 }
 
 .selections li a {
     color: #333;
     text-decoration: none;
     font-size: 18px;
-    margin-left: 10px; /* Add spacing between icon and text */
-    flex-grow: 1; /* Make sure text uses available space */
+    margin-left: 10px; /* Pridėti tarpą tarp ikonos ir teksto */
+    flex-grow: 1; /* Užtikrinti, kad tekstas naudoja turimą vietą */
 }
 
 .selections li a:hover {
-    color: #007bff; /* Color on hover */
+    color: #007bff; /* Spalva, kai užvedama pele */
 }
 
-/* Style for the icons */
+/* Ikonų stilius */
 .selection-icon {
     width: 30px;
     height: 30px;
@@ -70,30 +76,39 @@
     vertical-align: middle;
 }
 
-/* Style the center section */
+/* Centro sekcijos stilius */
 .center-section {
-    margin-left: 240px; /* Offset by sidebar width + padding */
-    background-color: #f5f5f5; /* Greyish color */
-    padding: 20px; /* Add padding for spacing */
-    border-radius: 10px; /* Optional: Add rounded corners */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional: Add box shadow */
-    flex-grow: 1; /* Take up remaining space */
-    min-height: 100%; /* Ensure it takes full height */
+    margin-left: 240px; /* Kompensuoti šoninės juostos plotį + tarpą */
+    background-color: #f5f5f5; /* Pilkas fonas */
+    padding: 20px; /* Pridėti tarpą */
+    border-radius: 10px; /* Neprivaloma: užapvalinti kampai */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Neprivaloma: pridėti šešėlį */
+    flex-grow: 1; /* Užimti likusią vietą */
+    min-height: 100%; /* Užtikrinti pilną aukštį */
 }
 
-/* Style for the centered content within the center section */
+/* Centro turinio stilius */
 .center-content {
     text-align: center;
     margin-bottom: 20px;
 }
 
-/* Additional styles for price calculator and result content */
-input, select {
+/* Papildomi stiliai kainos skaičiuotuvui ir rezultatų turiniui */
+input[type="text"], input[type="number"], select {
     display: block;
     width: 100%;
     padding: 10px;
     margin: 10px 0;
     box-sizing: border-box;
+    font-size: 16px; /* Vienodas šrifto dydis */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
 }
 
 button {
@@ -103,11 +118,13 @@ button {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    font-size: 16px; /* Vienodas šrifto dydis */
 }
 
 button:hover {
     background-color: #0056b3;
 }
+
 select {
     color: black;
     background-color: white;
@@ -127,7 +144,7 @@ option {
     background-color: white;
 }
 
-/* REGISTRATION STYLING */
+/* REGISTRACIJOS STILIAI */
 body {
     font-family: Arial, sans-serif;
     background-color: #f8f9fa;
@@ -175,8 +192,7 @@ h2 {
     border-color: #004085;
 }
 
-/* profile.html */
-
+/* profile.html stiliai */
 body {
     font-family: Arial, sans-serif;
 }
@@ -199,7 +215,8 @@ th {
 img {
     border-radius: 50%;
 }
-/* price_calculator.html  trip duration*/
+
+/* price_calculator.html kelionės trukmė */
 .form-group input,
 .form-group select,
 .form-group textarea {

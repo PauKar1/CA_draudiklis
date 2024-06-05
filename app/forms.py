@@ -105,6 +105,11 @@ class PolisaiForm(forms.ModelForm):
             # 'price': 'Kaina',  # Pakeičia 'price' lauko etiketę
         }
 
+        def __init__(self, *args, **kwargs):
+            super(PolisaiForm, self).__init__(*args, **kwargs)
+            self.fields['cover1'].required = False  # Nelaimingi atsitikimai neprivalomas laukas
+            self.fields['cover2'].required = False  # Civilinė atsakomybė neprivalomas laukas
+
 
 class KlientaiForm(forms.ModelForm):
     class Meta:
