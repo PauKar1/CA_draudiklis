@@ -13,8 +13,7 @@ urlpatterns = [
     path('app/kliento_paskyra/', views.kliento_paskyra, name='kliento_paskyra'),
     path('registracija/', views.registracija, name='registracija'),
     path('app/atsijungti/', views.logout_view, name='logout'),
-    # path('login/', auth_view.LoginView.as_view(), name='login'),
-    # path('logout/', auth_view.LogoutView.as_view(), name='logout'),
+
     path('password_reset/', auth_view.PasswordResetView.as_view(), name='password_reset'),
     path('password_reset/done/', auth_view.PasswordResetDoneView.as_view(), name='password_reset_done'),
     path('reset/<uidb64>/<token>/', auth_view.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
@@ -49,7 +48,7 @@ urlpatterns = [
     path('partneriams/register/', views.broker_register, name='broker_register'),
     path('partneriams/profile/<int:broker_id>/', views.broker_profile, name='broker_profile'),
     path('partneriams/logout/', views.broker_logout, name='broker_logout'),
-    # path('broker/register-client/', views.broker_register_client, name='broker_register_client'),
+
     path('broker/register-client-user/', views.broker_klientai_user_create, name='broker_klientai_user_create'),
     path('broker/update-klientas/<int:client_id>/', views.broker_update_klientas, name='broker_update_klientas'),
 
