@@ -52,18 +52,8 @@ class ProfileUpdateForm(forms.ModelForm):
         model = Profile
         fields = ['picture']
 
-class KlientaiForm(forms.ModelForm):
-    class Meta:
-        model = Klientai
-        fields = ['vardas', 'pavarde', 'tel_numeris', 'gimimo_data', 'adresas', 'el_pastas']
-        widgets = {
-            'vardas': forms.TextInput(attrs={'class': 'form-control'}),
-            'pavarde': forms.TextInput(attrs={'class': 'form-control'}),
-            'tel_numeris': forms.TextInput(attrs={'class': 'form-control'}),
-            'gimimo_data': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
-            'adresas': forms.TextInput(attrs={'class': 'form-control'}),
-            'el_pastas': forms.EmailInput(attrs={'class': 'form-control'}),
-        }
+
+
 
 class KlientasUpdateForm(forms.ModelForm):
     class Meta:
@@ -78,15 +68,57 @@ class KlientasUpdateForm(forms.ModelForm):
             'el_pastas': forms.EmailInput(attrs={'class': 'form-control'}),
         }
 
+###### used after calculating price in site to register client and policy
+class UserRegisterForm(UserCreationForm):
+    email = forms.EmailField()
+
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'password1', 'password2']
+        labels = {
+            'username': 'Vartotojo vardas',
+            'password1': 'Slaptažodis',
+            'password2': 'Slaptažodžio patvirtinimas',
+        }
 
 class PolisaiForm(forms.ModelForm):
     pradzios_data = forms.DateField(widget=forms.TextInput(attrs={'type': 'date'}))
     pabaigos_data = forms.DateField(widget=forms.TextInput(attrs={'type': 'date'}))
-
+    price = forms.FloatField(widget=forms.TextInput(attrs={'readonly': 'readonly'}), required=False)
 
     class Meta:
         model = Polisai
-        fields = ['brokeriai', 'paslaugos', 'pradzios_data', 'pabaigos_data', 'iskaita']
+        fields = ['brokeriai', 'paslaugos', 'pradzios_data', 'pabaigos_data', 'iskaita', 'country', 'travel_mode',
+                  'cover1', 'cover2', 'cover3', 'price']
+        labels = {
+            'brokeriai': 'Brokeris',
+            'paslaugos': 'Paslaugos',
+            'pradzios_data': 'Pradžios data',
+            'pabaigos_data': 'Pabaigos data',
+            'iskaita': 'Išskaita',
+            'country': 'Šalis',
+            'travel_mode': 'Kelionės būdas',
+            'cover1': 'Nelaimingi atsitikimai',
+            'cover2': 'Civilinė atsakomybė',
+            'cover3': 'Medicininės išlaidos',
+            'price': 'Kaina'
+        }
+
+class KlientaiForm(forms.ModelForm):
+    class Meta:
+        model = Klientai
+        fields = ['vardas', 'pavarde', 'tel_numeris', 'gimimo_data', 'adresas', 'el_pastas']
+        labels = {
+            'vardas': 'Vardas',
+            'pavarde': 'Pavardė',
+            'tel_numeris': 'Tel numeris',
+            'gimimo_data': 'Gimimo data',
+            'adresas': 'Adresas',
+            'el_pastas': 'El. paštas',
+        }
+        widgets = {
+            'adresas': forms.Textarea(attrs={'rows': 3, 'cols': 40}),
+        }
 
 ###### TEST
 class NaujaKlientoRegistracijosForma(UserCreationForm):

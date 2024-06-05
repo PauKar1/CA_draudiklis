@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}
     Profilis - Draudiklis.lt
@@ -12,8 +13,12 @@
     </div>
 
     <div style="display: flex; align-items: center; margin-bottom: 20px;">
-    <img src="{{ profile.user.profile_picture.url }}" alt="Profile Picture" style="width: 150px; height: 150px; border-radius: 50%; margin-right: 20px;">
-</div>
+        {% if user_profile_picture %}
+            <img src="{{ user_profile_picture }}" alt="Profile Picture" style="width: 150px; height: 150px; border-radius: 50%; margin-right: 20px;">
+        {% else %}
+            <img src="{% static 'default_profile_picture.png' %}" alt="Profile Picture" style="width: 150px; height: 150px; border-radius: 50%; margin-right: 20px;">
+        {% endif %}
+    </div>
 
     <h2>Jūsų sudarytos sutartys</h2>
     <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
@@ -23,9 +28,11 @@
                 <th style="padding: 10px; border: 1px solid #dee2e6;">Paslaugos</th>
                 <th style="padding: 10px; border: 1px solid #dee2e6;">Pradžios data</th>
                 <th style="padding: 10px; border: 1px solid #dee2e6;">Pabaigos data</th>
-                <th style="padding: 10px; border: 1px solid #dee2e6;">Draudimo suma</th>
                 <th style="padding: 10px; border: 1px solid #dee2e6;">Įskaita</th>
-                <th style="padding: 10px; border: 1px solid #dee2e6;">Apsauga</th>
+                <th style="padding: 10px; border: 1px solid #dee2e6;">Nelaimingi atsitikimai</th>
+                <th style="padding: 10px; border: 1px solid #dee2e6;">Civilinė atsakomybė</th>
+                <th style="padding: 10px; border: 1px solid #dee2e6;">Medicininės išlaidos</th>
+                <th style="padding: 10px; border: 1px solid #dee2e6;">Kaina</th>
             </tr>
         </thead>
         <tbody>
@@ -35,13 +42,15 @@
                 <td style="padding: 10px; border: 1px solid #dee2e6;">{{ contract.paslaugos }}</td>
                 <td style="padding: 10px; border: 1px solid #dee2e6;">{{ contract.pradzios_data }}</td>
                 <td style="padding: 10px; border: 1px solid #dee2e6;">{{ contract.pabaigos_data }}</td>
-                <td style="padding: 10px; border: 1px solid #dee2e6;">{{ contract.draudimo_suma }}</td>
                 <td style="padding: 10px; border: 1px solid #dee2e6;">{{ contract.iskaita }}</td>
-                <td style="padding: 10px; border: 1px solid #dee2e6;">{{ contract.apsauga }}</td>
+                <td style="padding: 10px; border: 1px solid #dee2e6;">{{ contract.cover1 }}</td>
+                <td style="padding: 10px; border: 1px solid #dee2e6;">{{ contract.cover2 }}</td>
+                <td style="padding: 10px; border: 1px solid #dee2e6;">{{ contract.cover3 }}</td>
+                <td style="padding: 10px; border: 1px solid #dee2e6;">{{ contract.price }}</td>
             </tr>
             {% empty %}
             <tr>
-                <td colspan="7" style="padding: 10px; border: 1px solid #dee2e6; text-align: center;">No contracts found.</td>
+                <td colspan="9" style="padding: 10px; border: 1px solid #dee2e6; text-align: center;">No contracts found.</td>
             </tr>
             {% endfor %}
         </tbody>

@@ -80,7 +80,6 @@ class Country(models.Model):
         return f"kelionės šalis {self.name}"
 ####################################
 class Polisai(models.Model):
-
     klientai = models.ForeignKey(Klientai, on_delete=models.CASCADE, related_name='polisai')
     brokeriai = models.ForeignKey(Brokeriai, on_delete=models.SET_NULL, null=True, blank=True, related_name='polisai')
     paslaugos = models.ForeignKey(Paslaugos, on_delete=models.CASCADE, related_name='polisai', default=1)
@@ -92,7 +91,8 @@ class Polisai(models.Model):
     cover2 = models.ForeignKey(Cover2, on_delete=models.CASCADE)
     cover3 = models.ForeignKey(Cover3, on_delete=models.CASCADE)
     travel_mode = models.ForeignKey(TravelMode, on_delete=models.CASCADE)
-    country = models.ForeignKey(Country, on_delete=models.CASCADE)  # Fixed missing parenthesis
+    country = models.ForeignKey(Country, on_delete=models.CASCADE)
+    price = models.FloatField(default=0.0)
 
     def __str__(self):
         return f"Polisas {self.pk} for {self.klientai}"
@@ -113,7 +113,7 @@ class Profile(models.Model):
         return f'{self.user.username} profilis'
 
     def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)  # numatytieji Model klasės veiksmai suvykdomi
+        super().save(*args, **kwargs)
         try:
             img = Image.open(self.picture.path)
             thumb_size = (200, 200)

@@ -1,12 +1,14 @@
 from django.http import HttpResponse
+from django.urls import reverse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse, HttpResponseBadRequest
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib import messages
 from .forms import (KlientasRegistrationForm, ProfileUpdateForm, KlientasUpdateForm, KlientaiForm,
                     PolisaiForm, NaujaKlientoRegistracijosForma, BrokeriaiUpdateForm, BrokerLoginForm,
-                    BrokerRegisterForm, TravelContractForm, InsuranceCostCalculationForm)
-from .models import Profile, Country, Paslaugos, Klientai, Brokeriai, Polisai, BrokerProfile, CountryRisk
+                    BrokerRegisterForm, TravelContractForm, InsuranceCostCalculationForm, UserRegisterForm)
+from .models import (Profile, Country, Paslaugos, Klientai, Brokeriai, Polisai, BrokerProfile,
+                     CountryRisk, Cover1, Cover2, Cover3, TravelMode, Iskaita)
 from django.contrib.auth.models import User, Group
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -226,7 +228,10 @@ def profile_view(request):
             return redirect('profile')
     else:
         form = ProfileUpdateForm(instance=profile)
-    return render(request, 'profile_edit.html', {'form': form, 'profile': profile, 'user_profile_picture': profile.picture.url})
+
+    profile_picture_url = profile.picture.url if profile.picture else None
+    return render(request, 'profile_edit.html', {'form': form, 'profile': profile, 'user_profile_picture': profile_picture_url})
+
 
 @login_required
 def profile(request):
@@ -244,7 +249,7 @@ def profile(request):
     for contract in contracts:
         print("Contract ID:", contract.id, "Klientai ID:", contract.klientai_id)
 
-    return render(request, 'profile.html', {'profile': klientai, 'contracts': contracts})
+    return render(request, 'profile.html', {'profile': klientai, 'contracts': contracts, })
 
 
 
@@ -323,7 +328,6 @@ def price_calculator(request):
     if request.method == 'POST':
         form = InsuranceCostCalculationForm(request.POST)
         if form.is_valid():
-            # Extract data from the form
             country = form.cleaned_data['country']
             travel_mode = form.cleaned_data['travel_mode']
             trip_duration = form.cleaned_data['trip_duration']
@@ -343,6 +347,18 @@ def price_calculator(request):
 
             total_cost = base_cost + cover1_cost + cover2_cost + cover3_cost - iskaita_cost
 
+            # Save the form data in the session
+            request.session['policy_data'] = {
+                'country': country.id,
+                'travel_mode': travel_mode.id,
+                'trip_duration': trip_duration,
+                'cover1': cover1.id if cover1 else None,
+                'cover2': cover2.id if cover2 else None,
+                'cover3': cover3.id if cover3 else None,
+                'iskaita': iskaita.id,
+                'paslaugos': paslaugos.id,
+            }
+
             context = {
                 'form': form,
                 'total_cost': total_cost,
@@ -354,13 +370,13 @@ def price_calculator(request):
                 'cover3': cover3,
                 'iskaita': iskaita,
                 'paslaugos_kaina': paslaugos_kaina,
+                'register_contract_url': reverse('register_policy'),  # Updated to 'register_policy'
             }
             return render(request, 'price_calculator.html', context)
         else:
             print(form.errors)
     else:
         form = InsuranceCostCalculationForm()
-        form.initial['country'] = form.fields['country'].queryset.first().pk
 
     return render(request, 'price_calculator.html', {'form': form})
 
@@ -397,40 +413,120 @@ def register_contract(request):
 
 
 #############
-###### for pricing part
+###### calculate and register client
+def register(request):
+    if request.method == 'POST':
+        form = UserRegisterForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            username = form.cleaned_data.get('username')
+            messages.success(request, f'Sukurtas vartotojo profilis {username}!')
+            login(request, user)
+            return redirect('register_client')
+    else:
+        form = UserRegisterForm()
+    return render(request, 'register.html', {'form': form})
 
+@login_required
 def register_client(request):
+    try:
+        klientai = Klientai.objects.get(user=request.user)
+        request.session['client_id'] = klientai.id
+        messages.info(request, 'Jūs jau esate registruotas klientas.')
+        return redirect('register_policy')
+    except Klientai.DoesNotExist:
+        pass
 
     if request.method == 'POST':
         form = KlientaiForm(request.POST)
         if form.is_valid():
-            client = form.save()
+            client = form.save(commit=False)
+            client.user = request.user
+            client.save()
             request.session['client_id'] = client.id
-            messages.success(request, 'Client registered successfully. Now proceed to register the policy.')
-            return redirect('broker_profile')
+            messages.success(request, 'Klientas sėkmingai užregistruotas. Dabar galite registruoti politiką.')
+            return redirect('register_policy')
     else:
         form = KlientaiForm()
     return render(request, 'register_client.html', {'form': form})
 
-def register_policy(request):
-    client_id = request.session.get('client_id')
-    if not client_id:
-        messages.error(request, 'You need to register a client first.')
-        return redirect('register_client')
 
-    klientai = get_object_or_404(Klientai, id=client_id)
+@login_required
+def register_policy(request):
+    klientai = get_object_or_404(Klientai, user=request.user)
 
     if request.method == 'POST':
-        form = PolisaiForm(request.POST)
-        if form.is_valid():
-            policy = form.save(commit=False)
-            policy.klientai = klientai
-            policy.save()
-            messages.success(request, 'Policy registered successfully.')
-            return redirect('policy_success')  # Redirect to a success page or appropriate URL
-    else:
-        form = PolisaiForm()
+        klientai_form = KlientaiForm(request.POST, instance=klientai)
+        polisai_form = PolisaiForm(request.POST)
 
-    return render(request, 'register_policy.html', {'form': form, 'klientai': klientai})
+        if klientai_form.is_valid():
+            klientai_form.save()
+            policy = polisai_form.save(commit=False)
+            policy.klientai = klientai
+
+            # Calculate the price
+            country = policy.country
+            travel_mode = policy.travel_mode
+            trip_duration = (policy.pabaigos_data - policy.pradzios_data).days
+            paslaugos_kaina = policy.paslaugos.kaina
+
+            base_cost = paslaugos_kaina * trip_duration
+            cover1_cost = base_cost * policy.cover1.na_kof if policy.cover1 else 0
+            cover2_cost = base_cost * policy.cover2.civ_kof if policy.cover2 else 0
+            cover3_cost = base_cost * policy.cover3.med_kof if policy.cover3 else 0
+            iskaita_cost = policy.iskaita.sum
+
+            total_cost = base_cost + cover1_cost + cover2_cost + cover3_cost - iskaita_cost
+            policy.price = total_cost
+
+            # Set the price in the form's cleaned data
+            polisai_form.data = polisai_form.data.copy()
+            polisai_form.data['price'] = total_cost
+
+            if polisai_form.is_valid():
+                policy.save()
+                messages.success(request, 'Policy registered successfully.')
+                return redirect('policy_success')
+            else:
+                print("Polisai Form errors:", polisai_form.errors)
+        else:
+            print("Klientai Form errors:", klientai_form.errors)
+    else:
+        klientai_form = KlientaiForm(instance=klientai)
+        policy_data = request.session.get('policy_data', {})
+        if policy_data:
+            polisai_form = PolisaiForm(initial=policy_data)
+        else:
+            polisai_form = PolisaiForm()
+
+        # Calculate price if data is available in session
+        if 'country' in policy_data and 'paslaugos' in policy_data:
+            country = Country.objects.get(id=policy_data['country'])
+            travel_mode = TravelMode.objects.get(id=policy_data['travel_mode'])
+            paslaugos = Paslaugos.objects.get(id=policy_data['paslaugos'])
+            trip_duration = policy_data['trip_duration']
+            cover1 = Cover1.objects.get(id=policy_data['cover1']) if policy_data['cover1'] else None
+            cover2 = Cover2.objects.get(id=policy_data['cover2']) if policy_data['cover2'] else None
+            cover3 = Cover3.objects.get(id=policy_data['cover3']) if policy_data['cover3'] else None
+            iskaita = Iskaita.objects.get(id=policy_data['iskaita'])
+
+            base_cost = paslaugos.kaina * trip_duration
+            cover1_cost = base_cost * cover1.na_kof if cover1 else 0
+            cover2_cost = base_cost * cover2.civ_kof if cover2 else 0
+            cover3_cost = base_cost * cover3.med_kof if cover3 else 0
+            iskaita_cost = iskaita.sum
+
+            total_cost = base_cost + cover1_cost + cover2_cost + cover3_cost - iskaita_cost
+            polisai_form.initial['price'] = total_cost
+
+    return render(request, 'register_policy.html', {'klientai_form': klientai_form, 'polisai_form': polisai_form})
+
+def policy_success(request):
+    return render(request, 'policy_success.html')
+
+
+
+
+
 
 ###### for pricing part END

@@ -1,16 +1,87 @@
 {% extends "base.html" %}
-
 {% block title %}
-    Register Policy - Draudiklis.lt
+    Registruoti sutartį - Draudiklis.lt
 {% endblock %}
-
 {% block content %}
 <div class="container mt-5">
-    <h1>Registruojama sutartis {{ klientai.vardas }} {{ klientai.pavarde }}</h1>
-    <form method="post">
+    <h1 class="text-center mb-4">Registruoti sutartį</h1>
+    <form method="post" class="row g-3">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Register</button>
+        <div class="col-md-6">
+            <div class="form-group mb-3">
+                {{ klientai_form.vardas.label_tag }}
+                {{ klientai_form.vardas }}
+            </div>
+            <div class="form-group mb-3">
+                {{ klientai_form.pavarde.label_tag }}
+                {{ klientai_form.pavarde }}
+            </div>
+            <div class="form-group mb-3">
+                {{ klientai_form.tel_numeris.label_tag }}
+                {{ klientai_form.tel_numeris }}
+            </div>
+            <div class="form-group mb-3">
+                {{ klientai_form.gimimo_data.label_tag }}
+                {{ klientai_form.gimimo_data }}
+            </div>
+            <div class="form-group mb-3">
+                {{ klientai_form.adresas.label_tag }}
+                {{ klientai_form.adresas }}
+            </div>
+            <div class="form-group mb-3">
+                {{ klientai_form.el_pastas.label_tag }}
+                {{ klientai_form.el_pastas }}
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group mb-3">
+                {{ polisai_form.brokeriai.label_tag }}
+                {{ polisai_form.brokeriai }}
+            </div>
+            <div class="form-group mb-3">
+                {{ polisai_form.paslaugos.label_tag }}
+                {{ polisai_form.paslaugos }}
+            </div>
+            <div class="form-group mb-3">
+                {{ polisai_form.pradzios_data.label_tag }}
+                {{ polisai_form.pradzios_data }}
+            </div>
+            <div class="form-group mb-3">
+                {{ polisai_form.pabaigos_data.label_tag }}
+                {{ polisai_form.pabaigos_data }}
+            </div>
+            <div class="form-group mb-3">
+                {{ polisai_form.iskaita.label_tag }}
+                {{ polisai_form.iskaita }}
+            </div>
+            <div class="form-group mb-3">
+                {{ polisai_form.country.label_tag }}
+                {{ polisai_form.country }}
+            </div>
+            <div class="form-group mb-3">
+                {{ polisai_form.travel_mode.label_tag }}
+                {{ polisai_form.travel_mode }}
+            </div>
+            <div class="form-group mb-3">
+                {{ polisai_form.cover1.label_tag }}
+                {{ polisai_form.cover1 }}
+            </div>
+            <div class="form-group mb-3">
+                {{ polisai_form.cover2.label_tag }}
+                {{ polisai_form.cover2 }}
+            </div>
+            <div class="form-group mb-3">
+                {{ polisai_form.cover3.label_tag }}
+                {{ polisai_form.cover3 }}
+            </div>
+            <div class="form-group mb-3">
+                {{ polisai_form.price.label_tag }}
+                {{ polisai_form.price }}
+            </div>
+        </div>
+        <div class="col-12 text-center">
+            <button type="submit" class="btn btn-primary">Registruoti sutartį</button>
+        </div>
     </form>
 </div>
 {% endblock %}
