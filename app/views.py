@@ -519,14 +519,12 @@ def register_policy(request):
         klientai_form = KlientaiForm(request.POST, instance=klientai)
         polisai_form = PolisaiForm(request.POST)
 
-        if klientai_form.is_valid():
+        if klientai_form.is_valid() and polisai_form.is_valid():
             klientai_form.save()
             policy = polisai_form.save(commit=False)
             policy.klientai = klientai
 
             # Kainos apskaičiavimas
-            policy.country
-            policy.travel_mode
             trip_duration = (policy.pabaigos_data - policy.pradzios_data).days
             paslaugos_kaina = policy.paslaugos.kaina
 
@@ -539,17 +537,15 @@ def register_policy(request):
             total_cost = base_cost + cover1_cost + cover2_cost + cover3_cost - iskaita_cost
             policy.price = total_cost
 
-            polisai_form.data = polisai_form.data.copy()
-            polisai_form.data['price'] = total_cost
+            policy.save()
 
-            if polisai_form.is_valid():
-                policy.save()
-                messages.success(request, 'Policy registered successfully.')
-                return redirect('policy_success')
-            else:
-                print("Polisai Form errors:", polisai_form.errors)
+            # Išsaugoti policy ID sesijoje
+            request.session['policy_id'] = policy.id
+
+            messages.success(request, 'Policy registered successfully.')
+            return redirect('policy_success')
         else:
-            print("Klientai Form errors:", klientai_form.errors)
+            print("Form errors:", klientai_form.errors, polisai_form.errors)
     else:
         klientai_form = KlientaiForm(instance=klientai)
         policy_data = request.session.get('policy_data', {})
@@ -558,28 +554,18 @@ def register_policy(request):
         else:
             polisai_form = PolisaiForm()
 
-        if 'country' in policy_data and 'paslaugos' in policy_data:
-            Country.objects.get(id=policy_data['country'])
-            TravelMode.objects.get(id=policy_data['travel_mode'])
-            paslaugos = Paslaugos.objects.get(id=policy_data['paslaugos'])
-            trip_duration = policy_data['trip_duration']
-            cover1 = Cover1.objects.get(id=policy_data['cover1']) if policy_data['cover1'] else None
-            cover2 = Cover2.objects.get(id=policy_data['cover2']) if policy_data['cover2'] else None
-            cover3 = Cover3.objects.get(id=policy_data['cover3']) if policy_data['cover3'] else None
-            iskaita = Iskaita.objects.get(id=policy_data['iskaita'])
-
-            base_cost = paslaugos.kaina * trip_duration
-            cover1_cost = base_cost * cover1.na_kof if cover1 else 0
-            cover2_cost = base_cost * cover2.civ_kof if cover2 else 0
-            cover3_cost = base_cost * cover3.med_kof if cover3 else 0
-            iskaita_cost = iskaita.sum
-
-            total_cost = base_cost + cover1_cost + cover2_cost + cover3_cost - iskaita_cost
-            polisai_form.initial['price'] = total_cost
-
     return render(request, 'register_policy.html', {'klientai_form': klientai_form, 'polisai_form': polisai_form})
 
 
 # Poliso registracijos sėkmės puslapis
+@login_required
 def policy_success(request):
-    return render(request, 'policy_success.html')
+    policy_id = request.session.get('policy_id')
+    if policy_id:
+        policy = get_object_or_404(Polisai, id=policy_id)
+        return render(request, 'policy_success.html', {'policy': policy})
+    else:
+        return render(request, 'policy_success.html', {'policy': None})
+
+
+

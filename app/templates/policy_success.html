@@ -6,5 +6,26 @@
 <div class="container mt-5">
     <h1>Sutartis sekmingai užregistruota</h1>
     <p>Jūsų sutartis užregistruota. Dėkojame!</p>
+
+    {% if policy %}
+        <h2>Sutarties informacija</h2>
+        <ul>
+            <li><strong>Klientas:</strong> {{ policy.klientai.vardas }} {{ policy.klientai.pavarde }}</li>
+            <li><strong>Brokeris:</strong> {{ policy.brokeriai.vardas }} {{ policy.brokeriai.pavarde }}</li>
+            <li><strong>Paslauga:</strong> {{ policy.paslaugos.pavadinimas }}</li>
+            <li><strong>Pradžios data:</strong> {{ policy.pradzios_data }}</li>
+            <li><strong>Pabaigos data:</strong> {{ policy.pabaigos_data }}</li>
+            <li><strong>Kelionės trukmė (dienomis):</strong> {{ policy.trip_duration }}</li>
+            <li><strong>Nelaimingi atsitikimai:</strong> {{ policy.cover1.na_sum }}</li>
+            <li><strong>Civilinė atsakomybė:</strong> {{ policy.cover2.civ_sum }}</li>
+            <li><strong>Medicininės išlaidos:</strong> {{ policy.cover3.med_sum }}</li>
+            <li><strong>Išskaita:</strong> {{ policy.iskaita.sum }}</li>
+            <li><strong>Kelionės būdas:</strong> {{ policy.travel_mode.type }}</li>
+            <li><strong>Kelionės šalis:</strong> {{ policy.country.name }}</li>
+            <li><strong>Galutinė kaina:</strong> €{{ policy.price }}</li>
+        </ul>
+    {% else %}
+        <p>Informacija apie sutartį nerasta.</p>
+    {% endif %}
 </div>
 {% endblock %}

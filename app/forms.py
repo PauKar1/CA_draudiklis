@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django import forms
-from .models import Profile, Polisai, Klientai, Brokeriai, Country, Paslaugos, TravelMode, Cover1, Cover2, Cover3, Iskaita
+from .models import Profile, Polisai, Klientai, Brokeriai, Country, Paslaugos, TravelMode, Cover1, Cover2, Cover3, \
+    Iskaita
 from .widgets import DeductibleSelect
 from django.db import IntegrityError
 from django.contrib.auth.forms import UserCreationForm
@@ -10,14 +11,18 @@ from django.utils.translation import gettext_lazy as _
 class KlientasRegistrationForm(forms.ModelForm):
     class Meta:
         model = Klientai  # Nustato, kad ši forma naudoja Klientai modelį
-        fields = ['vardas', 'pavarde', 'tel_numeris', 'gimimo_data', 'adresas', 'el_pastas']  # Nurodo, kurie modelio laukai bus naudojami formoje
+        fields = ['vardas', 'pavarde', 'tel_numeris', 'gimimo_data', 'adresas',
+                  'el_pastas']  # Nurodo, kurie modelio laukai bus naudojami formoje
         widgets = {
             'vardas': forms.TextInput(attrs={'class': 'form-control'}),  # Stilizuoja 'vardas' lauką kaip form-control
             'pavarde': forms.TextInput(attrs={'class': 'form-control'}),  # Stilizuoja 'pavarde' lauką kaip form-control
-            'tel_numeris': forms.TextInput(attrs={'class': 'form-control'}),  # Stilizuoja 'tel_numeris' lauką kaip form-control
-            'gimimo_data': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),  # Stilizuoja 'gimimo_data' lauką kaip form-control su date tipo
+            'tel_numeris': forms.TextInput(attrs={'class': 'form-control'}),
+            # Stilizuoja 'tel_numeris' lauką kaip form-control
+            'gimimo_data': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
+            # Stilizuoja 'gimimo_data' lauką kaip form-control su date tipo
             'adresas': forms.TextInput(attrs={'class': 'form-control'}),  # Stilizuoja 'adresas' lauką kaip form-control
-            'el_pastas': forms.EmailInput(attrs={'class': 'form-control'}),  # Stilizuoja 'el_pastas' lauką kaip form-control
+            'el_pastas': forms.EmailInput(attrs={'class': 'form-control'}),
+            # Stilizuoja 'el_pastas' lauką kaip form-control
         }
 
     def save(self, commit=True):
@@ -45,15 +50,20 @@ class ProfileUpdateForm(forms.ModelForm):
 class KlientasUpdateForm(forms.ModelForm):
     class Meta:
         model = Klientai  # Nustato, kad ši forma naudoja Klientai modelį
-        fields = ['vardas', 'pavarde', 'tel_numeris', 'gimimo_data', 'adresas', 'el_pastas']  # Nurodo, kurie modelio laukai bus naudojami formoje
+        fields = ['vardas', 'pavarde', 'tel_numeris', 'gimimo_data', 'adresas',
+                  'el_pastas']  # Nurodo, kurie modelio laukai bus naudojami formoje
         widgets = {
             'vardas': forms.TextInput(attrs={'class': 'form-control'}),  # Stilizuoja 'vardas' lauką kaip form-control
             'pavarde': forms.TextInput(attrs={'class': 'form-control'}),  # Stilizuoja 'pavarde' lauką kaip form-control
-            'tel_numeris': forms.TextInput(attrs={'class': 'form-control'}),  # Stilizuoja 'tel_numeris' lauką kaip form-control
-            'gimimo_data': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),  # Stilizuoja 'gimimo_data' lauką kaip form-control su date tipo
+            'tel_numeris': forms.TextInput(attrs={'class': 'form-control'}),
+            # Stilizuoja 'tel_numeris' lauką kaip form-control
+            'gimimo_data': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
+            # Stilizuoja 'gimimo_data' lauką kaip form-control su date tipo
             'adresas': forms.TextInput(attrs={'class': 'form-control'}),  # Stilizuoja 'adresas' lauką kaip form-control
-            'el_pastas': forms.EmailInput(attrs={'class': 'form-control'}),  # Stilizuoja 'el_pastas' lauką kaip form-control
+            'el_pastas': forms.EmailInput(attrs={'class': 'form-control'}),
+            # Stilizuoja 'el_pastas' lauką kaip form-control
         }
+
 
 class UserRegisterForm(UserCreationForm):
     email = forms.EmailField()  # Prideda el. pašto lauką į UserCreationForm
@@ -68,14 +78,19 @@ class UserRegisterForm(UserCreationForm):
             'password2': 'Slaptažodžio patvirtinimas',  # Pakeičia 'password2' lauko etiketę
         }
 
+
 class PolisaiForm(forms.ModelForm):
-    pradzios_data = forms.DateField(widget=forms.TextInput(attrs={'type': 'date'}))  # Nustato, kad 'pradzios_data' laukas bus date tipo
-    pabaigos_data = forms.DateField(widget=forms.TextInput(attrs={'type': 'date'}))  # Nustato, kad 'pabaigos_data' laukas bus date tipo
-    price = forms.FloatField(widget=forms.TextInput(attrs={'readonly': 'readonly'}), required=False)  # Nustato, kad 'price' laukas bus tik skaitymui
+    pradzios_data = forms.DateField(
+        widget=forms.TextInput(attrs={'type': 'date'}))  # Nustato, kad 'pradzios_data' laukas bus date tipo
+    pabaigos_data = forms.DateField(
+        widget=forms.TextInput(attrs={'type': 'date'}))  # Nustato, kad 'pabaigos_data' laukas bus date tipo
+    # price = forms.FloatField(widget=forms.TextInput(attrs={'readonly': 'readonly'}),
+    #                          required=False)  # Nustato, kad 'price' laukas bus tik skaitymui
 
     class Meta:
         model = Polisai  # Nustato, kad ši forma naudoja Polisai modelį
-        fields = ['brokeriai', 'paslaugos', 'pradzios_data', 'pabaigos_data', 'iskaita', 'country', 'travel_mode', 'cover1', 'cover2', 'cover3', 'price']  # Nurodo, kurie modelio laukai bus naudojami formoje
+        fields = ['brokeriai', 'paslaugos', 'pradzios_data', 'pabaigos_data', 'iskaita', 'country', 'travel_mode',
+                  'cover1', 'cover2', 'cover3']  # Nurodo, kurie modelio laukai bus naudojami formoje
         labels = {
             'brokeriai': 'Brokeris',  # Pakeičia 'brokeriai' lauko etiketę
             'paslaugos': 'Paslaugos',  # Pakeičia 'paslaugos' lauko etiketę
@@ -87,13 +102,15 @@ class PolisaiForm(forms.ModelForm):
             'cover1': 'Nelaimingi atsitikimai',  # Pakeičia 'cover1' lauko etiketę
             'cover2': 'Civilinė atsakomybė',  # Pakeičia 'cover2' lauko etiketę
             'cover3': 'Medicininės išlaidos',  # Pakeičia 'cover3' lauko etiketę
-            'price': 'Kaina',  # Pakeičia 'price' lauko etiketę
+            # 'price': 'Kaina',  # Pakeičia 'price' lauko etiketę
         }
+
 
 class KlientaiForm(forms.ModelForm):
     class Meta:
         model = Klientai  # Nustato, kad ši forma naudoja Klientai modelį
-        fields = ['vardas', 'pavarde', 'tel_numeris', 'gimimo_data', 'adresas', 'el_pastas']  # Nurodo, kurie modelio laukai bus naudojami formoje
+        fields = ['vardas', 'pavarde', 'tel_numeris', 'gimimo_data', 'adresas',
+                  'el_pastas']  # Nurodo, kurie modelio laukai bus naudojami formoje
         labels = {
             'vardas': 'Vardas',  # Pakeičia 'vardas' lauko etiketę
             'pavarde': 'Pavardė',  # Pakeičia 'pavarde' lauko etiketę
@@ -103,7 +120,8 @@ class KlientaiForm(forms.ModelForm):
             'el_pastas': 'El. paštas',  # Pakeičia 'el_pastas' lauko etiketę
         }
         widgets = {
-            'adresas': forms.Textarea(attrs={'rows': 3, 'cols': 40}),  # Nustato 'adresas' lauką kaip Textarea su tam tikrais dydžio atributais
+            'adresas': forms.Textarea(attrs={'rows': 3, 'cols': 40}),
+            # Nustato 'adresas' lauką kaip Textarea su tam tikrais dydžio atributais
         }
 
 
@@ -117,7 +135,8 @@ class NaujaKlientoRegistracijosForma(UserCreationForm):
             'password2': _("Slaptažodžio patvirtinimas"),  # Pakeičia 'password2' lauko etiketę į lietuvių kalbą
         }
         help_texts = {
-            'username': _("Privalomas. 150 arba mažiau simbolių. Raidės, skaičiai bei @/./+/-/_ simboliai."),  # Pateikia pagalbos tekstą vartotojo vardui
+            'username': _("Privalomas. 150 arba mažiau simbolių. Raidės, skaičiai bei @/./+/-/_ simboliai."),
+            # Pateikia pagalbos tekstą vartotojo vardui
             'password1': _(
                 "<ul>"
                 "<li>Jūsų slaptažodį turi sudaryti bent 8 simboliai.</li>"
@@ -126,7 +145,8 @@ class NaujaKlientoRegistracijosForma(UserCreationForm):
                 "<li>Jūsų slaptažodis negali būti vien skaičiai.</li>"
                 "</ul>"
             ),  # Pateikia pagalbos tekstą slaptažodžiui
-            'password2': _("Patikrinimui įveskite tokį patį slaptažodį, kaip anksčiau."),  # Pateikia pagalbos tekstą slaptažodžio patvirtinimui
+            'password2': _("Patikrinimui įveskite tokį patį slaptažodį, kaip anksčiau."),
+            # Pateikia pagalbos tekstą slaptažodžio patvirtinimui
         }
 
     def save(self, commit=True):
@@ -139,34 +159,46 @@ class NaujaKlientoRegistracijosForma(UserCreationForm):
 class BrokeriaiUpdateForm(forms.ModelForm):
     class Meta:
         model = Brokeriai  # Nustato, kad ši forma naudoja Brokeriai modelį
-        fields = ['vardas', 'pavarde', 'imones_pavadinimas', 'el_pastas', 'tel_numeris']  # Nurodo, kurie modelio laukai bus naudojami formoje
+        fields = ['vardas', 'pavarde', 'imones_pavadinimas', 'el_pastas',
+                  'tel_numeris']  # Nurodo, kurie modelio laukai bus naudojami formoje
         widgets = {
             'vardas': forms.TextInput(attrs={'class': 'form-control'}),  # Stilizuoja 'vardas' lauką kaip form-control
             'pavarde': forms.TextInput(attrs={'class': 'form-control'}),  # Stilizuoja 'pavarde' lauką kaip form-control
-            'imones_pavadinimas': forms.TextInput(attrs={'class': 'form-control'}),  # Stilizuoja 'imones_pavadinimas' lauką kaip form-control
-            'el_pastas': forms.EmailInput(attrs={'class': 'form-control'}),  # Stilizuoja 'el_pastas' lauką kaip form-control
-            'tel_numeris': forms.TextInput(attrs={'class': 'form-control'}),  # Stilizuoja 'tel_numeris' lauką kaip form-control
+            'imones_pavadinimas': forms.TextInput(attrs={'class': 'form-control'}),
+            # Stilizuoja 'imones_pavadinimas' lauką kaip form-control
+            'el_pastas': forms.EmailInput(attrs={'class': 'form-control'}),
+            # Stilizuoja 'el_pastas' lauką kaip form-control
+            'tel_numeris': forms.TextInput(attrs={'class': 'form-control'}),
+            # Stilizuoja 'tel_numeris' lauką kaip form-control
         }
 
 
 ###### Brokerių etapas
 class BrokerLoginForm(forms.Form):
     email = forms.EmailField(label='El. paštas')  # El. pašto laukas su lietuviška etikete
-    password = forms.CharField(widget=forms.PasswordInput, label='Slaptažodis')  # Slaptažodžio laukas su PasswordInput widget ir lietuviška etikete
+    password = forms.CharField(widget=forms.PasswordInput,
+                               label='Slaptažodis')  # Slaptažodžio laukas su PasswordInput widget ir lietuviška etikete
+
 
 class BrokerRegisterForm(forms.ModelForm):
-    password = forms.CharField(widget=forms.PasswordInput, label='Slaptažodis')  # Slaptažodžio laukas su PasswordInput widget ir lietuviška etikete
-    password1 = forms.CharField(widget=forms.PasswordInput, label='Slaptažodžio patvirtinimas')  # Slaptažodžio patvirtinimo laukas su PasswordInput widget ir lietuviška etikete
+    password = forms.CharField(widget=forms.PasswordInput,
+                               label='Slaptažodis')  # Slaptažodžio laukas su PasswordInput widget ir lietuviška etikete
+    password1 = forms.CharField(widget=forms.PasswordInput,
+                                label='Slaptažodžio patvirtinimas')  # Slaptažodžio patvirtinimo laukas su PasswordInput widget ir lietuviška etikete
 
     class Meta:
         model = Brokeriai  # Nustato, kad ši forma naudoja Brokeriai modelį
-        fields = ['vardas', 'pavarde', 'imones_pavadinimas', 'el_pastas', 'tel_numeris']  # Nurodo, kurie modelio laukai bus naudojami formoje
+        fields = ['vardas', 'pavarde', 'imones_pavadinimas', 'el_pastas',
+                  'tel_numeris']  # Nurodo, kurie modelio laukai bus naudojami formoje
         widgets = {
             'vardas': forms.TextInput(attrs={'class': 'form-control'}),  # Stilizuoja 'vardas' lauką kaip form-control
             'pavarde': forms.TextInput(attrs={'class': 'form-control'}),  # Stilizuoja 'pavarde' lauką kaip form-control
-            'imones_pavadinimas': forms.TextInput(attrs={'class': 'form-control'}),  # Stilizuoja 'imones_pavadinimas' lauką kaip form-control
-            'el_pastas': forms.EmailInput(attrs={'class': 'form-control'}),  # Stilizuoja 'el_pastas' lauką kaip form-control
-            'tel_numeris': forms.TextInput(attrs={'class': 'form-control'}),  # Stilizuoja 'tel_numeris' lauką kaip form-control
+            'imones_pavadinimas': forms.TextInput(attrs={'class': 'form-control'}),
+            # Stilizuoja 'imones_pavadinimas' lauką kaip form-control
+            'el_pastas': forms.EmailInput(attrs={'class': 'form-control'}),
+            # Stilizuoja 'el_pastas' lauką kaip form-control
+            'tel_numeris': forms.TextInput(attrs={'class': 'form-control'}),
+            # Stilizuoja 'tel_numeris' lauką kaip form-control
         }
 
     def clean_password1(self):
@@ -186,8 +218,10 @@ class BrokerRegisterForm(forms.ModelForm):
 
 
 class BrokerKlientaiUserCreateForm(forms.ModelForm):
-    password = forms.CharField(widget=forms.PasswordInput, label='Slaptažodis')  # Slaptažodžio laukas su PasswordInput widget ir lietuviška etikete
-    password_confirmation = forms.CharField(widget=forms.PasswordInput, label='Patvirtinkite slaptažodį')  # Slaptažodžio patvirtinimo laukas su PasswordInput widget ir lietuviška etikete
+    password = forms.CharField(widget=forms.PasswordInput,
+                               label='Slaptažodis')  # Slaptažodžio laukas su PasswordInput widget ir lietuviška etikete
+    password_confirmation = forms.CharField(widget=forms.PasswordInput,
+                                            label='Patvirtinkite slaptažodį')  # Slaptažodžio patvirtinimo laukas su PasswordInput widget ir lietuviška etikete
 
     class Meta:
         model = User  # Nustato, kad ši forma naudoja User modelį
@@ -195,7 +229,8 @@ class BrokerKlientaiUserCreateForm(forms.ModelForm):
 
     def clean_password_confirmation(self):
         password = self.cleaned_data.get('password')  # Gauk išvalytą 'password' vertę
-        password_confirmation = self.cleaned_data.get('password_confirmation')  # Gauk išvalytą 'password_confirmation' vertę
+        password_confirmation = self.cleaned_data.get(
+            'password_confirmation')  # Gauk išvalytą 'password_confirmation' vertę
         if password and password_confirmation and password != password_confirmation:  # Patikrina, ar slaptažodžiai sutampa
             raise forms.ValidationError("Slaptažodžiai nesutampa")  # Išmeta klaidą, jei slaptažodžiai nesutampa
         return password_confirmation  # Grąžina 'password_confirmation' vertę
@@ -204,7 +239,8 @@ class BrokerKlientaiUserCreateForm(forms.ModelForm):
 class KlientaiUpdateForm(forms.ModelForm):
     class Meta:
         model = Klientai  # Nustato, kad ši forma naudoja Klientai modelį
-        fields = ['vardas', 'pavarde', 'adresas', 'tel_numeris', 'el_pastas', 'gimimo_data']  # Nurodo, kurie modelio laukai bus naudojami formoje
+        fields = ['vardas', 'pavarde', 'adresas', 'tel_numeris', 'el_pastas',
+                  'gimimo_data']  # Nurodo, kurie modelio laukai bus naudojami formoje
         widgets = {
             'gimimo_data': forms.DateInput(attrs={'type': 'date'}),  # Nustato 'gimimo_data' lauką kaip date tipo
         }
@@ -212,34 +248,50 @@ class KlientaiUpdateForm(forms.ModelForm):
 
 ###### Pricing
 class TravelContractForm(forms.Form):
-    klientas = forms.ModelChoiceField(queryset=Klientai.objects.all(), label='Klientas', required=False)  # Laukas pasirinkti klientą
-    brokeris = forms.ModelChoiceField(queryset=Brokeriai.objects.all(), label='Brokeris', required=False)  # Laukas pasirinkti brokerį
+    klientas = forms.ModelChoiceField(queryset=Klientai.objects.all(), label='Klientas',
+                                      required=False)  # Laukas pasirinkti klientą
+    brokeris = forms.ModelChoiceField(queryset=Brokeriai.objects.all(), label='Brokeris',
+                                      required=False)  # Laukas pasirinkti brokerį
     country = forms.ModelChoiceField(queryset=Country.objects.all(), label='Šalis')  # Laukas pasirinkti šalį
     travel_start_date = forms.DateField(label='Kelionės pradžios data')  # Laukas įvesti kelionės pradžios datą
     travel_end_date = forms.DateField(label='Kelionės pabaigos data')  # Laukas įvesti kelionės pabaigos datą
-    paslaugos = forms.ModelChoiceField(queryset=Paslaugos.objects.all(), label='Paslaugos')  # Laukas pasirinkti paslaugas
-    cover3 = forms.ModelChoiceField(queryset=Cover1.objects.all(), label='Medicininės išlaidos', required=False)  # Laukas pasirinkti medicinines išlaidas
-    cover1 = forms.ModelChoiceField(queryset=Cover2.objects.all(), label='Nelaimingi atsitikimai', required=False)  # Laukas pasirinkti nelaimingus atsitikimus
-    cover2 = forms.ModelChoiceField(queryset=Cover3.objects.all(), label='Civilinė atsakomybė', required=False)  # Laukas pasirinkti civilinę atsakomybę
-    travel_mode = forms.ModelChoiceField(queryset=TravelMode.objects.all(), label='Kelionės būdas')  # Laukas pasirinkti kelionės būdą
-    iskaita = forms.ModelChoiceField(queryset=Iskaita.objects.all(), label='Išskaita', required=False)  # Laukas pasirinkti išskaitą
-    total_price = forms.FloatField(label='Viso kaina', required=False, widget=forms.TextInput(attrs={'readonly': 'readonly'}))  # Viso kaina, tik skaitymui
+    paslaugos = forms.ModelChoiceField(queryset=Paslaugos.objects.all(),
+                                       label='Paslaugos')  # Laukas pasirinkti paslaugas
+    cover3 = forms.ModelChoiceField(queryset=Cover1.objects.all(), label='Medicininės išlaidos',
+                                    required=False)  # Laukas pasirinkti medicinines išlaidas
+    cover1 = forms.ModelChoiceField(queryset=Cover2.objects.all(), label='Nelaimingi atsitikimai',
+                                    required=False)  # Laukas pasirinkti nelaimingus atsitikimus
+    cover2 = forms.ModelChoiceField(queryset=Cover3.objects.all(), label='Civilinė atsakomybė',
+                                    required=False)  # Laukas pasirinkti civilinę atsakomybę
+    travel_mode = forms.ModelChoiceField(queryset=TravelMode.objects.all(),
+                                         label='Kelionės būdas')  # Laukas pasirinkti kelionės būdą
+    iskaita = forms.ModelChoiceField(queryset=Iskaita.objects.all(), label='Išskaita',
+                                     required=False)  # Laukas pasirinkti išskaitą
+    total_price = forms.FloatField(label='Viso kaina', required=False,
+                                   widget=forms.TextInput(attrs={'readonly': 'readonly'}))  # Viso kaina, tik skaitymui
 
 
 ##### price calc
 class InsuranceCostCalculationForm(forms.ModelForm):
     country = forms.ModelChoiceField(queryset=Country.objects.all(), label='Pasirinkite šalį')  # Laukas pasirinkti šalį
-    travel_mode = forms.ModelChoiceField(queryset=TravelMode.objects.all(), label='Keliavimo būdas')  # Laukas pasirinkti keliavimo būdą
+    travel_mode = forms.ModelChoiceField(queryset=TravelMode.objects.all(),
+                                         label='Keliavimo būdas')  # Laukas pasirinkti keliavimo būdą
     trip_duration = forms.IntegerField(label='Kelionės dienų skaičius')  # Laukas įvesti kelionės dienų skaičių
-    cover1 = forms.ModelChoiceField(queryset=Cover1.objects.all(), label='Nelaimingi atsitikimai', required=False)  # Laukas pasirinkti nelaimingus atsitikimus
-    cover2 = forms.ModelChoiceField(queryset=Cover2.objects.all(), label='Civilinė atsakomybė', required=False)  # Laukas pasirinkti civilinę atsakomybę
-    cover3 = forms.ModelChoiceField(queryset=Cover3.objects.all(), label='Medicininės išlaidos', required=True)  # Laukas pasirinkti medicinines išlaidas
-    iskaita = forms.ModelChoiceField(queryset=Iskaita.objects.all(), label='Taikoma išskaita')  # Laukas pasirinkti taikomą išskaitą
-    paslaugos = forms.ModelChoiceField(queryset=Paslaugos.objects.all(), label='Paslaugos', widget=forms.HiddenInput, required=True)  # Laukas pasirinkti paslaugas, paslėptas
+    cover1 = forms.ModelChoiceField(queryset=Cover1.objects.all(), label='Nelaimingi atsitikimai',
+                                    required=False)  # Laukas pasirinkti nelaimingus atsitikimus
+    cover2 = forms.ModelChoiceField(queryset=Cover2.objects.all(), label='Civilinė atsakomybė',
+                                    required=False)  # Laukas pasirinkti civilinę atsakomybę
+    cover3 = forms.ModelChoiceField(queryset=Cover3.objects.all(), label='Medicininės išlaidos',
+                                    required=True)  # Laukas pasirinkti medicinines išlaidas
+    iskaita = forms.ModelChoiceField(queryset=Iskaita.objects.all(),
+                                     label='Taikoma išskaita')  # Laukas pasirinkti taikomą išskaitą
+    paslaugos = forms.ModelChoiceField(queryset=Paslaugos.objects.all(), label='Paslaugos', widget=forms.HiddenInput,
+                                       required=True)  # Laukas pasirinkti paslaugas, paslėptas
 
     class Meta:
         model = Polisai  # Nustato, kad ši forma naudoja Polisai modelį
-        fields = ['country', 'travel_mode', 'trip_duration', 'cover1', 'cover2', 'cover3', 'iskaita', 'paslaugos']  # Nurodo, kurie modelio laukai bus naudojami formoje
+        fields = ['country', 'travel_mode', 'trip_duration', 'cover1', 'cover2', 'cover3', 'iskaita',
+                  'paslaugos']  # Nurodo, kurie modelio laukai bus naudojami formoje
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -256,5 +308,3 @@ class InsuranceCostCalculationForm(forms.ModelForm):
             default_paslaugos = Paslaugos.objects.get(pk=1)  # Grąžina numatytąją paslaugą, jei nėra pasirinkta
             return default_paslaugos
         return paslaugos  # Grąžina pasirinktas paslaugas
-
-
