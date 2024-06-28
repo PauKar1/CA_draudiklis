@@ -1,0 +1,8 @@
+# Ignoruoti visus .log failus
+*.log
+
+# Ignoruoti katalogą tmp/
+tmp/
+
+# Ignoruoti konkretų failą
+app\management\commands\map\natural_earth_vector.gpkg
