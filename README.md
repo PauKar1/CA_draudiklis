@@ -1,0 +1,3 @@
+Travel insurance preliminary price calculation and administration portal. The customer can log in, calculate, register and monitor their contracts. At the same time, there is functionality to assign contracts and work through the broker's login.
+It is possible for the Broker to have both a Broker user and a client user, with the goal that the broker can write contracts on behalf of the client and administer all related issues. 
+Linking with Ministry of Foreign Affairs data has been completed. The map was created based on the data on the website. When choosing a travel country, the level of risk when going to this country is emphasized, on the basis of which we can read additional at Foreign Affairs official site.
